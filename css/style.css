@@ -1,0 +1,289 @@
+
+
+.search-area {
+	margin: 20px 75px 20px 75px;
+}
+
+#search-button {
+	display: block;
+	margin: 5px auto 5px auto;
+	padding: 15px 35px 15px 35px;
+	font-size: 18px;
+	/*border-radius: 8px;*/
+}
+
+#search-bar {
+	margin: 0px 20% 0px 20%
+}
+
+
+#results-table {
+	/*table-layout: fixed;*/
+	width: 100%;
+	max-width: 93%;
+	min-width: 93%;
+	margin: 20px auto 20px auto;
+
+	border-color: black;
+	border-radius: 8px;
+	border-width: 1px;
+	border-style: solid;
+
+	text-align: center;
+	font-family: sans-serif;
+}
+
+.table-app-border {
+	border-top: solid;
+	border-width: 1px;
+}
+
+
+/* Main Row Styles */
+tr.row-box {
+	height: 70px;
+	outline: 1px solid black;
+	/*border-width: 3px;
+	border-style: solid;
+	border-color: black;*/
+	text-align: center;
+}
+
+td.row-data-box, th {
+	border-width: 1px;
+	border-color: black;
+	/*border-style: solid;*/
+	/*width: 14%;*/
+	border-radius: 4px;
+	overflow: auto;
+	text-overflow: ellipsis;
+	padding: 0 8px 0 8px;
+	overflow: scroll;
+
+	/*background-color: green;*/
+	text-align: center;
+	min-width: 10%;
+	/*max-width: 10%;*/
+}
+
+td.row-data-box-lg {
+	max-width: 15%;
+	width: 15%;
+}
+
+td.row-data-box-md {
+	max-width: 10%;
+	width: 10%;
+}
+
+td.row-data-box-sm {
+	max-width: 4%;
+	width: 4%;
+}
+
+td.row-data-box-xs {
+	max-width: 3%;
+	width: 3%;
+}
+
+td, table {
+	vertical-align: middle;
+}
+
+div.row-data-keywords-container {
+	height: 100px;
+	overflow: scroll;
+	text-align: center;
+	/*background-color: blue;*/
+	margin: 5% 1% 5% 1%;
+	vertical-align: middle;
+}
+
+div.row-data-name-container {
+	width: 200px;
+	overflow: hidden;
+	text-overflow: scroll;
+}
+
+div.row-data-addr-container {
+	width: 180px;
+}
+
+div.row-data-phone-container {
+	width: 110px;
+}
+
+div.row-data-web-container {
+	width: 100px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+div.row-data-email-container, div.row-data-web-container {
+	text-align: center;
+	width: 100px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+div.row-data-email-container:hover, div.row-data-web-container:hover {
+	float: left;
+	overflow: initial;
+}
+
+
+div.keyword-list-item {
+	display:inline-block;
+	max-width: 90px;
+	margin:2px;
+	padding: 4px;
+	border-radius:10%;
+	
+	background-color:rgb(47,213,102);
+	overflow: hidden;
+	text-overflow: ellipsis;
+	color: white;
+}
+
+
+
+/* Subrow Styles */
+tr.subrow-box {
+	transition: height 2s;
+	min-height: 30%;
+	height: 30%;
+	padding: 0;
+	margin: 0;
+	/*background-color: lightgray;*/
+}
+
+div.subrow-data-box {
+	vertical-align: top;
+	padding: 0;
+	margin: 0;
+	display: inline-block;
+	text-align: left;
+	height: 150px;
+	/*border-style: solid;*/
+	/*border-width: 1px;*/
+	/*background-color: lightgray;*/
+}
+
+div.subrow-data-box-lg {
+	width: 27%;
+	max-width: 27%;
+}
+
+div.subrow-data-box-sm {
+	width: 17%;
+	max-width: 17%;
+}
+
+div.subrow-data-box-sub {
+	border-style: solid;
+	border-width: thin;
+	background-color: lightgray;
+	margin: 2px;
+}
+
+div.subrow-data-box-sub-top {
+	padding: 2px 2px 2px 2px;
+}
+
+div.subrow-data-box-sub-bottom {
+	padding: 2px;
+}
+
+
+
+/* */
+button.view-btn {
+	height: 40px;
+	width: 40px;
+	border-radius: 60%
+}
+
+button.view-btn:hover {
+	background-color: lightgray;
+}
+
+button.view-btn:focus {
+	outline: none;
+}
+
+.multiselector {
+	background-color: lightgray;
+	padding: 7px;
+	/*border-radius: 2%;*/
+	margin: 0;
+}
+
+/**/
+.selector-sm {
+	width: 33%;
+	margin: 10px;
+	display: inline-block;
+	max-width: 300px;
+}
+
+.link-text {
+	color: black;
+	text-decoration: none;
+	text-align: center;
+	font-family: sans-serif;
+}
+
+.redback {
+	background-color: lightpink;
+}
+
+.greenback {
+	background-color: lightgreen;
+}
+
+.center {
+	text-align: center;
+	margin-left: auto;
+	margin-right: auto;
+	vertical-align: middle;
+}
+
+.greytext {
+	color: grey;
+}
+
+#banner-welcome {
+	color: white;
+	margin: 0;
+	padding: 30px 90px 30px 90px;
+	background-color: grey;
+	font-family: sans-serif;
+	border-radius: 2px;
+	border-color: black;
+	font: 'arial';
+}
+
+#search-filter-area {
+	display: block;
+	text-align: center;
+}
+
+#filter-app {
+	
+}
+
+
+img[name="result-info"] {
+	height: 30px;
+	width: 30px;
+}
+
+
+.fade-enter-active {
+  transition: all 3s ease;
+}
+.fade-enter {
+  opacity: 0;
+  background-color: grey;
+}

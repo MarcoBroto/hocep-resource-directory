@@ -1,0 +1,71 @@
+
+#list-window {
+	min-height: 67vh;
+	margin: auto;
+	text-align: center;
+	padding: 10px;
+}
+
+div.list-view {
+	background-color: lightgray;
+	display: inline-block;
+	margin: 10px;
+	vertical-align: top;
+	text-align: center;
+	border-radius: 9px;
+	border-width: thick;
+	border: solid;
+}
+
+div.list-large {
+	width: 40vw;
+}
+
+div.list-small {
+	width: 20vw;
+}
+
+div.list-view > ul {
+	list-style: none;
+	padding: 3px 10px 3px 10px;
+}
+
+li.list-item {
+	background-color: white;
+	justify-content: space-between;
+	display: flex;
+	height: 30px;
+	border: solid;
+	border-width: thin;
+}
+
+div.list-item-label {
+	display: inline;
+	max-width: 90%;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	margin-right: 7px;
+	font-size: 1.5em;
+}
+
+div.list-item-btns {
+	display: inline;
+	vertical-align: center;
+	padding: 2px;
+}
+
+button.btn-list-item {
+	padding: 3px;
+	border-radius: 5px;
+	height: 25px;
+	align-content: right;
+
+	/*margin-left: 30px;*/
+}
+
+button.btn-add {
+	margin-top: 7px;
+	padding: 5px;
+	border-radius: 5px;
+}

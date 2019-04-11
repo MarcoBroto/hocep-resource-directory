@@ -1,0 +1,61 @@
+
+html, body {
+	height: 100%
+	width: 100%;
+	margin: 0;
+	padding: 0;
+	background-color: white;
+	font-family: sans-serif;
+}
+
+.standard-colors {
+	background-color: #1C2932;
+}
+
+/* Header Styling */
+
+.header-size {
+	
+}
+
+.header {
+	padding: 10px 20px 10px 20px;
+}
+
+.header a {
+	margin: 10px;
+	padding: 10px 0px 10px 10px;
+}
+
+.header img {
+	width: 200px;
+	max-height: 10%;
+}
+
+
+/* Footer styling */
+
+.footer {
+	height: 18vh;
+	margin: 0;
+}
+
+.footer-size {
+	min-height: 18%;
+}
+
+.footer-quicklinks {
+	text-align: center;
+	padding: 15px 0px 15px 0px;
+}
+
+.footer-quicklinks-item, .footer-quicklinks-item > a {
+	color: white;
+	display: inline;
+	margin: 0px 7px 0px 7px;
+	text-decoration: none;
+}
+
+.footer-quicklinks-item>a:hover {
+	text-decoration: underline;
+}
