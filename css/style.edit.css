@@ -1,0 +1,44 @@
+
+.center {
+	margin: auto;
+	text-align: center;
+	vertical-align: middle;
+}
+
+.resource-row {
+	margin: auto;
+	padding: 0;
+	width: 81vw;
+	text-align: left;
+}
+
+.btn-light {
+	border: thin solid black;
+}
+
+td.name {
+	max-width: 21vw;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+
+td.description {
+	max-width: 30vw;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+
+td.no-wrap-col {
+	white-space: nowrap;
+}
+
+#resource-editor {
+	height: 80vh;
+	min-height: 80vh;
+}
+
+#tab-content {
+	height: 100%;
+}

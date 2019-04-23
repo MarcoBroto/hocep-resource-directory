@@ -1,0 +1,44 @@
+
+.center {
+	margin: auto;
+	text-align: center;
+	vertical-align: middle;
+}
+
+.overflow {
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+
+div.table-border {
+	border: solid thin lightgray;
+}
+
+div.data-card-top {
+	max-height: 4.94rem;
+}
+
+div.cat-serv-card {
+	height: 15.2rem;
+	max-height: 15.2rem;
+}
+
+div.long-text-card {
+	max-height: 15rem;
+}
+
+div.contacts-card {
+	height: 12rem;
+}
+
+td.name-col, td.title-col {
+	width: auto;
+	max-width: 15vw;
+	white-space: nowrap;
+}
+
+td.phone-col {
+	min-width: 11vw;
+	max-width: 11vw;
+}
