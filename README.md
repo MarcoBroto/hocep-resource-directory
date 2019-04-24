@@ -1,1 +1,0 @@
-# HSEP-Resource-Directory-Project
