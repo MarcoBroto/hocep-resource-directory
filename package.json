@@ -25,5 +25,7 @@
   "directories": {
     "test": "test"
   },
-  "dependencies": {}
+  "dependencies": {
+    "vue-multiselect": "^2.1.4"
+  }
 }

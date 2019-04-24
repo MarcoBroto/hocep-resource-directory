@@ -1,24 +1,30 @@
 
-function fetchOptions(list) {
+/**
+ * Query database for desired list of element names and assign the values to the selected Vue data field.
+ *	list 		 <- Name of list to fetch from database
+ *	vueComponent <- Reference to the Vue component that holds the desired data field.
+ *	dataField 	 <- Vue componenet data field that the values should be assigned to.
+ */
+function fetchOptions(list, vueComponent, dataField) {
 	sendRequest_get('../php/fetchOptions.php', {options: list}, callback=function(response) {
 		let data = JSON.parse(response);
 		if (data.response) {
 			switch(list) {
 				case 'resource':
 					if (data.resources != null)
-						app.$data.resourceNameList = data.resources;
+						vueComponent.$data[dataField] = data.resources;
 						break;
 				case 'category':
 					if (data.categories != null)
-						app.$data.categoryList = data.categories;
+						vueComponent.$data[dataField] = data.categories;
 						break;
 				case 'service':
 					if (data.services != null)
-						app.$data.serviceList = data.services;
+						vueComponent.$data[dataField] = data.services;
 						break;
 				case 'zipcode':
 					if (data.zipcodes != null)
-						app.$data.zipcodeList = data.zipcodes;
+						vueComponent.$data[dataField] = data.zipcodes;
 						break;
 				default:
 					console.log(`Error fetching \"${list}\".`);
@@ -30,13 +36,8 @@ function fetchOptions(list) {
 }
 
 (function fetchMultiselectOptions() {
-	// fetchResourceNames();
-	// fetchCategories();
-	// fetchServices();
-	// fetchZipcodes();
-
-	fetchOptions('resource');
-	fetchOptions('category');
-	fetchOptions('service');
-	fetchOptions('zipcode');
-})();
+	fetchOptions('resource', app, 'resourceNameList');
+	fetchOptions('category', app, 'categoryList');
+	fetchOptions('service', app, 'serviceList');
+	fetchOptions('zipcode', app, 'zipcodeList');
+})(); // Called on file load

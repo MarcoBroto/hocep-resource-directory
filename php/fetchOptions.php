@@ -52,7 +52,12 @@
                 2 => 'Community Cleaning',
                 3 => 'Trash Handling'
             ],
-            'zipcodes' => null
+            'zipcodes' => [
+                79932,
+                85643,
+                29019,
+                79989
+            ]
         ];
 
         echo json_encode($response);
