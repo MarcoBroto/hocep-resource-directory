@@ -10,9 +10,9 @@ The site is structured using webpack for some files. The project will be structu
 2. Configure PHP Storm's Built-In Web Server
 3. [Install NodeJS](https://nodejs.org/en/)
 4. Open the command line to the project directory and run 
-'''bash
+```bash
 npm install
-'''
+```
 This should access the 'package.json' file to insall the node dependencies on your computer.
 
 ## Guidelines to commiting to branches
