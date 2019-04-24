@@ -3,26 +3,58 @@
     fetchOptions();
 
     function fetchOptions() {
-        $response = ['response' => 'failed'];
+        $response = ['response' => 'false']; // Initial Response
 
-        $uname = 'mrsoto3';
+        $host = 'ilinkserver.cs.utep.edu';
+        $user = 'mrsoto3';
         $pass = '*utep2019!';
         $dbname = 'team11_db';
-        $conn = new mysqli('mrsoto3@ilinkserver.cs.utep.edu', $uname, $pass, $dbname);
+        $conn = new mysqli($host, $user, $pass, $dbname);
 
-//        if ($conn->connect_errno || !isset($_GET['options'])) {
-//            echo json_encode($response);
-//            die();
-//        }
+        /* Production Code Block, Send queries through here and parse
 
-        //$query = 'SELECT * from category_list;';
-        //$conn->query($query);
+        if ($conn->connect_errno || !isset($_GET['options'])) {
+            echo json_encode($response);
+            die();
+        }
+
+        $query = 'SELECT * from category_list;';
+        $query = 'SELECT * from service_list;';
+        $query = 'SELECT * from resource_list;';
+        $query = 'SELECT * from zipcode_list;';
+        $conn->query($query);
 
         $response = [
             'response' => $_GET['options']
         ];
 
+        */
+
+
+        //  Dummy Response
+        $response = [
+            'response' => true,
+            'resources' => [
+                0 => 'Homeless Shelter of El Paso',
+                1 => 'Shelter Place of El Paso',
+                2 => 'El Paso Dispensary',
+                3 => 'Opportunity Organization'
+            ],
+            'categories' => [
+                0 => 'Mental Health',
+                1 => 'Health',
+                2 => 'Housing',
+                3 => 'Military'
+            ],
+            'services' => [
+                0 => 'Cleaning',
+                1 => 'Job Placement',
+                2 => 'Community Cleaning',
+                3 => 'Trash Handling'
+            ],
+            'zipcodes' => null
+        ];
+
         echo json_encode($response);
         $conn->close();
     }
-?>

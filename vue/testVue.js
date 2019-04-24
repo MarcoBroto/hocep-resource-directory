@@ -34,8 +34,15 @@ let app = new Vue({
 		Multiselect: window.VueMultiselect.default,
 	},
 	data: {
-		resources: rlist,
-		text: [],
 		welcome: true,
+		resourceNameList: [],
+		categoryList: [],
+		serviceList: [],
+		zipcodeList: [],
+		selectedResource: '',
+		selectedService: [],
+		selectedCategory: [],
+		selectedZipcode: [],
+		resources: rlist,
 	},
 });

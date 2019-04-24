@@ -15,8 +15,8 @@
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
 	<!-- Vue imports -->
-	<script src="https://cdn.jsdelivr.net/npm/vue"></script>
-	<script src="https://unpkg.com/vue-multiselect@2.1.0"></script>
+	<!-- <script src="https://cdn.jsdelivr.net/npm/vue"></script> -->
+	<!-- <script src="https://unpkg.com/vue-multiselect@2.1.0"></script> -->
 	<script>
 
 	</script>
@@ -35,15 +35,15 @@
 			<div class="container center my-3" style="width: 80vw;">
 				<h5>Search by Name</h5>
 				<div class="row mb-4 bg-secondary px-1 py-1 rounded">
-					<multiselect :options="['hello']" multiple="false" searchable="true" close-on-select="false" show-labels="true" placeholder="Search for a Resource or Organization by Name"></multiselect>
+					<multiselect v-model="selectedResource" :options="resourceNameList" multiple="false" searchable="true" close-on-select="false" show-labels="true" placeholder="Search for a Resource or Organization by Name"></multiselect>
 				</div>
 				<h6>Or</h6>
 				<h5>Filter by Criteria</h5>
 				<div class="row mt-4">
 					<div class="col col-4 pr-2 pl-0 py-0 rounded">
 						<multiselect
-							v-model="text" 
-		    			:options="['hello','world']"
+							v-model="selectedCategory" 
+		    			:options="categoryList"
 		    			multiple="true"
 		    			placeholder="Filter by Category"
 		    			optionsLimit="4"
@@ -52,8 +52,8 @@
 		    	</div>
 		    	<div class="col col-4 rounded">
 		    		<multiselect
-							v-model="text" 
-		    			:options="['hello','world']"
+							v-model="selectedService" 
+		    			:options="serviceList"
 		    			multiple="true"
 		    			placeholder="Filter by Services Offered"
 		    			optionsLimit="4"
@@ -62,8 +62,8 @@
 		    	</div>
 		    	<div class="col col-4 pl-2 pr-0 py-0 rounded">
 						<multiselect
-							v-model="text" 
-		    			:options="['hello','world']"
+							v-model="selectedZipcode" 
+		    			:options="zipcodeList"
 		    			multiple="true"
 		    			placeholder="Filter by Zipcode"
 		    			optionsLimit="4"
@@ -163,12 +163,12 @@
 <script src="Service.js"></script>
 <script src="Resource.js"></script>
 <script src="connect.js"></script>
-<script src="fetchMultiselectOptions.js"></script>
 
 <script src="https://cdn.jsdelivr.net/npm/vue"></script>
 <script src="https://unpkg.com/vue-multiselect@2.1.0"></script>
 <script src="../vue/ResourceView.js"></script>
 <script src="../vue/testVue.js"></script>
+<script src="fetchMultiselectOptions.js"></script>
 
 </body>
 </html>

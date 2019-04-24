@@ -16,15 +16,14 @@
 
 
     function getConnection() {
-        $dbhost = "localhost:3306";
-        $port = "3306";
-        $dbuser = "dbuser";
-        $dbpass = "password";
+        $host = "localhost:3306";
+        $user = "dbuser";
+        $pass = "password";
         $dbname = "dbname";
 
         // Create connection
         error_reporting(E_ERROR); // Use to remove error echoing
-        $GLOBALS['link'] = new mysqli($host=$dbhost, $username=$dbuser, $passwd=$dbpass, $dbname=$dbname);
+        $GLOBALS['link'] = new mysqli($host, $user, $pass, $dbname);
 
         $response = false;
 
