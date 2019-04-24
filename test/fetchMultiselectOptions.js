@@ -1,46 +1,4 @@
 
-function fetchCategories() {
-	sendRequest_get('../php/fetchOptions.php', {options: 'category'}, callback=function(response) {
-		let data = JSON.parse(response);
-		// console.log(data);
-		if (data.response && data.categories != null)
-			app.$data.categoryList = data.categories;
-		else
-			console.log('Error fetching categories.')
-	})
-}
-
-function fetchServices() {
-	sendRequest_get('../php/fetchOptions.php', {options: 'service'}, callback=function(response) {
-		let data = JSON.parse(response);
-		if (data.response && data.services != null)
-			app.$data.serviceList = data.services;
-		else
-			console.log('Error fetching services.')
-	})
-}
-
-function fetchResourceNames() {
-	sendRequest_get('../php/fetchOptions.php', {options: 'resource'}, callback=function(response) {
-		let data = JSON.parse(response);
-		// console.log(data);
-		if (data.response && data.resources != null)
-			app.$data.resourceNameList = data.resources;
-		else
-			console.log('Error fetching resource names.')
-	});
-}
-
-function fetchZipcodes() {
-	sendRequest_get('../php/fetchOptions.php', {options: 'zipcode'}, callback=function(response) {
-		let data = JSON.parse(response);
-		if (data.response && data.zipcodes != null)
-			app.$data.zipcodeList = data.zipcodes;
-		else
-			console.log('Error fetching zipcodes.')
-	});
-}
-
 function fetchOptions(list) {
 	sendRequest_get('../php/fetchOptions.php', {options: list}, callback=function(response) {
 		let data = JSON.parse(response);
