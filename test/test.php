@@ -2,11 +2,11 @@
 <html>
 <head>
 	<!-- Bootstrap Import -->
-	<link href="bootstrap/flatly.bootstrap.min.css" rel="stylesheet">
+	<link href="../bootstrap/flatly.bootstrap.min.css" rel="stylesheet">
 	<!-- Used for multi-select dropdown menu -->
 	<link rel="stylesheet" href="https://unpkg.com/vue-multiselect@2.1.0/dist/vue-multiselect.min.css">
 	<!-- Page Stylesheet -->
-	<link href="css/style.test.css" rel="stylesheet">
+	<link href="../css/style.test.css" rel="stylesheet">
 
 	<!-- Bootstrap JS imports -->
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
@@ -14,7 +14,7 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
-	<!-- VueJS imports -->
+	<!-- Vue imports -->
 	<script src="https://cdn.jsdelivr.net/npm/vue"></script>
 	<script src="https://unpkg.com/vue-multiselect@2.1.0"></script>
 	<script>
@@ -27,16 +27,11 @@
 
 <div id="resource-table-app">
 	<nav class="navbar navbar-expand-lg navbar-dark bg-primary mt-0 mb-4">
-		<a class="navbar-brand" href="/"><img src="assets/logo.png"></a>
+		<a class="navbar-brand" href="/"><img src="../assets/logo.png"></a>
 	</nav>
 
 	<div class="container-fluid center bg-light py-3">
 			<h1>El Paso Oppurtunity Center<br>Resource Directory</h1>
-			<?
-				include 'php/fetchOptions.php';
-
-				fetchOptions();
-			?>
 			<div class="container center my-3" style="width: 80vw;">
 				<h5>Search by Name</h5>
 				<div class="row mb-4 bg-secondary px-1 py-1 rounded">
@@ -163,16 +158,17 @@
 	</footer>
 </div>
 
-<script src="test/Contact.js"></script>
-<script src="test/Category.js"></script>
-<script src="test/Service.js"></script>
-<script src="test/Resource.js"></script>
+<script src="Contact.js"></script>
+<script src="Category.js"></script>
+<script src="Service.js"></script>
+<script src="Resource.js"></script>
+<script src="connect.js"></script>
+<script src="fetchMultiselectOptions.js"></script>
+
 <script src="https://cdn.jsdelivr.net/npm/vue"></script>
-<!-- Used for multi-select dropdown menu -->
 <script src="https://unpkg.com/vue-multiselect@2.1.0"></script>
-<script src="vue/testVue.js"></script>
-<script src="js/connect.js"></script>
-<script src="js/fetchMultiselectOptions.js"></script>
+<script src="../vue/ResourceView.js"></script>
+<script src="../vue/testVue.js"></script>
 
 </body>
 </html>

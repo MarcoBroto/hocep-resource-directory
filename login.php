@@ -61,7 +61,7 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/vue"></script>
-<script src="../login/vue/LoginApp.js" type="text/javascript"></script>
+<script src="../vue/LoginVue.js" type="text/javascript"></script>
 
 </body>
 </html>

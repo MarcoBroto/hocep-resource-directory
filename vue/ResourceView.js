@@ -38,8 +38,8 @@ Vue.component("ResourceView", {
 					<div class="card bg-primary mr-1 my-1 data-card-top">
 						<div class="card-body py-2">
 							<h4 class="card-title text-white">Name<button style="float: right;"class="btn btn-sm btn-info ml-auto pl-auto" data-toggle="collapse" :data-target="'#collapse' + ind" v-on:click="toggleOpen()">
-								<span v-if="!isOpen">Show More<img src="assets/outline-expand_more-24px.svg"></span>
-								<span v-else>Show Less<img src="assets/baseline-expand_less-24px.svg"></span>
+								<span v-if="!isOpen">Show More<img src="../assets/outline-expand_more-24px.svg"></span>
+								<span v-else>Show Less<img src="../assets/baseline-expand_less-24px.svg"></span>
 							</button></h4>
 							<h5 class="card-text text-info overflow"><strong>{{ resource.name }}</strong></h5>
 						</div>

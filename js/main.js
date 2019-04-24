@@ -1,2 +1,2 @@
 
-import { ResourceEditor } from '../edit/vue/ResourceEditor';
+import { ResourceEditor } from '../vue/ResourceEditor';

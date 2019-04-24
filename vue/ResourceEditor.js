@@ -1,10 +1,10 @@
 
 Vue.config.devtools = true; // Vue chrome debugger line, remove in deployment
 
-import { Resource } from '../../js/Resource.js';
-import { Category } from '../../js/Category.js';
-import { Service } from '../../js/Service.js';
-import { Contact } from '../../js/Contact.js';
+import { Resource } from '../js/Resource.js';
+import { Category } from '../js/Category.js';
+import { Service } from '../js/Service.js';
+import { Contact } from '../js/Contact.js';
 
 // Dummy Table Data
 var contact1 = new Contact(1, 'Michael Hawk', 'The Dude', '(915) 253-4321', 'micawk@icloud.com');
