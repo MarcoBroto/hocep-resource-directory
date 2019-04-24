@@ -1,4 +1,6 @@
 
+const request = require('ajax-request');
+
 /**
  * Query database for desired list of element names and assign the values to the selected Vue data field.
  *	list 		 <- Name of list to fetch from database
@@ -6,8 +8,8 @@
  *	dataField 	 <- Vue componenet data field that the values should be assigned to.
  */
 export function fetchOptions(list, vueComponent, dataField) {
-	sendRequest_get('../php/fetchOptions.php', {options: list}, callback=function(response) {
-		let data = JSON.parse(response);
+	request({url: '../php/fetchOptions.php', data: {'options': list}, method: 'GET'}, function(err, res, body) {
+		let data = JSON.parse(body);
 		if (data.response) {
 			switch(list) {
 				case 'resource':

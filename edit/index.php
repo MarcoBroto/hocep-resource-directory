@@ -11,6 +11,8 @@
 
 	<!-- Bootstrap with Flatly Theme import -->
 	<link href="bootstrap/flatly.bootstrap.min.css" rel="stylesheet">
+	<!-- Used for multi-select dropdown menu -->
+	<link rel="stylesheet" href="https://unpkg.com/vue-multiselect@2.1.0/dist/vue-multiselect.min.css">
 	<!-- Page Stylesheet -->
 	<link href="css/style.edit.css" rel="stylesheet">
 
@@ -26,8 +28,8 @@
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary mt-0 mb-4">
 	<a class="navbar-brand" href="/edit.html"><h4>Admin Dashboard | <span class="text-secondary">Resource Editor</span></h4></a>
-	<div id="user-id" class="ml-auto">
-		<a class="text-white disabled mr-3">User: {{ user }}</a>
+	<div class="ml-auto">
+		<a class="text-white disabled mr-3">User: <? /* echo current user */echo 'mrsoto3' ?></a>
 		<button class="btn btn-secondary">Logout</button>
 	</div>
 </nav>
@@ -36,15 +38,15 @@
 	<ul class="nav nav-dark nav-tabs">
 		<li class="nav-item">
 			<a class="nav-link active" data-toggle="tab" href="#resources"><h4 class="text-primary">Resources
-			<span class="badge badge-danger badge-pill">{{ resourceList.length }}</span></h4></a>
+			<span class="badge badge-danger badge-pill">{{ resources.length }}</span></h4></a>
 		</li>
 		<li class="nav-item">
 			<a class="nav-link" data-toggle="tab" href="#categories"><h4 class="text-primary">Categories
-			<span class="badge badge-success badge-pill">{{ categoryList.length }}</span></h4></a>
+			<span class="badge badge-success badge-pill">{{ categories.length }}</span></h4></a>
 		</li>
 		<li class="nav-item dropdown">
 			<a class="nav-link" data-toggle="tab" href="#services"><h4 class="text-primary">Services
-			<span class="badge badge-warning badge-pill">{{ serviceList.length }}</span></h4></a>
+			<span class="badge badge-warning badge-pill">{{ services.length }}</span></h4></a>
 		</li>
 	</ul>
 
@@ -67,7 +69,7 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr v-for="(resource, ind) in resourceList" class="table-light" :class="{'table-danger': !isUpdated(resource.lastUpdate)}">
+					<tr v-for="(resource, ind) in resources" class="table-light" :class="{'table-danger': !isUpdated(resource.lastUpdate)}">
 						<td>{{ resource.id }}</td>
 						<td class="name">{{ resource.name }}</td>
 						<td class="description">{{ resource.description }}</td>
@@ -89,7 +91,7 @@
 				<thead>
 					<tr class="mb-0 pb-0">
 						<th colspan="4" class="center">
-							<button class="btn btn-success">+ Add Category</button>
+							<button class="btn btn-success" data-toggle="modal" data-target="#category-modal" v-on:click="newModalCategory()">+ Add Category</button>
 						</th>
 					</tr>
 					<tr class="table-primary mt-0 pt-0">
@@ -100,11 +102,11 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr v-for="(category, ind) in categoryList" class="table-light">
+					<tr v-for="(category, ind) in categories" class="table-light">
 						<td>{{ category.id }}</td>
 						<td class="name"><button class="btn btn-success" disabled>{{ category.name }}</button></td>
 						<td class="description">{{ category.description }}</td>
-						<td><button class="btn btn-outline-info" data-toggle="modal" data-target="#category-modal" v-on:click="setModalCategory(categoryList[ind])">Edit Category</button></td>
+						<td><button class="btn btn-outline-info" data-toggle="modal" data-target="#category-modal" v-on:click="setModalCategory(category)">Edit Category</button></td>
 					</tr>
 				</tbody>
 			</table>
@@ -116,7 +118,7 @@
 				<thead>
 					<tr class="mb-0 pb-0">
 						<th colspan="4" class="center">
-							<button class="btn btn-warning">+ Add Service</button>
+							<button class="btn btn-warning" data-toggle="modal" data-target="#service-modal" v-on:click="newModalService()">+ Add Service</button>
 						</th>
 					</tr>
 					<tr class="table-primary">
@@ -126,7 +128,7 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr v-for="(service, ind) in serviceList" class="table-light">
+					<tr v-for="(service, ind) in services" class="table-light">
 						<td>{{ service.id }}</td>
 						<td class="name"><button class="btn btn-warning" disabled>{{ service.name }}</button></td>
 						<td class="description">{{ service.description }}</td>
@@ -153,7 +155,7 @@
 								<fieldset>
 									<legend><label for="">Name</label></legend>
 									<div class="form-group">
-										<input :value="modalResource.name" type="form-text" class="form-control" id="exampleInputEmail1" aria-describedby="resource-name" placeholder="Resource or Organization Name" autocomplete="off" required>
+										<input :value="modalResource.name" type="form-text" class="form-control" id="" aria-describedby="resource-name" placeholder="Resource or Organization Name" autocomplete="off" required>
 									</div>
 
 									<div class="row">
@@ -190,14 +192,41 @@
 
 							<div class="col col-6">
 								<fieldset class="form-group">
-									<legend><label for="exampleInputEmail1" class="text-success">Categories</label></legend>
+									<legend><label for="" class="text-success">Categories</label></legend>
 									<div class="form-group">
-										<input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Type name of Category">
+										<multiselect
+											:class="{invalid:true === null}"
+											v-model="selectedCategory" 
+											:options="categoryList"
+											placeholder="Select a category this resource belongs to"
+											multiple="false"
+											optionsLimit="6"
+											max="10"
+											class="category-tag">
+											<!-- <template slot="tag" slot-scope="{ option, remove }" class="multiselect__tags">
+												<span class="custom__tag">
+													<span>{{ option }}</span>
+													<span class="custom__remove" @click="remove(option)">❌</span>
+												</span>
+											</template> -->
+											<template slot="clear" slot-scope="props">
+												<div class="multiselect__clear" v-if="selectedCategory.length" @mousedown.prevent.stop="clearAll(props.search)"></div>
+											</template>
+										</multiselect>
 									</div>
 
-									<legend><label for="exampleInputEmail1" class="text-warning">Services Provided</label></legend>
+									<legend><label for="" class="text-warning">Services Provided</label></legend>
 									<div class="form-group">
-										<input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Type name of Service">
+										<multiselect
+											v-model="selectedService"
+											:options="serviceList"
+											placeholder="Select a service this resource provides"
+											multiple="true"
+											optionsLimit="6"
+											max="20"
+											name="serviceSelect"
+											class="service-tag">
+										</multiselect>
 									</div>
 									
 									<legend>Other Options</legend>
@@ -207,7 +236,7 @@
 									</div>
 									<hr>
 
-									<legend class="justify-content-between">Contact List <button class="btn btn-sm btn-outline-primary" style="float: right;" type="button" data-toggle="modal" data-target="#contact-modal">+ Add New Contact</button></legend>
+									<legend class="justify-content-between">Contact List <button class="btn btn-sm btn-outline-primary" style="float: right;" type="button" data-toggle="modal" data-target="#contact-modal" v-on:click="newModalContact()">+ Add New Contact</button></legend>
 									<div class="overflow-auto">
 										<table class="table table-hover">
 											<thead>
@@ -220,7 +249,7 @@
 											</thead>
 											<tbody>
 												<!-- Vue Component -->
-												<tr v-for="contact in modalResource.contactList" class="table-light">
+												<tr v-for="contact in modalResource.contactList" v-on:click="setModalContact(contact)" class="table-light" data-toggle="modal" data-target="#contact-modal">
 													<td class="no-wrap-col">{{ contact.name }}</td>
 													<td class="no-wrap-col">{{ contact.title }}</td>
 													<td class="no-wrap-col">{{ contact.phone }}</td>
@@ -267,7 +296,7 @@
 				</div>
 				<div class="modal-footer">
 					<button v-if="!newElement" class="btn btn-sm btn-outline-danger mr-auto" data-toggle="modal" data-target="#warning-modal" type="button">Delete Document</button>
-					<button type="button" class="btn btn-info">Update Document</button>
+					<button type="button" class="btn btn-info">{{ (newElement) ? 'Create Resource' : 'Update Document' }}</button>
 					<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
 				</div>
 			</div>
@@ -279,7 +308,8 @@
 		<div class="modal-dialog modal-dialog-centered" role="document">
 			<div class="modal-content" style="">
 				<div class="modal-header">
-					<h3 class="modal-title"><strong><span class="text-success">{{ modalCategory.name }}</span><span class="text-secondary"> - Edit Category</span></strong></h3>
+					<h3 v-if="!newElement" class="modal-title"><strong><span class="text-success">{{ modalCategory.name }}</span><span class="text-secondary"> - Edit Category</span></strong></h3>
+					<h3 v-else class="modal-title"><strong><span class="text-success">New Category</span></strong></h3>
 				</div>
 				<div class="modal-body">
 					<form class="container-fluid">
@@ -298,8 +328,8 @@
 				</div>
 
 				<div class="modal-footer">
-					<button type="button" class="btn btn-outline-danger mr-auto">Delete</button>
-					<button type="button" class="btn btn-info">Update</button>
+					<button v-if="!newElement" type="button" class="btn btn-outline-danger mr-auto">Delete</button>
+					<button type="button" class="btn btn-info">{{ (newElement) ? 'Create' : 'Update' }}</button>
 					<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
 				</div>
 			</div>
@@ -311,7 +341,9 @@
 		<div class="modal-dialog modal-dialog-centered" role="document">
 			<div class="modal-content" style="">
 				<div class="modal-header">
-					<h3 class="modal-title"><strong><span class="text-warning">{{ modalService.name }}</span><span class="text-secondary"> - Edit Service</span></strong></h3>
+					<h3 v-if="!newElement" class="modal-title"><strong><span class="text-warning">{{ modalService.name }}</span><span class="text-secondary"> - Edit Service</span></strong></h3>
+					<h3 v-else class="modal-title"><strong><span class="text-warning">New Category</span></strong></h3>
+
 				</div>
 				<div class="modal-body">
 					<form class="container-fluid">
@@ -330,8 +362,8 @@
 				</div>
 
 				<div class="modal-footer">
-					<button type="button" class="btn btn-outline-danger mr-auto">Delete</button>
-					<button type="button" class="btn btn-info">Update</button>
+					<button v-if="!newElement" type="button" class="btn btn-outline-danger mr-auto">Delete</button>
+					<button type="button" class="btn btn-info">{{ (newElement) ? 'Create' : 'Update' }}</button>
 					<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
 				</div>
 			</div>
@@ -339,43 +371,42 @@
 	</div>
 
 	<!-- 		Contact Modal    -->
-	<div id="contact-modal" class="modal fade">
+	<div id="contact-modal" class="modal fade" v-if="modalContact != null">
 		<div class="modal-dialog modal-dialog-centered" role="document">
 			<div class="modal-content" style="">
 				<div class="modal-header">
-					<h3 v-if="newElement || modalResource == null" class="modal-title"><strong>Add Contact</strong></h3>
-					<h3 v-else class="modal-title"><strong>Add Contact for <span class="text-info">{{ modalResource.name }}</span></strong></h3>
+					<h3 v-if="modalResource != null" class="modal-title"><strong>{{ (newContact) ? 'Add New Contact' : 'Edit Contact' }} for {{ (newElement) ? 'a ' : '' }}<span class="text-info">{{ (!newElement) ? modalResource.name : 'New Resource' }}</span></strong></h3>
 				</div>
 				<div class="modal-body">
 					<form class="container-fluid">
 						<fieldset>
 							<legend><label for="">First Name</label></legend>
 							<div class="form-group">
-								<input type="textarea" autocomplete="off" class="form-control" aria-describedby="first-name" placeholder="Contact First Name" required>
+								<input :value="modalContact.name" type="textarea" autocomplete="off" class="form-control" aria-describedby="first-name" placeholder="Contact First Name" required>
 							</div>
 							<legend><label for="">Last Name</label></legend>
 							<div class="form-group">
-								<input type="textarea" autocomplete="off" class="form-control" aria-describedby="last-name" placeholder="Contact Last Name" required>
+								<input :value="modalContact.name" type="textarea" autocomplete="off" class="form-control" aria-describedby="last-name" placeholder="Contact Last Name" required>
 							</div>
 							<legend><label for="">Title</label></legend>
 							<div class="form-group">
-								<input class="form-control" type="text-area" aria-describedby="title" placeholder="Contact Title/Position" rows="3"></input>
+								<input :value="modalContact.title" class="form-control" type="text-area" aria-describedby="title" placeholder="Contact Title/Position" rows="3"></input>
 							</div>
 							<legend><label for="">Phone</label></legend>
 							<div class="form-group">
-								<input class="form-control" type="text-area" aria-describedby="phone" placeholder="Contact Phone #" rows="3"></input>
+								<input :value="modalContact.phone" class="form-control" type="text-area" aria-describedby="phone" placeholder="Contact Phone #" rows="3"></input>
 							</div>
 							<legend><label for="">Email</label></legend>
 							<div class="form-group">
-								<input class="form-control" type="email" aria-describedby="email" placeholder="Contact Email Address" rows="3"></input>
+								<input :value="modalContact.email" class="form-control" type="email" aria-describedby="email" placeholder="Contact Email Address" rows="3"></input>
 							</div>
 						</fieldset>
 					</form>
 				</div>
 
 				<div class="modal-footer">
-					<button type="button" class="btn btn-outline-danger mr-auto">Delete</button>
-					<button type="button" class="btn btn-info">Update</button>
+					<button v-if="!newContact" type="button" class="btn btn-outline-danger mr-auto">Remove</button>
+					<button type="button" class="btn btn-info">{{ (newContact) ? 'Add' : 'Update' }}</button>
 					<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
 				</div>
 			</div>
@@ -384,14 +415,14 @@
 
 	<div id="warning-modal" class="modal fade">
 		<div class="modal-dialog modal-dialog-centered" style="max-width: 20rem;">
-				<div class="modal-content bg-danger">
-					<div class="modal-body">
-						<h3>Warning</h3>
-						<h5>Are you sure you want to delete this? This action cannot be undone and all data will be lost.</h5>
-						<button class="btn btn-outline-primary" type="button">Delete</button>
-						<button class="btn btn-secondary" type="button" data-dismiss="modal" style="float: right;">Cancel</button>
-					</div>
+			<div class="modal-content bg-danger">
+				<div class="modal-body">
+					<h3>Warning</h3>
+					<h5>Are you sure you want to delete this? This action cannot be undone and all data will be lost.</h5>
+					<button class="btn btn-outline-primary" type="button">Delete</button>
+					<button class="btn btn-secondary" type="button" data-dismiss="modal" style="float: right;">Cancel</button>
 				</div>
+			</div>
 		</div>
 	</div>
 </div>

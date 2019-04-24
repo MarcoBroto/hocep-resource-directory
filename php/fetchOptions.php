@@ -34,6 +34,7 @@
         //  Dummy Response
         $response = [
             'response' => true,
+            'options' => $_GET['options'],
             'resources' => [
                 0 => 'Homeless Shelter of El Paso',
                 1 => 'Shelter Place of El Paso',

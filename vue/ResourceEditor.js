@@ -5,6 +5,7 @@ import { Resource } from '../js/Resource.js';
 import { Category } from '../js/Category.js';
 import { Service } from '../js/Service.js';
 import { Contact } from '../js/Contact.js';
+import { fetchOptions } from '../js/fetchMultiselectOptions.js';
 import Multiselect from 'vue-multiselect';
 
 // Dummy Table Data
@@ -47,19 +48,15 @@ let rlist = [
 ];
 rlist[2].lastUpdate.setFullYear(2000);
 
-let userId = new Vue({
-	el: '#user-id',
-	data: {
-		user: 'mrsoto3',
-	}
-})
 
 let editorApp = new Vue({
 	el: '#resource-editor',
 	data: {
-		resourceList: rlist,
-		categoryList: clist,
-		serviceList: slist,
+		resources: rlist,
+		categories: clist,
+		services: slist,
+		categoryList: [],
+		serviceList: [],
 		modalResource: null,
 		modalCategory: null,
 		modalService: null,
@@ -68,6 +65,12 @@ let editorApp = new Vue({
 		categoryInd: null,
 		serviceInd: null,
 		newElement: false,
+		newContact: false,
+		selectedCategory: [],
+		selectedService: [],
+	},
+	components: {
+		Multiselect
 	},
 	methods: {
 		formatDate(resource) {
@@ -87,7 +90,7 @@ let editorApp = new Vue({
 			this.modalService = new Service();
 		},
 		newModalContact() {
-			this.newElement = true;
+			this.newContact= true;
 			this.modalContact = new Contact();
 		},
 		setModalResource(resource) {
@@ -103,7 +106,7 @@ let editorApp = new Vue({
 			this.modalService = service;
 		},
 		setModalContact(contact) {
-			this.newElement = false;
+			this.newContact = false;
 			this.modalContact = contact;
 		},
 		isUpdated(date) {
@@ -115,3 +118,5 @@ let editorApp = new Vue({
 	},
 })
 
+fetchOptions('category', editorApp, 'categoryList');
+fetchOptions('service', editorApp, 'serviceList');

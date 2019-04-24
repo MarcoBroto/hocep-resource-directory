@@ -26,7 +26,7 @@
 <body>
 
 <div id="resource-table-app">
-	<nav class="navbar navbar-expand-lg navbar-dark bg-primary mt-0 mb-4">
+	<nav class="navbar navbar-expand-lg bg-primary mt-0 mb-4">
 		<a class="navbar-brand" href="/"><img src="../assets/logo.png"></a>
 	</nav>
 
@@ -35,50 +35,65 @@
 			<div class="container center my-3" style="width: 80vw;">
 				<h5>Search by Name</h5>
 				<div class="row mb-4 bg-secondary px-1 py-1 rounded">
-					<multiselect v-model="selectedResource" :options="resourceNameList" multiple="false" searchable="true" close-on-select="false" show-labels="true" placeholder="Search for a Resource or Organization by Name"></multiselect>
+					<multiselect
+						v-model="selectedResource"
+						:options="resourceNameList"
+						:labelmultiple="false"
+						searchable="true"
+						close-on-select="false"
+						show-labels="true"
+						placeholder="Search for a Resource or Organization by Name"
+						class="resource-tag">
+					</multiselect>
 				</div>
 				<h6>Or</h6>
 				<h5>Filter by Criteria</h5>
 				<div class="row mt-4">
 					<div class="col col-4 pr-2 pl-0 py-0 rounded">
+						<label>Category</label>
 						<multiselect
 							v-model="selectedCategory" 
-		    			:options="categoryList"
-		    			multiple="true"
-		    			placeholder="Filter by Category"
-		    			optionsLimit="4"
-		    			max="5">
-		    		</multiselect>
-		    	</div>
-		    	<div class="col col-4 rounded">
-		    		<multiselect
+							:options="categoryList"
+							multiple="true"
+							placeholder="Filter by Category"
+							optionsLimit="6"
+							max="5"
+							class="category-tag">
+						</multiselect>
+					</div>
+					<div class="col col-4 rounded">
+						<label>Service</label>
+						<multiselect
 							v-model="selectedService" 
-		    			:options="serviceList"
-		    			multiple="true"
-		    			placeholder="Filter by Services Offered"
-		    			optionsLimit="4"
-		    			max="5">
-		    		</multiselect>
-		    	</div>
-		    	<div class="col col-4 pl-2 pr-0 py-0 rounded">
+							:options="serviceList"
+							multiple="true"
+							placeholder="Filter by Services Offered"
+							optionsLimit="6"
+							max="5"
+							class="service-tag">
+						</multiselect>
+					</div>
+					<div class="col col-4 pl-2 pr-0 py-0 rounded">
+						<label>Zipcode</label>
 						<multiselect
 							v-model="selectedZipcode" 
-		    			:options="zipcodeList"
-		    			multiple="true"
-		    			placeholder="Filter by Zipcode"
-		    			optionsLimit="4"
-		    			max="5">
-		    		</multiselect>
-		    	</div>
+							:options="zipcodeList"
+							multiple="true"
+							placeholder="Filter by Zipcode"
+							optionsLimit="6"
+							max="5"
+							class="zipcode-tag">
+						</multiselect>
+					</div>
 				</div>
 				<div class="row">
 					<div class="col-12 custom-control custom-checkbox" style="zoom: 0;">
-      				<input type="checkbox" class="custom-control-input" id="insuranceCheck" style="">
-      				<label class="custom-control-label" for="insuranceCheck" style="">Requires Insurance</label>
-      			</div>
+					<input type="checkbox" class="custom-control-input" id="insuranceCheck" style="">
+					<label class="custom-control-label" for="insuranceCheck" style="">Requires Insurance</label>
+				</div>
 				</div>
 			</div>
-			<button v-on:click="welcome = false" class="btn btn-lg btn-info">Search</button>
+			<button v-on:click="welcome = false" class="btn btn-lg btn-info"><img src="../assets/baseline-search-24px.svg">Search</button>
 	</div>
 
 	<hr>

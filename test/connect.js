@@ -22,4 +22,3 @@ function sendRequest_post(url, params={}, callback) { // Query database for Reso
 }
 
 function handleErrors() { }
-function parseJSON(json) { }

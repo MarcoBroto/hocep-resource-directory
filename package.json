@@ -5,8 +5,9 @@
   "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build-prod": "webpack js/main.js -p",
-    "build-dev": "webpack js/main.js"
+    "build": "webpack --config webpack.config.js",
+    "build-prod": "webpack --config webpack.config.js js/main.js -p",
+    "build-dev": "webpack --config webpack.config.js js/main.js"
   },
   "repository": {
     "type": "git",
@@ -26,6 +27,14 @@
     "test": "test"
   },
   "dependencies": {
+    "ajax": "0.0.4",
+    "ajax-request": "^1.2.3",
+    "file-system": "^2.2.2",
+    "forever-agent": "^0.6.1",
+    "fs": "0.0.1-security",
+    "jquery": "^3.4.0",
+    "tunnel-agent": "^0.6.0",
+    "utils-extend": "^1.0.8",
     "vue-multiselect": "^2.1.4"
   }
 }

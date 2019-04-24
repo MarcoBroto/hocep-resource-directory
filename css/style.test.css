@@ -42,3 +42,18 @@ td.phone-col {
 	min-width: 11vw;
 	max-width: 11vw;
 }
+
+.resource-tag .multiselect__tag {background:rgb(58,153,216)}
+.resource-tag .multiselect__tag-icon:hover{background:#708BAE}
+.resource-tag .multiselect__tag-icon:after{color:white}
+.resource-tag .multiselect__option--highlight{background:rgb(58,153,216)}
+
+.service-tag .multiselect__tag {background:rgb(241,155,44)}
+.service-tag .multiselect__tag-icon:hover{background:#D68D35}
+.service-tag .multiselect__tag-icon:after{color:dimgray}
+.service-tag .multiselect__option--highlight{background:rgb(241,155,44)}
+
+.zipcode-tag .multiselect__tag {background:rgb(149,165,166)}
+.zipcode-tag .multiselect__tag-icon:hover{background:rgb(44,62,90)}
+.zipcode-tag .multiselect__tag-icon:after{color:white}
+.zipcode-tag .multiselect__option--highlight{background:rgb(149,165,166)}
