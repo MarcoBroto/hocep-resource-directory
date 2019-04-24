@@ -1,7 +1,6 @@
-# HOCEP-Resource-Directory-Project
-Resource Directory Website for the Oppurtunity Center of El Paso.
+# Oppurtunity Center of El Paso Resource Directory
 
-Easiest way to run demo is to use PHP Storm's Built In Web Server.
+The easiest way to run demo and/or test is to use PHP Storm's Built In Web Server.
 The site is structured using webpack for some files. The project will be structured and minified once it is completed.
 
 ## Steps to running demo
@@ -30,3 +29,13 @@ npm run build-dev
 ## Merging to the 'master' branch
 1. All branches must be pull requested before attempting to merge.
 2. Code must be reviewed by at least one of the contributors including the repository owner before accepting the request.
+
+****************************
+#### Database Host
+```
+ilinkserver.cs.utep.edu
+```
+#### Website Host
+```
+cssrvlab01.utep.edu:21
+```
