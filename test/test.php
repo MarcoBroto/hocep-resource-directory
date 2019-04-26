@@ -97,7 +97,10 @@
 	</div>
 
 	<hr>
-	<div v-if="welcome" class="container bg-light center py-4"><h1>Welcome to the El Paso Resource Directory for People Experiencing Homelessness</h1><br><h2>This resource directory is designed to be an ever-evolving guide of services available to people experiencing homelessness<br> in El Paso, Texas. The main goal of the directory is to expand the range of referral services in our community by facilitating interagency collaboration. Feel free to download a copy of this directory for your own records. We appreciate your continued commitment to providing those facing homelessness with the best, culturally competent care.<br><br>DISCLAIMER: Due to the ever-changing nature of programs, organizations, and agencies, no guarantee is given that all information is up-to-date and accurate. The directory is meant to be a guide, so contacting the agencies prior to referral is recommended.</h2></div>
+	<div v-if="welcome" class="container bg-light center py-4">
+		<h2>Welcome to the El Paso Resource Directory for People Experiencing Homelessness</h2><br>
+		<h3 style="text-align: left; padding: 1rem 1rem 1rem 1rem;">&nbsp&nbsp&nbsp&nbsp&nbsp&nbspThis resource directory is designed to be an ever-evolving guide of services available to people experiencing homelessness in El Paso, Texas. The main goal of the directory is to expand the range of referral services in our community by facilitating interagency collaboration. Feel free to download a copy of this directory for your own records. We appreciate your continued commitment to providing those facing homelessness with the best, culturally competent care.<br><br>DISCLAIMER: Due to the ever-changing nature of programs, organizations, and agencies, no guarantee is given that all information is up-to-date and accurate. The directory is meant to be a guide, so contacting the agencies prior to referral is recommended.</h3>
+	</div>
 	<div v-else class="container-fluid border-success rounded" style="width: 100%;">
 		<h2 class="center">Results</h2>
 		<!-- Vue Component -->
