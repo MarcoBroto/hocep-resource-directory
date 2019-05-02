@@ -14,8 +14,8 @@
         $login_session = $row['Username'];
 
         if(!isset($_SESSION['login_user'])){
-            header("location: index.php");
+            header("location: ../edit/index.php");
         }
     } else {
-        header("location:login.php");
+        header("location:../login.php");
     }

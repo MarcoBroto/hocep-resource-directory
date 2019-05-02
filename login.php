@@ -1,5 +1,5 @@
 <?php
-    include("config.php");
+    include("php/config.php");
 
     session_start();
 
@@ -24,7 +24,7 @@
             if ($password == $row['Password']) {
                 $_SESSION['login_user'] = $row['Username'];
                 $_SESSION['login_id'] = $row['Admin_id'];
-                header("location: index.php");
+                header("location: edit/index.php");
             } else {
                 $error = "Invalid password.";
             }
@@ -48,7 +48,7 @@
 	<meta name="robots" content="all,follow">
 
 	<!-- Bootstrap with Flatly Theme import -->
-	<link href="../bootstrap/flatly.bootstrap.min.css" rel="stylesheet">
+	<link href="bootstrap/flatly.bootstrap.min.css" rel="stylesheet">
 	<!-- Page Stylesheet -->
 	<!-- <link href="css/style.login.css" rel="stylesheet"> -->
 
@@ -101,7 +101,7 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/vue"></script>
-<script src="../vue/LoginVue.js" type="text/javascript"></script>
+<script src="vue/LoginVue.js" type="text/javascript"></script>
 
 </body>
 </html>

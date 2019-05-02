@@ -1,5 +1,5 @@
 <?php
-    include('session.php');
+    include('../php/session.php');
     session_start();
 
     echo("(DEBUG) Username: " . $_SESSION['login_user'] . " id: " . $_SESSION['login_id']);
