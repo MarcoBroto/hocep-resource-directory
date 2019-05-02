@@ -61,22 +61,12 @@ CREATE OR REPLACE VIEW `updates_w_admin` AS (
 	JOIN admin ON updates.admin_id=admin.admin_id
 );
 
-CREATE OR REPLACE VIEW `belongs_to_category` AS (
-	SELECT belongs_to.resource_id, belongs_to.category_id, category.name FROM belongs_to
-	JOIN category ON belongs_to.category_id=category.category_id
-);
-
-CREATE OR REPLACE VIEW `provides_service` AS (
-	SELECT provides.resource_id, provides.service_id, service.name FROM provides
-	JOIN service ON provides.service_id=service.service_id
-);
-
 ##########################
 ### Data Display Views ###
 
 # View for Resource Editor app, must have all data associated with each row
 CREATE OR REPLACE VIEW `editor_rows` AS (
-	SELECT resource.resource_id, title AS name, categories, services, street_address, zipcode, phone, email, website, description, documents, requirements, insurance, opHours, contacts, admin_id, username AS lastUpdate_admin, updates_w_admin.date as lastUpdate FROM resource
+	SELECT resource.resource_id, title AS name, categories, services, street_address, zipcode, phone, email, website, description, documents, requirements, insurance, hoursOfOp AS opHours, contacts, admin_id, username AS lastUpdate_admin, updates_w_admin.date as lastUpdate FROM resource
 	JOIN category_grouped ON resource.resource_id=category_grouped.resource_id
 	JOIN service_grouped ON resource.resource_id=service_grouped.resource_id
 	JOIN contact_grouped ON resource.resource_id=contact_grouped.resource_id
@@ -86,7 +76,7 @@ CREATE OR REPLACE VIEW `editor_rows` AS (
 
 # View for Search Page app, must have all data associated with each row except for the username of the  admin who updated the document.
 CREATE OR REPLACE VIEW `search_rows` AS (
-	SELECT resource.resource_id, title AS name, categories, services, street_address, zipcode, phone, email, website, description, documents, requirements, insurance, opHours, contacts, updates.date AS lastUpdate FROM resource
+	SELECT resource.resource_id, title AS name, categories, services, street_address, zipcode, phone, email, website, description, documents, requirements, insurance, hoursOfOp AS opHours, contacts, updates.date AS lastUpdate FROM resource
 	JOIN category_grouped ON resource.resource_id=category_grouped.resource_id
 	JOIN service_grouped ON resource.resource_id=service_grouped.resource_id
 	JOIN contact_grouped ON resource.resource_id=contact_grouped.resource_id
