@@ -1,5 +1,5 @@
 
-export class Resource {
+export default class Resource {
 	constructor(resource_id, resource_name, street, zipcode, 
 			resource_phone, resource_email, resource_website, resource_descrip,
 			resource_requirements, resource_documents, insurance_required, 

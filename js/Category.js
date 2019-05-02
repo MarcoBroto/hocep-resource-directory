@@ -1,5 +1,5 @@
 
-export class Category {
+export default class Category {
 	constructor(category_id, category_name, category_descrip) {
 		this.id = category_id;
 		this.name = category_name;
