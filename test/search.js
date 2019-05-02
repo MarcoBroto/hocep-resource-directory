@@ -1,4 +1,5 @@
 
+categories = "0,1,2";
 services = null;
 resource = "1";
 
