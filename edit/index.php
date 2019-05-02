@@ -23,6 +23,7 @@
 
 	<!-- VueJS import -->
 	<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+	<script src="https://unpkg.com/vue-multiselect@2.1.0"></script>
 </head>
 
 <body>
@@ -431,10 +432,7 @@
 	</div>
 </div>
 
-
-<script src="https://cdn.jsdelivr.net/npm/vue"></script>
-<script src="dist/main.js" type="text/javascript"></script>
-<!-- <script src="dist/bundle.edit.min.js"></script> -->
+<script src="../dist/bundle.edit.min.js"></script>
 
 </body>
 </html>

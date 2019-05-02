@@ -20,9 +20,9 @@ module.exports = {
 		path: path.resolve(__dirname, 'dist'),
 		filename: 'bundle.[name].min.js',
 	},
-	optimization: {
-		splitChunks: {
-      		chunks: 'all',
-    	}
-	},
+	// optimization: {
+	// 	splitChunks: {
+ //      		chunks: 'all',
+ //    	}
+	// },
 };

@@ -1,12 +1,12 @@
 
 Vue.config.devtools = true; // Vue chrome debugger line, remove in deployment
 
-import { Resource } from '../js/Resource.js';
-import { Category } from '../js/Category.js';
-import { Service } from '../js/Service.js';
-import { Contact } from '../js/Contact.js';
-import { fetchOptions } from '../js/fetchMultiselectOptions.js';
 import Multiselect from 'vue-multiselect';
+import Resource from '../js/Resource.js';
+import Category from '../js/Category.js';
+import Service from '../js/Service.js';
+import Contact from '../js/Contact.js';
+import { fetchOptionsList } from '../js/fetchMultiselectOptions.js';
 
 // Dummy Table Data
 var contact1 = new Contact(1, 'Michael Hawk', 'The Dude', '(915) 253-4321', 'micawk@icloud.com');
@@ -70,7 +70,7 @@ let editorApp = new Vue({
 		selectedService: [],
 	},
 	components: {
-		Multiselect
+		Multiselect: window.VueMultiselect.default,
 	},
 	methods: {
 		formatDate(resource) {
@@ -78,34 +78,50 @@ let editorApp = new Vue({
 			return `${date.getMonth()+1}/${date.getDate()}/${date.getFullYear()}`;
 		},
 		newModalResource() {
+			this.selectedCategory = [];
+			this.selectedService = [];
 			this.newElement = true;
 			this.modalResource = new Resource();
 		},
 		newModalCategory() {
+			this.selectedCategory = [];
+			this.selectedService = [];
 			this.newElement = true;
 			this.modalCategory = new Category();
 		},
 		newModalService() {
+			this.selectedCategory = [];
+			this.selectedService = [];
 			this.newElement = true;
 			this.modalService = new Service();
 		},
 		newModalContact() {
+			this.selectedCategory = [];
+			this.selectedService = [];
 			this.newContact= true;
 			this.modalContact = new Contact();
 		},
 		setModalResource(resource) {
+			this.selectedCategory = [];
+			this.selectedService = [];
 			this.newElement = false;
 			this.modalResource = resource;
 		},
 		setModalCategory(category) {
+			this.selectedCategory = [];
+			this.selectedService = [];
 			this.newElement = false;
 			this.modalCategory = category;
 		},
 		setModalService(service) {
+			this.selectedCategory = [];
+			this.selectedService = [];
 			this.newElement = false;
 			this.modalService = service;
 		},
 		setModalContact(contact) {
+			this.selectedCategory = [];
+			this.selectedService = [];
 			this.newContact = false;
 			this.modalContact = contact;
 		},
@@ -118,5 +134,5 @@ let editorApp = new Vue({
 	},
 })
 
-fetchOptions('category', editorApp, 'categorySelectList');
-fetchOptions('service', editorApp, 'serviceSelectList');
+fetchOptionsList('category', editorApp, 'categorySelectList');
+fetchOptionsList('service', editorApp, 'serviceSelectList');

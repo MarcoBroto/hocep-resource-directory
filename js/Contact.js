@@ -1,5 +1,5 @@
 
-export class Contact {
+export default class Contact {
 	constructor(contact_id, name, title, phone_num, email) {
 		this.id = contact_id;
 		this.name = name;

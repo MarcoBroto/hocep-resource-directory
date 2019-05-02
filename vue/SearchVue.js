@@ -1,13 +1,13 @@
 
+Vue.config.devtools = true; // Vue chrome debugger line, remove in deployment
+
 import Multiselect from 'vue-multiselect';
-import { Resource } from '../js/Resource.js';
-import { Category } from '../js/Category.js';
-import { Service } from '../js/Service.js';
-import { Contact } from '../js/Contact.js';
+import Resource from '../js/Resource.js';
+import Category from '../js/Category.js';
+import Service from '../js/Service.js';
+import Contact from '../js/Contact.js';
 import { sendSearchRequest } from '../js/search.js';
 import { fetchOptionsList } from '../js/fetchMultiselectOptions.js';
-
-Vue.config.devtools = true; // Vue chrome debugger line, remove in deployment
 
 // Dummy Data (delete when connected to database)
 var contact1 = new Contact(1, 'Michael Hawk', 'The Dude', '(915) 253-4321', 'micawk@icloud.com');
@@ -42,7 +42,7 @@ rlist[2].lastUpdate.setFullYear(2000);
 let app = new Vue({
 	el: '#resource-table-app',
 	components: {
-		Multiselect, ResourceView
+		Multiselect: window.VueMultiselect.default,
 	},
 	data: {
 		welcome: true,
@@ -112,9 +112,8 @@ let app = new Vue({
 });
 
 
-fetchOptionList('resource', app, 'resourceSelectList');
-fetchOptionList('category', app, 'categorySelectList');
-fetchOptionList('service', app, 'serviceSelectList');
-fetchOptionList('zipcode', app, 'zipcodeSelectList');
+fetchOptionsList('resource', app, 'resourceSelectList');
+fetchOptionsList('category', app, 'categorySelectList');
+fetchOptionsList('service', app, 'serviceSelectList');
+fetchOptionsList('zipcode', app, 'zipcodeSelectList');
 
-console.log('TESTINGGGG');
