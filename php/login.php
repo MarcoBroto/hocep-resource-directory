@@ -1,3 +1,42 @@
+<?php
+    include("config.php");
+
+    session_start();
+
+    if ($db->connect_error) {
+        die('Connection Error (' . $db->connect_errno . ') ' . $db->connect_error);
+    }
+
+    if($_SERVER["REQUEST_METHOD"] == "POST") {
+
+        $username = mysqli_real_escape_string($db, $_POST['username']);
+        $password = mysqli_real_escape_string($db, $_POST['password']);
+
+        //Building the query
+        $stmt = $db -> prepare("SELECT * FROM Admin WHERE Username = ?");
+        $stmt -> bind_param("s", $username);
+        $stmt -> execute();
+        $result = $stmt -> get_result();
+
+        $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
+
+        if (count($row) > 0) {
+            if ($password == $row['Password']) {
+                $_SESSION['login_user'] = $row['Username'];
+                $_SESSION['login_id'] = $row['Admin_id'];
+                header("location: index.php");
+            } else {
+                $error = "Invalid password.";
+            }
+        } else {
+            $error = "Invalid username or password.";
+        }
+        $stmt->free_result();
+        $stmt->close();
+    }
+?>
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,7 +48,7 @@
 	<meta name="robots" content="all,follow">
 
 	<!-- Bootstrap with Flatly Theme import -->
-	<link href="bootstrap/flatly.bootstrap.min.css" rel="stylesheet">
+	<link href="../bootstrap/flatly.bootstrap.min.css" rel="stylesheet">
 	<!-- Page Stylesheet -->
 	<!-- <link href="css/style.login.css" rel="stylesheet"> -->
 
@@ -37,7 +76,8 @@
 	</div>
 	<hr/>
 	<div class="container" style="width: 45vw;">
-		<form>
+        <p style="color:#ff0000"><?php echo $error; ?></p>
+        <form id="login-form" method="post" action="login.php">
 			<fieldset>
 				<legend><label>Username</label></legend>
 				<input v-if="failed" type="form-text" class="form-control form-control-lg is-invalid" name="username" aria-describedby="username" required>
@@ -49,13 +89,13 @@
 				<input v-else type="password" class="form-control form-control-lg" name="password" aria-describedby="password" required>
 				<small id="passwordHelp" class="form-text text-muted"></small>
 			</fieldset>
+            <div class="mt-3" style="text-align: center;">
+                <button class="btn btn-lg btn-primary" style="width: 7.5rem;">Login</button>
+            </div>
 		</form>
 		<div v-if="failed" class="alert alert-dismissible alert-danger mt-3">
 			<button type="button" class="close" data-dismiss="alert">&times;</button>
 			<strong>Invalid Username or Password.</strong> Change a few things up and try submitting again.
-		</div>
-		<div class="mt-3" style="text-align: center;">
-			<button class="btn btn-lg btn-primary" style="width: 7.5rem;">Login</button>
 		</div>
 	</div>
 </div>
