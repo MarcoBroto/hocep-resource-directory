@@ -2,11 +2,11 @@
 <html>
 <head>
 	<!-- Bootstrap Import -->
-	<link href="../bootstrap/flatly.bootstrap.min.css" rel="stylesheet">
+	<link href="bootstrap/flatly.bootstrap.min.css" rel="stylesheet">
 	<!-- Used for multi-select dropdown menu -->
 	<link rel="stylesheet" href="https://unpkg.com/vue-multiselect@2.1.0/dist/vue-multiselect.min.css">
 	<!-- Page Stylesheet -->
-	<link href="../css/style.test.css" rel="stylesheet">
+	<link href="css/style.test.css" rel="stylesheet">
 
 	<!-- Bootstrap JS imports -->
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
@@ -185,18 +185,18 @@
 	</footer>
 </div>
 
-<script src="Contact.js"></script>
-<script src="Category.js"></script>
-<script src="Service.js"></script>
-<script src="Resource.js"></script>
-<script src="connect.js"></script>
-<script src="search.js"></script>
+<script src="test/Contact.js"></script>
+<script src="test/Category.js"></script>
+<script src="test/Service.js"></script>
+<script src="test/Resource.js"></script>
+<script src="test/connect.js"></script>
+<script src="test/search.js"></script>
 
 <script src="https://cdn.jsdelivr.net/npm/vue"></script>
 <script src="https://unpkg.com/vue-multiselect@2.1.0"></script>
-<script src="../vue/ResourceView.js"></script>
-<script src="../vue/testVue.js"></script>
-<script src="fetchMultiselectOptions.js"></script>
+<script src="vue/ResourceView.js"></script>
+<script src="vue/testVue.js"></script>
+<script src="test/fetchMultiselectOptions.js"></script>
 
 </body>
 </html>
