@@ -55,8 +55,8 @@ let editorApp = new Vue({
 		resources: rlist,
 		categories: clist,
 		services: slist,
-		categoryList: [],
-		serviceList: [],
+		categorySelectList: [],
+		serviceSelectList: [],
 		modalResource: null,
 		modalCategory: null,
 		modalService: null,
@@ -118,5 +118,5 @@ let editorApp = new Vue({
 	},
 })
 
-fetchOptions('category', editorApp, 'categoryList');
-fetchOptions('service', editorApp, 'serviceList');
+fetchOptions('category', editorApp, 'categorySelectList');
+fetchOptions('service', editorApp, 'serviceSelectList');

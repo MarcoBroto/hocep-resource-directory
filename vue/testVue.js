@@ -1,6 +1,7 @@
 
 Vue.config.devtools = true; // Vue chrome debugger line, remove in deployment
 
+// Dummy Data (delete when connected to database)
 var contact1 = new Contact(1, 'Michael Hawk', 'The Dude', '(915) 253-4321', 'micawk@icloud.com');
 var contact2 = new Contact(2, 'Michael Hunt', 'The Man', '(915) 253-2331', 'mikunt@gmail.com');
 var contact3 = new Contact(3, 'Janet Hanky', 'Jan the Man', '(915) 431-4321', 'janisaman@outlook.com');
@@ -28,6 +29,8 @@ let rlist = [
 rlist[2].lastUpdate.setFullYear(2000);
 
 
+
+
 let app = new Vue({
 	el: '#resource-table-app',
 	components: {
@@ -35,14 +38,68 @@ let app = new Vue({
 	},
 	data: {
 		welcome: true,
-		resourceNameList: [],
-		categoryList: [],
-		serviceList: [],
-		zipcodeList: [],
-		selectedResource: '',
+		isLoading: false,
+		resourceSelectList: [],
+		categorySelectList: [],
+		serviceSelectList: [],
+		zipcodeSelectList: [],
+		selectedResource: [],
 		selectedService: [],
 		selectedCategory: [],
 		selectedZipcode: [],
+		insuranceRequired: false,
 		resources: rlist,
 	},
+	methods: {
+		csv_tagId(selectedArray) {
+			var id_csv_string = selectedArray.map(function(elem){ return elem.id; }).join();
+			return id_csv_string;
+		},
+		csv_zipcode(selectedArray) {
+			var id_csv_string = selectedArray.join();
+			return id_csv_string;
+		},
+		getSelectorParams() {
+			var params = {};
+			if (this.resourceIsSelected) {
+				params['resource'] = this.csv_tagId(this.selectedResource);
+			}
+			else {
+				if (this.selectedCategory.length)
+					params['category'] = this.csv_tagId(this.selectedCategory);
+				if (this.selectedService.length)
+					params['service'] = this.csv_tagId(this.selectedService);
+				if (this.selectedService.length)
+					params['zipcode'] = this.csv_zipcode(this.selectedZipcode);
+			}
+			params['insurance'] = this.insuranceRequired;
+			return params;
+		},
+		search() {
+			console.log(this.serviceSelectList);
+			this.welcome = false;
+			this.isLoading = true;
+			// console.log('resources:');
+			// console.log(this.selectedResource);
+			// console.log('categories:');
+			// console.log(this.selectedCategory);
+			// console.log('services:');
+			// console.log(this.selectedService);
+			// console.log('zipcodes:');
+			// console.log(this.selectedZipcode);
+			// console.log('insuranceRequired:');
+			// console.log(this.insuranceRequired);
+			// console.log('resourceIsSelected:');
+			// console.log(this.resourceIsSelected);
+			// this.getSelectorParams();
+			let params = this.getSelectorParams();
+			sendSearchRequest(params);
+			this.isLoading = false; // <---Attach this line to the request callback and delete this line
+		}
+	},
+	computed: {
+		resourceIsSelected() {
+			return this.selectedResource.length;
+		}
+	}
 });

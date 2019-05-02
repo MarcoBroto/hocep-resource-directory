@@ -197,11 +197,13 @@
 										<multiselect
 											:class="{invalid:true === null}"
 											v-model="selectedCategory" 
-											:options="categoryList"
+											:options="categorySelectList"
 											placeholder="Select a category this resource belongs to"
 											multiple="false"
 											optionsLimit="6"
 											max="10"
+											label="name"
+											track-by="name"
 											class="category-tag">
 											<!-- <template slot="tag" slot-scope="{ option, remove }" class="multiselect__tags">
 												<span class="custom__tag">
@@ -219,12 +221,14 @@
 									<div class="form-group">
 										<multiselect
 											v-model="selectedService"
-											:options="serviceList"
+											:options="serviceSelectList"
 											placeholder="Select a service this resource provides"
 											multiple="true"
 											optionsLimit="6"
 											max="20"
 											name="serviceSelect"
+											label="name"
+											track-by="name"
 											class="service-tag">
 										</multiselect>
 									</div>

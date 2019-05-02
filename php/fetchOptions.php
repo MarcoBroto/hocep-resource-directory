@@ -36,22 +36,58 @@
             'response' => true,
             'options' => $_GET['options'],
             'resources' => [
-                0 => 'Homeless Shelter of El Paso',
-                1 => 'Shelter Place of El Paso',
-                2 => 'El Paso Dispensary',
-                3 => 'Opportunity Organization'
+                0 => [
+                    'name' => 'Homeless Shelter of El Paso',
+                    'id' => 0
+                ],
+                1 => [
+                    'name' => 'Shelter Place of El Paso',
+                    'id' => 1
+                ],
+                2 => [
+                    'name' => 'El Paso Dispensary',
+                    'id' => 2
+                ],
+                3 => [
+                    'name' => 'Opportunity Organization',
+                    'id' => 3
+                ]
             ],
             'categories' => [
-                0 => 'Mental Health',
-                1 => 'Health',
-                2 => 'Housing',
-                3 => 'Military'
+                0 => [
+                    'name' => 'Mental Health',
+                    'id' => 0
+                ],
+                1 => [
+                    'name' => 'Health',
+                    'id' => 1
+                ],
+                2 => [
+                    'name' => 'Housing',
+                    'id' => 2
+                ],
+                3 => [
+                    'name' => 'Military',
+                    'id' => 3
+                ]
             ],
             'services' => [
-                0 => 'Cleaning',
-                1 => 'Job Placement',
-                2 => 'Community Cleaning',
-                3 => 'Trash Handling'
+                0 => [
+                    'name' => 'Cleaning',
+                    'id' => 1
+                ],
+                1 => [
+                    'name' => 'Job Placement',
+                    'id' => 2
+                ],
+                2 => [
+                    'name' => 'Community Service',
+                    'id' => 3
+                ],
+                3 => [
+                    'name' => 'Environmental Service',
+                    'id' => 4
+                ],
             ],
             'zipcodes' => [
                 79932,

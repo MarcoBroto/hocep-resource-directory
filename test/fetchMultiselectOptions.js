@@ -5,7 +5,7 @@
  *	vueComponent <- Reference to the Vue component that holds the desired data field.
  *	dataField 	 <- Vue componenet data field that the values should be assigned to.
  */
-function fetchOptions(list, vueComponent, dataField) {
+function fetchOptionList(list, vueComponent, dataField) {
 	sendRequest_get('../php/fetchOptions.php', {options: list}, callback=function(response) {
 		let data = JSON.parse(response);
 		if (data.response) {
@@ -35,9 +35,11 @@ function fetchOptions(list, vueComponent, dataField) {
 	});
 }
 
-(function fetchMultiselectOptions() {
-	fetchOptions('resource', app, 'resourceNameList');
-	fetchOptions('category', app, 'categoryList');
-	fetchOptions('service', app, 'serviceList');
-	fetchOptions('zipcode', app, 'zipcodeList');
-})(); // Called on file load
+function fetchMultiselectOptions() {
+	fetchOptionList('resource', app, 'resourceSelectList');
+	fetchOptionList('category', app, 'categorySelectList');
+	fetchOptionList('service', app, 'serviceSelectList');
+	fetchOptionList('zipcode', app, 'zipcodeSelectList');
+}
+
+fetchMultiselectOptions(); // Called on file load
