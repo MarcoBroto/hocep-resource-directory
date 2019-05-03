@@ -146,7 +146,7 @@
 		<div class="modal-dialog modal-xl" role="document">
 			<div class="modal-content" style="">
 				<div class="modal-header">
-					<h3 v-if="!newElement" class="modal-title"><strong><span class="text-info">{{ modalResource.name }}</span><span class="text-secondary"> - Edit/Update Data</span></strong></h3>
+					<h3 v-if="!isNewElement" class="modal-title"><strong><span class="text-info">{{ modalResource.name }}</span><span class="text-secondary"> - Edit/Update Data</span></strong></h3>
 					<h3 v-else class="modal-title"><strong><span class="text-info">Create New Resource</span></strong></h3>
 				</div>
 				<div class="modal-body">
@@ -300,9 +300,9 @@
 					</form>
 				</div>
 				<div class="modal-footer">
-					<button v-if="!newElement" class="btn btn-sm btn-outline-danger mr-auto" data-toggle="modal" data-target="#warning-modal" type="button">Delete Document</button>
-					<button type="button" class="btn btn-info">{{ (newElement) ? 'Create Resource' : 'Update Document' }}</button>
-					<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+					<button v-if="!isNewElement" class="btn btn-sm btn-outline-danger mr-auto" data-toggle="modal" data-target="#warning-modal" type="button">Delete Document</button>
+					<button class="btn btn-info" type="button">{{ (isNewElement) ? 'Create Resource' : 'Update Document' }}</button>
+					<button class="btn btn-secondary" data-dismiss="modal" type="button">Cancel</button>
 				</div>
 			</div>
 		</div>
@@ -313,7 +313,7 @@
 		<div class="modal-dialog modal-dialog-centered" role="document">
 			<div class="modal-content" style="">
 				<div class="modal-header">
-					<h3 v-if="!newElement" class="modal-title"><strong><span class="text-success">{{ modalCategory.name }}</span><span class="text-secondary"> - Edit Category</span></strong></h3>
+					<h3 v-if="!isNewElement" class="modal-title"><strong><span class="text-success">{{ modalCategory.name }}</span><span class="text-secondary"> - Edit Category</span></strong></h3>
 					<h3 v-else class="modal-title"><strong><span class="text-success">New Category</span></strong></h3>
 				</div>
 				<div class="modal-body">
@@ -333,9 +333,9 @@
 				</div>
 
 				<div class="modal-footer">
-					<button v-if="!newElement" type="button" class="btn btn-outline-danger mr-auto">Delete</button>
-					<button type="button" class="btn btn-info">{{ (newElement) ? 'Create' : 'Update' }}</button>
-					<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+					<button v-if="!isNewElement" class="btn btn-outline-danger mr-auto" type="button">Delete</button>
+					<button class="btn btn-info" type="button">{{ (isNewElement) ? 'Create' : 'Update' }}</button>
+					<button class="btn btn-secondary" data-dismiss="modal" type="button">Cancel</button>
 				</div>
 			</div>
 		</div>
@@ -346,7 +346,7 @@
 		<div class="modal-dialog modal-dialog-centered" role="document">
 			<div class="modal-content" style="">
 				<div class="modal-header">
-					<h3 v-if="!newElement" class="modal-title"><strong><span class="text-warning">{{ modalService.name }}</span><span class="text-secondary"> - Edit Service</span></strong></h3>
+					<h3 v-if="!isNewElement" class="modal-title"><strong><span class="text-warning">{{ modalService.name }}</span><span class="text-secondary"> - Edit Service</span></strong></h3>
 					<h3 v-else class="modal-title"><strong><span class="text-warning">New Category</span></strong></h3>
 
 				</div>
@@ -367,9 +367,9 @@
 				</div>
 
 				<div class="modal-footer">
-					<button v-if="!newElement" type="button" class="btn btn-outline-danger mr-auto">Delete</button>
-					<button type="button" class="btn btn-info">{{ (newElement) ? 'Create' : 'Update' }}</button>
-					<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+					<button v-if="!isNewElement" class="btn btn-outline-danger mr-auto" type="button">Delete</button>
+					<button class="btn btn-info" type="button">{{ (isNewElement) ? 'Create' : 'Update' }}</button>
+					<button class="btn btn-secondary" data-dismiss="modal" type="button">Cancel</button>
 				</div>
 			</div>
 		</div>
@@ -380,7 +380,7 @@
 		<div class="modal-dialog modal-dialog-centered" role="document">
 			<div class="modal-content" style="">
 				<div class="modal-header">
-					<h3 v-if="modalResource != null" class="modal-title"><strong>{{ (newContact) ? 'Add New Contact' : 'Edit Contact' }} for {{ (newElement) ? 'a ' : '' }}<span class="text-info">{{ (!newElement) ? modalResource.name : 'New Resource' }}</span></strong></h3>
+					<h3 v-if="modalResource != null" class="modal-title"><strong>{{ (isNewContact) ? 'Add New Contact' : 'Edit Contact' }} for {{ (isNewElement) ? 'a ' : '' }}<span class="text-info">{{ (!isNewElement) ? modalResource.name : 'New Resource' }}</span></strong></h3>
 				</div>
 				<div class="modal-body">
 					<form class="container-fluid">
@@ -410,9 +410,9 @@
 				</div>
 
 				<div class="modal-footer">
-					<button v-if="!newContact" type="button" class="btn btn-outline-danger mr-auto">Remove</button>
-					<button type="button" class="btn btn-info">{{ (newContact) ? 'Add' : 'Update' }}</button>
-					<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+					<button v-if="!isNewContact" class="btn btn-outline-danger mr-auto" type="button">Remove</button>
+					<button class="btn btn-info" type="button">{{ (isNewContact) ? 'Add' : 'Update' }}</button>
+					<button class="btn btn-secondary" data-dismiss="modal" type="button">Cancel</button>
 				</div>
 			</div>
 		</div>
@@ -425,7 +425,7 @@
 					<h3>Warning</h3>
 					<h5>Are you sure you want to delete this? This action cannot be undone and all data will be lost.</h5>
 					<button class="btn btn-outline-primary" type="button">Delete</button>
-					<button class="btn btn-secondary" type="button" data-dismiss="modal" style="float: right;">Cancel</button>
+					<button class="btn btn-secondary" data-dismiss="modal" type="button" style="float: right;">Cancel</button>
 				</div>
 			</div>
 		</div>

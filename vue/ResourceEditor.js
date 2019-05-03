@@ -64,8 +64,8 @@ let editorApp = new Vue({
 		resourceInd: null,
 		categoryInd: null,
 		serviceInd: null,
-		newElement: false,
-		newContact: false,
+		isNewElement: false,
+		isNewContact: false,
 		selectedCategory: [],
 		selectedService: [],
 	},
@@ -80,49 +80,49 @@ let editorApp = new Vue({
 		newModalResource() {
 			this.selectedCategory = [];
 			this.selectedService = [];
-			this.newElement = true;
+			this.isNewElement = true;
 			this.modalResource = new Resource();
 		},
 		newModalCategory() {
 			this.selectedCategory = [];
 			this.selectedService = [];
-			this.newElement = true;
+			this.isNewElement = true;
 			this.modalCategory = new Category();
 		},
 		newModalService() {
 			this.selectedCategory = [];
 			this.selectedService = [];
-			this.newElement = true;
+			this.isNewElement = true;
 			this.modalService = new Service();
 		},
 		newModalContact() {
 			this.selectedCategory = [];
 			this.selectedService = [];
-			this.newContact= true;
+			this.isNewContact= true;
 			this.modalContact = new Contact();
 		},
 		setModalResource(resource) {
 			this.selectedCategory = [];
 			this.selectedService = [];
-			this.newElement = false;
+			this.isNewElement = false;
 			this.modalResource = resource;
 		},
 		setModalCategory(category) {
 			this.selectedCategory = [];
 			this.selectedService = [];
-			this.newElement = false;
+			this.isNewElement = false;
 			this.modalCategory = category;
 		},
 		setModalService(service) {
 			this.selectedCategory = [];
 			this.selectedService = [];
-			this.newElement = false;
+			this.isNewElement = false;
 			this.modalService = service;
 		},
 		setModalContact(contact) {
 			this.selectedCategory = [];
 			this.selectedService = [];
-			this.newContact = false;
+			this.isNewContact = false;
 			this.modalContact = contact;
 		},
 		isUpdated(date) {
