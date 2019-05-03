@@ -7,6 +7,8 @@ import Category from '../js/Category.js';
 import Service from '../js/Service.js';
 import Contact from '../js/Contact.js';
 import { fetchOptionsList } from '../js/fetchMultiselectOptions.js';
+// import * as Editor from '../js/editor.js';
+
 
 // Dummy Table Data
 var contact1 = new Contact(1, 'Michael Hawk', 'The Dude', '(915) 253-4321', 'micawk@icloud.com');
@@ -77,6 +79,12 @@ let editorApp = new Vue({
 			let date = resource.lastUpdate;
 			return `${date.getMonth()+1}/${date.getDate()}/${date.getFullYear()}`;
 		},
+		isUpdated(date) {
+			let today = new Date();
+			if (today.getFullYear() > date.getFullYear() || (today.getMonth()-date.getMonth()) > 6)
+				return false;
+			return true;
+		},
 		newModalResource() {
 			this.selectedCategory = [];
 			this.selectedService = [];
@@ -125,12 +133,47 @@ let editorApp = new Vue({
 			this.isNewContact = false;
 			this.modalContact = contact;
 		},
-		isUpdated(date) {
-			let today = new Date();
-			if (today.getFullYear() > date.getFullYear() || (today.getMonth()-date.getMonth()) > 6)
-				return false;
-			return true;
+		addNewContact() {
+			console.log('Pushing new contact');
 		},
+		removeSelectedContact(ind) {
+			console.log('Removing contact at ' + ind);
+		},
+		submit_createResource() {
+			this.modalResource.categories = this.selectedCategory;
+			this.modalResource.services = this.selectedService;
+
+			if (!this.modalResource || this.modalResource == null) {
+				console.log("Error: Add create resource failed\nReason: No resource selected");
+				return;
+			}
+			else if (!this.isNewElement && this.modalResource.id != null) {
+				this.submit_updateResource();
+				return;
+			}
+			console.log(`Creating resource`);
+			createResource(this.modalResource); // Send resource add request
+			this.modalResource = null;
+		},
+		submit_updateResource() {
+			if (!this.modalResource || this.modalResource == null) {
+				console.log("Error: Update resource failed\nReason: No resource selected");
+				return;
+			}
+			console.log(`Updating resource_id=${this.modalResource.id}`);
+			updateResource(this.modalResource.id, this.modalResource); // Send resource update request
+			this.modalResource = null;
+		},
+		submit_deleteResource() {
+			if (!this.modalResource || this.modalResource == null) {
+				console.log("Error: Delete resource failed\nReason: No resource selected");
+				return;
+			}
+			console.log(`Deleting resource_id=${this.modalResource.id}`);
+			deleteResource(this.modalResource.id); // Send resource delete request
+			this.isNewElement = true;
+			this.modalResource = null;
+		}
 	},
 })
 
