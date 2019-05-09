@@ -6,12 +6,9 @@
  * Time: 8:22 PM
  */
 
-$response = ['response' => false];
+include('config.php');
 
-$host = "ilinkserver.cs.utep";
-$user = "mrsoto3";
-$pass = "*utep2019!";
-$dbname = "spr19_team11";
+$response = ['response' => false];
 
 //error_reporting(E_ERROR); // Use to remove error echoing
 //$conn = new mysqli($host, $user, $pass, $dbname) or die("Connection failed: " . $GLOBALS['link']->connect_error);

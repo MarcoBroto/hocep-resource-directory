@@ -8,22 +8,26 @@ export function createResource(resource_data) {
 			return;
 		}
 		console.log(body);
-		if (body.response)
-			console.log('Added Resource Successfuly.');
+		if (body.response) {
+			console.log('Added Resource Successfully.');
+			// TODO: refresh edit page interface items
+		}
 		else
 			console.log('Failed to Create Resource.');
 	});
 }
 
-export function updateResource(resource_id, resource_data) {
-	request({url: '../php/updateResource.php', method: 'POST', data: {'id': resource_id, 'resource': resource_data}, json: true}, function(err, response, body) {
+export function updateResource(resource_data) {
+	request({url: '../php/updateResource.php', method: 'POST', data: {'resource': resource_data}, json: true}, function(err, response, body) {
 		if (err) {
 			console.log("UPDATE RESOURCE REQUEST ERROR");
 			return;
 		}
 		console.log(body);
-		if (body.response)
-			console.log('Updated Resource Successfuly.');
+		if (body.response) {
+			console.log('Updated Resource Successfully.');
+			// TODO: refresh edit page interface items
+		}
 		else
 			console.log('Failed to Update Resource.');
 	});
@@ -36,8 +40,10 @@ export function deleteResource(resource_id) {
 			return;
 		}
 		console.log(body);
-		if (body.response)
-			console.log('Deleted Resource Successfuly.');
+		if (body.response) {
+			console.log('Deleted Resource Successfully.');
+			// TODO: refresh edit page interface items
+		}
 		else
 			console.log('Failed to Delete Resource.');
 	});
@@ -55,8 +61,10 @@ export function createTag(tag_type, tag_data) {
 			return;
 		}
 		console.log(body);
-		if (body.response)
-			console.log('Added Tag Successfuly.');
+		if (body.response) {
+			console.log('Added Tag Successfully.');
+			// TODO: refresh edit page interface items
+		}
 		else
 			console.log('Failed to Create Tag.');
 	});
@@ -72,8 +80,10 @@ export function updateTag(tag_type, tag_id, tag_data) {
 			return;
 		}
 		console.log(body);
-		if (body.response)
-			console.log('Updated Tag Successfuly.');
+		if (body.response) {
+			console.log('Updated Tag Successfully.');
+			// TODO: refresh edit page interface items
+		}
 		else
 			console.log('Failed to Update Tag.');
 	});
@@ -89,8 +99,10 @@ export function deleteTag(tag_type, tag_id) {
 			return;
 		}
 		console.log(body);
-		if (body.response)
-			console.log('Deleted Tag Successfuly.');
+		if (body.response) {
+			console.log('Deleted Tag Successfully.');
+			// TODO: refresh edit page interface items
+		}
 		else
 			console.log('Failed to Delete Tag.');
 	});

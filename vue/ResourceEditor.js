@@ -7,13 +7,13 @@ import Category from '../js/Category.js';
 import Service from '../js/Service.js';
 import Contact from '../js/Contact.js';
 import { fetchOptionsList } from '../js/fetchMultiselectOptions.js';
-// import * as Editor from '../js/editor.js';
+import * as Editor from '../js/editor.js';
 
 
 // Dummy Table Data
-var contact1 = new Contact(1, 'Michael Hawk', 'The Dude', '(915) 253-4321', 'micawk@icloud.com');
-var contact2 = new Contact(2, 'Michael Hunt', 'The Man', '(915) 253-2331', 'mikunt@icloud.com');
-var contact3 = new Contact(3, 'Janet Hanky', 'Jan the Man', '(915) 431-4321', 'janisaman@icloud.com');
+var contact1 = new Contact(1, 'Michael', 'Hawk', 'The Dude', '(915) 253-4321', 'micawk@icloud.com');
+var contact2 = new Contact(2, 'Michael', 'Hunt', 'The Man', '(915) 253-2331', 'mikunt@icloud.com');
+var contact3 = new Contact(3, 'Janet', 'Hanky', 'Jan the Man', '(915) 431-4321', 'janisaman@icloud.com');
 let clist = [
 	new Category(1, 'Health', 'Resources pertaining to physical health.'),
 	new Category(2, 'Shelter', 'Resources that provide housing services or living accomodations'),
@@ -53,12 +53,21 @@ rlist[2].lastUpdate.setFullYear(2000);
 
 let editorApp = new Vue({
 	el: '#resource-editor',
+	components: {
+		Multiselect: window.VueMultiselect.default,
+	},
 	data: {
+		//
 		resources: rlist,
 		categories: clist,
 		services: slist,
+		//
 		categorySelectList: [],
 		serviceSelectList: [],
+		//
+		selectedCategory: [],
+		selectedService: [],
+		//
 		modalResource: null,
 		modalCategory: null,
 		modalService: null,
@@ -66,13 +75,10 @@ let editorApp = new Vue({
 		resourceInd: null,
 		categoryInd: null,
 		serviceInd: null,
+		contactInd: null,
+		//
 		isNewElement: false,
 		isNewContact: false,
-		selectedCategory: [],
-		selectedService: [],
-	},
-	components: {
-		Multiselect: window.VueMultiselect.default,
 	},
 	methods: {
 		formatDate(resource) {
@@ -92,52 +98,65 @@ let editorApp = new Vue({
 			this.modalResource = new Resource();
 		},
 		newModalCategory() {
-			this.selectedCategory = [];
-			this.selectedService = [];
 			this.isNewElement = true;
 			this.modalCategory = new Category();
 		},
 		newModalService() {
-			this.selectedCategory = [];
-			this.selectedService = [];
 			this.isNewElement = true;
 			this.modalService = new Service();
 		},
 		newModalContact() {
-			this.selectedCategory = [];
-			this.selectedService = [];
+			this.contactInd = null;
 			this.isNewContact= true;
 			this.modalContact = new Contact();
 		},
 		setModalResource(resource) {
+			// Set selected category and service
 			this.selectedCategory = [];
 			this.selectedService = [];
 			this.isNewElement = false;
-			this.modalResource = resource;
+			this.modalResource = this.copyResource(resource);
+			console.log(this.modalResource === resource);
 		},
 		setModalCategory(category) {
-			this.selectedCategory = [];
-			this.selectedService = [];
 			this.isNewElement = false;
 			this.modalCategory = category;
 		},
 		setModalService(service) {
-			this.selectedCategory = [];
-			this.selectedService = [];
 			this.isNewElement = false;
 			this.modalService = service;
 		},
-		setModalContact(contact) {
-			this.selectedCategory = [];
-			this.selectedService = [];
+		setModalContact(contact, ind) {
 			this.isNewContact = false;
 			this.modalContact = contact;
+			this.contactInd = ind;
 		},
-		addNewContact() {
+		resetModalResource() {
+			this.modalResource = null;
+		},
+		resetModalCategory() {
+			this.modalCategory = null;
+		},
+		resetModalService() {
+			this.modalService = null;
+		},
+		resetModalContact() {
+			this.modalContact = null;
+			this.contactInd = null;
+		},
+		addContact() {
 			console.log('Pushing new contact');
+			this.modalResource.contactList.push(this.modalContact);
 		},
-		removeSelectedContact(ind) {
+		updateContact(ind) {
+			console.log('Updating contact at ' + ind);
+		},
+		removeContact(ind) {
+			if (!ind || ind < 0 || !modalResource || ind > this.modalResource.contactList.length)
+				console.log('Error removing contact at ' + ind);
 			console.log('Removing contact at ' + ind);
+			delete this.modalResource.contactList[ind];
+			this.contactIndex = null;
 		},
 		submit_createResource() {
 			this.modalResource.categories = this.selectedCategory;
@@ -152,8 +171,10 @@ let editorApp = new Vue({
 				return;
 			}
 			console.log(`Creating resource`);
-			createResource(this.modalResource); // Send resource add request
+			Editor.createResource(this.modalResource); // Send resource add request
 			this.modalResource = null;
+			this.selectedCategory = [];
+			this.selectedService = [];
 		},
 		submit_updateResource() {
 			if (!this.modalResource || this.modalResource == null) {
@@ -161,20 +182,43 @@ let editorApp = new Vue({
 				return;
 			}
 			console.log(`Updating resource_id=${this.modalResource.id}`);
-			updateResource(this.modalResource.id, this.modalResource); // Send resource update request
+			Editor.updateResource(this.modalResource); // Send resource update request
 			this.modalResource = null;
+			this.selectedCategory = [];
+			this.selectedService = [];
 		},
 		submit_deleteResource() {
 			if (!this.modalResource || this.modalResource == null) {
 				console.log("Error: Delete resource failed\nReason: No resource selected");
 				return;
 			}
-			console.log(`Deleting resource_id=${this.modalResource.id}`);
-			deleteResource(this.modalResource.id); // Send resource delete request
+			Editor.deleteResource(this.modalResource.id); // Send resource delete request
 			this.isNewElement = true;
 			this.modalResource = null;
-		}
+			this.selectedCategory = [];
+			this.selectedService = [];
+			// Pass in the index of the resource and remove it from the 'resources' list
+		},
+		copyResource(resource) {
+			var copy = new Resource();
+			Object.assign(copy, resource);
+			return copy;
+		},
 	},
+	computed: {
+		isValidResource() {
+			let resource = this.modalResource;
+			// TODO: test that zipcode is number
+			let x = (resource.name != null && resource.name !== '') &&
+					(resource.phone != null && resource.phone !== '') &&
+					(resource.street != null && resource.street !== '') &&
+					(resource.zipcode != null && resource.zipcode !== '') &&
+					(resource.zipcode.length == 5);
+			// console.log(x);
+			// console.log(typeof(resource.zipcode));
+			return x;
+		}
+	}
 })
 
 fetchOptionsList('category', editorApp, 'categorySelectList');

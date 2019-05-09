@@ -57,7 +57,7 @@
 				<thead>
 					<tr class="mx-0 my-0">
 						<th colspan="6" class="center mb-0">
-							<button class="btn btn-info" type="button" data-toggle="modal" data-target="#resource-modal" v-on:click="newModalResource()">+ Add Resource</button>
+							<button class="btn btn-info" type="button" data-toggle="modal" data-target="#resource-modal" data-backdrop="static" data-keyboard="false" v-on:click="newModalResource()">+ Add Resource</button>
 						</th>
 					</tr>
 					<tr class="table-primary">
@@ -78,7 +78,7 @@
 						<td>{{ resource.lastUpdate_admin }}</td>
 						<td>
 							<button v-if="isUpdated(resource.lastUpdate)" class="btn btn-outline-info" data-toggle="modal" data-target="#resource-modal" v-on:click="setModalResource(resource)">View/Edit</button>
-							<button v-else class="btn btn-info" data-toggle="modal" data-target="#resource-modal" v-on:click="setModalResource(resource)">View/Edit</button>
+							<button v-else class="btn btn-info" data-toggle="modal" data-target="#resource-modal" data-backdrop="static" data-keyboard="false" v-on:click="setModalResource(resource)">View/Edit</button>
 						</td>
 					</tr>
 
@@ -92,7 +92,7 @@
 				<thead>
 					<tr class="mb-0 pb-0">
 						<th colspan="4" class="center">
-							<button class="btn btn-success" data-toggle="modal" data-target="#category-modal" v-on:click="newModalCategory()">+ Add Category</button>
+							<button class="btn btn-success" data-toggle="modal" data-target="#category-modal" data-backdrop="static" data-keyboard="false" v-on:click="newModalCategory()">+ Add Category</button>
 						</th>
 					</tr>
 					<tr class="table-primary mt-0 pt-0">
@@ -107,7 +107,7 @@
 						<td>{{ category.id }}</td>
 						<td class="name"><button class="btn btn-success" disabled>{{ category.name }}</button></td>
 						<td class="description">{{ category.description }}</td>
-						<td><button class="btn btn-outline-info" data-toggle="modal" data-target="#category-modal" v-on:click="setModalCategory(category)">Edit Category</button></td>
+						<td><button class="btn btn-outline-info" data-toggle="modal" data-target="#category-modal" data-backdrop="static" data-keyboard="false" v-on:click="setModalCategory(category)">Edit Category</button></td>
 					</tr>
 				</tbody>
 			</table>
@@ -119,7 +119,7 @@
 				<thead>
 					<tr class="mb-0 pb-0">
 						<th colspan="4" class="center">
-							<button class="btn btn-warning" data-toggle="modal" data-target="#service-modal" v-on:click="newModalService()">+ Add Service</button>
+							<button class="btn btn-warning" data-toggle="modal" data-target="#service-modal" data-backdrop="static" data-keyboard="false" v-on:click="newModalService()">+ Add Service</button>
 						</th>
 					</tr>
 					<tr class="table-primary">
@@ -133,7 +133,7 @@
 						<td>{{ service.id }}</td>
 						<td class="name"><button class="btn btn-warning" disabled>{{ service.name }}</button></td>
 						<td class="description">{{ service.description }}</td>
-						<td><button class="btn btn-outline-info" data-toggle="modal" data-target="#service-modal" v-on:click="setModalService(service)">Edit Service</button></td>
+						<td><button class="btn btn-outline-info" data-toggle="modal" data-target="#service-modal" data-backdrop="static" data-keyboard="false" v-on:click="setModalService(service)">Edit Service</button></td>
 					</tr>
 				</tbody>
 			</table>
@@ -156,37 +156,42 @@
 								<fieldset>
 									<legend><label for="">Name</label></legend>
 									<div class="form-group">
-										<input :value="modalResource.name" type="form-text" class="form-control" id="" aria-describedby="resource-name" placeholder="Resource or Organization Name" autocomplete="off" required>
+										<input v-model="modalResource.name" type="form-text" class="form-control" id="" aria-describedby="resource-name" placeholder="Resource or Organization Name" autocomplete="off" required>
+										<small class="form-text text-muted">*Required</small>
 									</div>
 
 									<div class="row">
 										<div class="col col-7">
 											<legend><label for="">Address</label></legend>
 											<div class="form-group">
-												<input :value="modalResource.street" type="textarea" class="form-control" id="" aria-describedby="address" placeholder="Street Address" autocomplete="off" required>
+												<input v-model="modalResource.street" type="textarea" class="form-control" id="" aria-describedby="address" placeholder="Street Address" autocomplete="off" required>
+												<small class="form-text text-muted">*Required</small>
 											</div>
+
 										</div>
 										<div class="col col-5">
 											<legend><label for="">Zipcode</label></legend>
 											<div class="form-group">
-												<input :value="modalResource.zipcode" modaltype="form-text" class="form-control" id="" aria-describedby="zipcode" autocomplete="on" placeholder="ex: 87920">
+												<input v-model="modalResource.zipcode" type="number" class="form-control" id="" aria-describedby="zipcode" autocomplete="on" placeholder="ex: 87920" max="99999" min="0" maxlength="5" required>
+												<small class="form-text text-muted">*Required</small>
 											</div>
 										</div>
 									</div>
 
 									<legend><label for="">Phone Number</label></legend>
 									<div class="form-group">
-										<input :value="modalResource.phone" type="textarea" class="form-control" id="" aria-describedby="phone" placeholder="Phone #">
+										<input v-model="modalResource.phone" type="textarea" class="form-control" id="" aria-describedby="phone" placeholder="Phone #" required>
+										<small class="form-text text-muted">*Required</small>
 									</div>
 
 									<legend><label for="">Website</label></legend>
 									<div class="form-group">
-										<input :value="modalResource.website" type="textarea" class="form-control" id="" aria-describedby="website" placeholder="Website URL">
+										<input v-model="modalResource.website" type="textarea" class="form-control" id="" aria-describedby="website" placeholder="Website URL">
 									</div>
 
 									<legend><label for="">Email</label></legend>
 									<div class="form-group">
-										<input :value="modalResource.email" type="email" class="form-control" id="" aria-describedby="email" placeholder="Resource Email Address">
+										<input v-model="modalResource.email" type="email" class="form-control" id="" aria-describedby="email" placeholder="Resource Email Address">
 									</div>
 								</fieldset>
 							</div>
@@ -254,8 +259,9 @@
 											</thead>
 											<tbody>
 												<!-- Vue Component -->
-												<tr v-for="contact in modalResource.contactList" v-on:click="setModalContact(contact)" class="table-light" data-toggle="modal" data-target="#contact-modal">
-													<td class="no-wrap-col">{{ contact.name }}</td>
+												<tr v-for="(contact, contact_ind) in modalResource.contactList" v-on:click="setModalContact(contact, contact_ind)" class="table-light" data-toggle="modal" data-target="#contact-modal">
+													<td class="no-wrap-col">{{ contact.fname }}</td>
+													<td class="no-wrap-col">{{ contact.lname }}</td>
 													<td class="no-wrap-col">{{ contact.title }}</td>
 													<td class="no-wrap-col">{{ contact.phone }}</td>
 													<td class="no-wrap-col">{{ contact.email }}</td>
@@ -272,13 +278,13 @@
 							<div class="col col-6">
 								<legend><label for="">Description</label></legend>
 									<div class="form-group">
-										<textarea :value="modalResource.description" class="form-control" id="" rows="3"></textarea>
+										<textarea v-model="modalResource.description" class="form-control" id="" rows="3"></textarea>
 										<small class="form-text text-muted">Text will display as it appears.</small>
 									</div>
 
 									<legend><label for="">Qualifications and Restrictions</label></legend>
 									<div class="form-group">
-										<textarea :value="modalResource.requirements" class="form-control" id="" rows="3"></textarea>
+										<textarea v-model="modalResource.requirements" class="form-control" id="" rows="3"></textarea>
 										<small class="form-text text-muted">Text will display as it appears.</small>
 									</div>
 							</div>
@@ -286,13 +292,13 @@
 							<div class="col col-6">
 								<legend><label for="">Required Documents</label></legend>
 								<div class="form-group">
-									<textarea :value="modalResource.documents" class="form-control" id="" rows="3"></textarea>
+									<textarea v-model="modalResource.documents" class="form-control" id="" rows="3"></textarea>
 									<small class="form-text text-muted">Text will display as it appears.</small>
 								</div>
 
 								<legend><label for="">Hours of Operation</label></legend>
 								<div class="form-group">
-									<textarea :value="modalResource.opHours" class="form-control" id="" rows="3"></textarea>
+									<textarea v-model="modalResource.opHours" class="form-control" id="" rows="3"></textarea>
 									<small class="form-text text-muted">Text will display as it appears.</small>
 								</div>
 							</div>
@@ -301,7 +307,7 @@
 				</div>
 				<div class="modal-footer">
 					<button v-if="!isNewElement" class="btn btn-sm btn-outline-danger mr-auto" data-toggle="modal" data-target="#warning-modal" type="button">Delete Document</button>
-					<button class="btn btn-info" type="button">{{ (isNewElement) ? 'Create Resource' : 'Update Document' }}</button>
+					<button v-on:click="submit_createResource()" class="btn btn-info" data-dismiss="modal" type="button" :disabled="!isValidResource">{{ (isNewElement) ? 'Create Resource' : 'Update Document' }}</button>
 					<button class="btn btn-secondary" data-dismiss="modal" type="button">Cancel</button>
 				</div>
 			</div>
@@ -321,12 +327,13 @@
 						<fieldset>
 							<legend><label for="">Name</label></legend>
 							<div class="form-group">
-								<input :value="modalCategory.name" type="textarea" autocomplete="off" class="form-control" id="" aria-describedby="resource-name" placeholder="Enter the Category Name" required>
+								<input v-model="modalCategory.name" type="textarea" autocomplete="off" class="form-control" id="" aria-describedby="resource-name" placeholder="Enter the Category Name" required>
+								<small class="form-text text-muted">*Required</small>
 							</div>
 
 							<legend><label for="">Description</label></legend>
 							<div class="form-group">
-								<textarea :value="modalCategory.description" class="form-control" id="" aria-describedby="description" placeholder="Write a description of the category..." required rows="3"></textarea>
+								<textarea v-model="modalCategory.description" class="form-control" id="" aria-describedby="description" placeholder="Write a description of the category..." required rows="3"></textarea>
 							</div>
 						</fieldset>
 					</form>
@@ -355,12 +362,13 @@
 						<fieldset>
 							<legend><label for="">Name</label></legend>
 							<div class="form-group">
-								<input :value="modalService.name" type="textarea" autocomplete="off" class="form-control" id="" aria-describedby="resource-name" placeholder="Enter the Service Name" required>
+								<input v-model="modalService.name" type="textarea" autocomplete="off" class="form-control" id="" aria-describedby="resource-name" placeholder="Enter the Service Name" required>
+								<small class="form-text text-muted">*Required</small>
 							</div>
 
 							<legend><label for="">Description</label></legend>
 							<div class="form-group">
-								<textarea :value="modalService.description" class="form-control" id="" aria-describedby="description" placeholder="Write a description of the service..." rows="3"></textarea>
+								<textarea v-model="modalService.description" class="form-control" id="" aria-describedby="description" placeholder="Write a description of the service..." rows="3"></textarea>
 							</div>
 						</fieldset>
 					</form>
@@ -387,32 +395,35 @@
 						<fieldset>
 							<legend><label for="">First Name</label></legend>
 							<div class="form-group">
-								<input :value="modalContact.name" type="textarea" autocomplete="off" class="form-control" aria-describedby="first-name" placeholder="Contact First Name" required>
+								<input v-model="modalContact.fname" type="textarea" autocomplete="off" class="form-control" aria-describedby="first-name" placeholder="Contact First Name" required>
+								<small class="form-text text-muted">*Required</small>
 							</div>
 							<legend><label for="">Last Name</label></legend>
 							<div class="form-group">
-								<input :value="modalContact.name" type="textarea" autocomplete="off" class="form-control" aria-describedby="last-name" placeholder="Contact Last Name" required>
+								<input v-model="modalContact.lname" type="textarea" autocomplete="off" class="form-control" aria-describedby="last-name" placeholder="Contact Last Name" required>
+								<small class="form-text text-muted">*Required</small>
 							</div>
 							<legend><label for="">Title</label></legend>
 							<div class="form-group">
-								<input :value="modalContact.title" class="form-control" type="text-area" aria-describedby="title" placeholder="Contact Title/Position" rows="3"></input>
+								<input v-model="modalContact.title" class="form-control" type="text-area" aria-describedby="title" placeholder="Contact Title/Position" rows="3"></input>
 							</div>
 							<legend><label for="">Phone</label></legend>
 							<div class="form-group">
-								<input :value="modalContact.phone" class="form-control" type="text-area" aria-describedby="phone" placeholder="Contact Phone #" rows="3"></input>
+								<input v-model="modalContact.phone" class="form-control" type="text-area" aria-describedby="phone" placeholder="Contact Phone #" rows="3"></input>
+								<small class="form-text text-muted">*Required</small>
 							</div>
 							<legend><label for="">Email</label></legend>
 							<div class="form-group">
-								<input :value="modalContact.email" class="form-control" type="email" aria-describedby="email" placeholder="Contact Email Address" rows="3"></input>
+								<input v-model="modalContact.email" class="form-control" type="email" aria-describedby="email" placeholder="Contact Email Address" rows="3"></input>
 							</div>
 						</fieldset>
 					</form>
 				</div>
 
 				<div class="modal-footer">
-					<button v-if="!isNewContact" class="btn btn-outline-danger mr-auto" type="button">Remove</button>
-					<button class="btn btn-info" type="button">{{ (isNewContact) ? 'Add' : 'Update' }}</button>
-					<button class="btn btn-secondary" data-dismiss="modal" type="button">Cancel</button>
+					<button v-if="!isNewContact" v-on:click="removeContact(contactInd)" data-dismiss="modal" class="btn btn-outline-danger mr-auto" type="button">Remove</button>
+					<button class="btn btn-info" v-on:click="(isNewContact) ? addContact() : updateContact(contactInd)" data-dismiss="modal" type="button">{{ (isNewContact) ? 'Add' : 'Update' }}</button>
+					<button v-on:click="resetContact()" class="btn btn-secondary" data-dismiss="modal" type="button">Cancel</button>
 				</div>
 			</div>
 		</div>
@@ -424,7 +435,7 @@
 				<div class="modal-body">
 					<h3>Warning</h3>
 					<h5>Are you sure you want to delete this? This action cannot be undone and all data will be lost.</h5>
-					<button class="btn btn-outline-primary" type="button">Delete</button>
+					<button onclick="jquery_deleteResource()" v-on:click="submit_deleteResource()" class="btn btn-outline-primary" data-dismiss="modal" type="button">Delete</button>
 					<button class="btn btn-secondary" data-dismiss="modal" type="button" style="float: right;">Cancel</button>
 				</div>
 			</div>
@@ -433,6 +444,7 @@
 </div>
 
 <script src="../dist/bundle.edit.min.js"></script>
+<script src="../js/editorJQuery.js"></script>
 
 </body>
 </html>
