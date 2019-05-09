@@ -19,7 +19,7 @@ else { // Resource is not selected, search by criteria [NOTE: Uses the intersect
     $sql_append = null;
     // Append insurance query
     if ($_GET['insurance'] === 'true' ? true : false)
-        $sql_append = $sql_append . " WHERE insurance='" . $_GET['insurance'] . "'";
+        $sql_append = $sql_append . " WHERE insurance=" . $_GET['insurance'];
     // Append category query
     if (isset($_GET['category'])) {
         if (isset($sql_append)) $sql_append = $sql_append . " AND resource_id IN (";
@@ -59,7 +59,7 @@ else { // Resource is not selected, search by criteria [NOTE: Uses the intersect
 $response['params'] = $_GET;
 $response['query'] = $sql;
 
-sleep(2); // Used to simulate 'long query' testing]
+//sleep(2); // Used to simulate 'long query' testing]
 $table = $dbconn->query($sql) or $dbconn->error;
 if ($dbconn->error) {
     $response['reason'] = $dbconn->error;
