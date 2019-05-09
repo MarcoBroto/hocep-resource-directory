@@ -52,7 +52,7 @@ export function deleteResource(resource_id) {
 /*********************************************************/
 
 export function createTag(tag_type, tag_data) {
-	if (tag_type != 'category' || tag_type != 'service') {
+	if (tag_type !== 'category' && tag_type !== 'service') {
 		console.log("Create Tag Failed: Invalid Tag Type")
 	}
 	request({url: '../php/createTag.php', method: 'POST', data: {'type': tag_type, 'tag': tag_data}, json: true}, function(err, response, body) {
@@ -70,11 +70,11 @@ export function createTag(tag_type, tag_data) {
 	});
 }
 
-export function updateTag(tag_type, tag_id, tag_data) {
-	if (tag_type != 'category' || tag_type != 'service') {
+export function updateTag(tag_type, tag_data) {
+	if (tag_type !== 'category' && tag_type !== 'service') {
 		console.log("Update Tag Failed: Invalid Tag Type")
 	}
-	request({url: '../php/updateTag.php', method: 'POST', data: {'type': tag_type, 'id': tag_id, 'tag': tag_data}, json: true}, function(err, response, body) {
+	request({url: '../php/updateTag.php', method: 'POST', data: {'type': tag_type, 'tag': tag_data}, json: true}, function(err, response, body) {
 		if (err) {
 			console.log("UPDATE TAG REQUEST ERROR");
 			return;
@@ -107,9 +107,3 @@ export function deleteTag(tag_type, tag_id) {
 			console.log('Failed to Delete Tag.');
 	});
 }
-
-/*********************************************************/
-
-function createContact(newContact) { }
-function updateContact(contact_id, newContact) { }
-function deleteContact(contact_id) { }

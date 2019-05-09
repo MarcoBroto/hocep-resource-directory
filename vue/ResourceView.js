@@ -47,7 +47,7 @@ Vue.component("ResourceView", {
 					<div class="card bg-light mr-1 my-1 data-card-top">
 						<div class="card-body py-2 overflow-auto">
 							<h4 class="card-title">Address</h4>
-							<h5 class="card-text overflow">{{ resource.address }}</h5>
+							<h5 class="card-text overflow">{{ resource.getAddress() }}</h5>
 						</div>
 					</div>
 					<div class="card bg-light mr-1 data-card-top">

@@ -8,4 +8,8 @@ export default class Contact {
 		this.phone = phone_num;
 		this.email = email;
 	}
+
+	fullname() {
+		return `${this.fname} ${this.lname}`;
+	}
 }

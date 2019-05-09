@@ -4,7 +4,7 @@ export default class Resource {
 			resource_phone=null, resource_email="", resource_website="", resource_descrip="",
 			resource_requirements="", resource_documents="", insurance_required=false, 
 			hoursOfOperation="", resource_category=[], resource_service=[],
-			lastUpdate_date=null, lastUpdate_admin=null, contact_list=[]) {
+			lastUpdate_date=new Date(), lastUpdate_admin=null, contact_list=[]) {
 		this.id = resource_id;
 		this.name = resource_name;
 		this.street = street;
@@ -21,7 +21,10 @@ export default class Resource {
 		this.services = resource_service;
 		this.lastUpdate = lastUpdate_date;
 		this.lastUpdate_admin = lastUpdate_admin
-		this.address = `${street} ${zipcode}`;
 		this.contactList = contact_list;
+	}
+
+	getAddress() {
+		return `${this.street} ${this.zipcode}`;
 	}
 }
