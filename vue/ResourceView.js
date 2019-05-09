@@ -47,7 +47,7 @@ Vue.component("ResourceView", {
 					<div class="card bg-light mr-1 my-1 data-card-top">
 						<div class="card-body py-2 overflow-auto">
 							<h4 class="card-title">Address</h4>
-							<h5 class="card-text overflow">{{ resource.address }}</h5>
+							<h5 class="card-text overflow">{{ resource.getAddress() }}</h5>
 						</div>
 					</div>
 					<div class="card bg-light mr-1 data-card-top">
@@ -84,12 +84,12 @@ Vue.component("ResourceView", {
 						<div class="card-body overflow-auto cat-serv-card">
 							<h4 class="card-title"><span class="text-success">Categories</span ></h4>
 							<div>
-								<span v-for="category in resource.categories" class="badge badge-pill badge-success ml-0 mr-1">{{ category.name }}</span>
+								<span v-for="category in resource.categories" class="badge badge-pill badge-success ml-0 mr-1">{{ category }}</span>
 							</div>
 							<hr>
 							<h4 class="card-title"><span class="text-warning">Services</span></h4>
 							<div>
-								<span v-for="service in resource.services" class="badge badge-pill badge-warning ml-0 mr-1">{{ service.name }}</span>
+								<span v-for="service in resource.services" class="badge badge-pill badge-warning ml-0 mr-1">{{ service }}</span>
 							</div>
 						</div>
 					</div>
@@ -109,7 +109,7 @@ Vue.component("ResourceView", {
 						<div class="card-body overflow-auto long-text-card">
 							<h4 class="card-title">Qualificatons and Requirements</h4>
 							<p class="card-text">
-								<span v-if="resource.needInsurance"><strong class="text-danger">*Insurance is Required</strong><br></span>
+								<span v-if="resource.insurance"><strong class="text-danger">*Insurance is Required</strong><br></span>
 								{{ resource.requirements }}
 							</p>
 						</div>
@@ -148,7 +148,7 @@ Vue.component("ResourceView", {
 									</thead>
 									<tbody>
 										<tr v-for="contact in resource.contactList" class="table-light">
-											<td class="name-col overflow">{{ contact.name }}</td>
+											<td class="name-col overflow">{{ contact.fullname() }}</td>
 											<td class="title-col overflow">{{ contact.title }}</td>
 											<td class="phone-col">{{ contact.phone }}</td>
 											<td><a href="http://www.apple.com">{{ contact.email }}</a></td>

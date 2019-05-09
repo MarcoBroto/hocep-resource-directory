@@ -56,7 +56,7 @@ let app = new Vue({
 		selectedCategory: [],
 		selectedZipcode: [],
 		insuranceRequired: false,
-		resources: rlist,
+		resources: [],
 	},
 	methods: {
 		csv_tagId(selectedArray) {
@@ -77,7 +77,7 @@ let app = new Vue({
 					params['category'] = this.csv_tagId(this.selectedCategory);
 				if (this.selectedService.length)
 					params['service'] = this.csv_tagId(this.selectedService);
-				if (this.selectedService.length)
+				if (this.selectedZipcode.length)
 					params['zipcode'] = this.csv_zipcode(this.selectedZipcode);
 			}
 			params['insurance'] = this.insuranceRequired;
@@ -86,28 +86,17 @@ let app = new Vue({
 		search() {
 			this.welcome = false;
 			this.isLoading = true;
-			// console.log('resources:');
-			// console.log(this.selectedResource);
-			// console.log('categories:');
-			// console.log(this.selectedCategory);
-			// console.log('services:');
-			// console.log(this.selectedService);
-			// console.log('zipcodes:');
-			// console.log(this.selectedZipcode);
-			// console.log('insuranceRequired:');
-			// console.log(this.insuranceRequired);
-			// console.log('resourceIsSelected:');
-			// console.log(this.resourceIsSelected);
-			// this.getSelectorParams();
 			let params = this.getSelectorParams();
-			sendSearchRequest(params);
-			this.isLoading = false; // <---Attach this operation to the request callback and delete this line
-		}
+			sendSearchRequest(params, this);
+		},
 	},
 	computed: {
 		resourceIsSelected() {
 			return this.selectedResource.length;
-		}
+		},
+		isLoad() {
+			return this.isLoading;
+		},
 	}
 });
 
