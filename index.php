@@ -26,7 +26,7 @@
 
 <div id="resource-table-app">
 	<nav class="navbar navbar-expand-lg bg-primary my-0">
-		<a class="navbar-brand" href="/"><img src="../assets/logo.png"></a>
+		<a class="navbar-brand" href="/"><img src="./assets/logo.png"></a>
 	</nav>
 
 	<div class="container-fluid center bg-light py-3 my-0">
@@ -100,7 +100,7 @@
 				</div>
 				</div>
 			</div>
-			<button v-on:click="search()" class="btn btn-lg btn-info" style="font-size: 1.4rem;" ><img src="../assets/baseline-search-24px.svg">Search</button>
+			<button v-on:click="search()" class="btn btn-lg btn-info" style="font-size: 1.4rem;" ><img src="./assets/baseline-search-24px.svg">Search</button>
 	</div>
 
 	<hr>

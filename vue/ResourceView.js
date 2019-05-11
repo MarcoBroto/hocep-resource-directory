@@ -38,8 +38,8 @@ Vue.component("ResourceView", {
 					<div class="card bg-primary mr-1 my-1 data-card-top">
 						<div class="card-body py-2">
 							<h4 class="card-title text-white">Name<button style="float: right;"class="btn btn-sm btn-info ml-auto pl-auto" data-toggle="collapse" :data-target="'#collapse' + ind" v-on:click="toggleOpen()">
-								<span v-if="!isOpen">Show More<img src="../assets/outline-expand_more-24px.svg"></span>
-								<span v-else>Show Less<img src="../assets/baseline-expand_less-24px.svg"></span>
+								<span v-if="!isOpen">Show More<img src="./assets/outline-expand_more-24px.svg"></span>
+								<span v-else>Show Less<img src="./assets/baseline-expand_less-24px.svg"></span>
 							</button></h4>
 							<h5 class="card-text text-info overflow"><strong>{{ resource.name }}</strong></h5>
 						</div>
@@ -101,7 +101,7 @@ Vue.component("ResourceView", {
 					<div class="card bg-light ml-0 mr-1 my-1">
 						<div class="card-body overflow-auto long-text-card">
 							<h4 class="card-title">Description</h4>
-							<p class="card-text">{{ resource.description }}</p>
+							<p class="card-text"><span style="white-space:pre">{{ resource.description }}</span></p>
 						</div>
 					</div>
 
@@ -110,7 +110,7 @@ Vue.component("ResourceView", {
 							<h4 class="card-title">Qualificatons and Requirements</h4>
 							<p class="card-text">
 								<span v-if="resource.insurance"><strong class="text-danger">*Insurance is Required</strong><br></span>
-								{{ resource.requirements }}
+								<span style="white-space:pre">{{ resource.requirements }}</span>
 							</p>
 						</div>
 					</div>
@@ -118,7 +118,7 @@ Vue.component("ResourceView", {
 					<div class="card bg-light ml-0 mr-1 my-1">
 						<div class="card-body overflow-auto long-text-card">
 							<h4 class="card-title">Required Documents</h4>
-							<p class="card-text">{{ resource.documents }}</p>
+							<p class="card-text"><span style="white-space:pre">{{ resource.documents }}</span></p>
 						</div>
 					</div>
 				</div>
@@ -128,7 +128,7 @@ Vue.component("ResourceView", {
 							<h4 class="card-title">Hours of Operation</h4>
 							<div>
 								<h5>
-									{{ resource.opHours }}<br>
+									<span style="white-space:pre">{{ resource.opHours }}</span><br>
 								</h5>
 							</div>
 						</div>

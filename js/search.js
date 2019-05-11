@@ -16,9 +16,9 @@ export function sendSearchRequest(params, component) {
 			let new_resources = [];
 			for (var i = 0; i < body.resources.length; i++) {
 				// Fix non-uniform values
-				body.resources[i].categories = JSON.parse(body.resources[i].categories);
-				body.resources[i].services = JSON.parse(body.resources[i].services);
-				body.resources[i].contactList = JSON.parse(body.resources[i].contactList);
+				body.resources[i].categories = (body.resources[i].categories) ? JSON.parse(body.resources[i].categories) : [];
+				body.resources[i].services = (body.resources[i].services) ? JSON.parse(body.resources[i].services) : [];
+				body.resources[i].contactList = (body.resources[i].contactList) ? JSON.parse(body.resources[i].contactList) : [];
 				body.resources[i].lastUpdate = new Date(body.resources[i].lastUpdate);
 				body.resources[i].insurance = (body.resources[i].insurance == '1');
 				for (var j = 0; j < body.resources[i].contactList.length; j++)

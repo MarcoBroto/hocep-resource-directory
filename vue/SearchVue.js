@@ -10,17 +10,23 @@ let app = new Vue({
 		Multiselect: window.VueMultiselect.default,
 	},
 	data: {
-		welcome: true,
-		isLoading: false,
+		welcome: true, // Used to display banner and hide resource list
+		isLoading: false, // Used to display loading wheel
+
+		// Contains the options the user can select from the vue multiselectors
 		resourceSelectList: [],
 		categorySelectList: [],
 		serviceSelectList: [],
 		zipcodeSelectList: [],
+
+		// Contains the options the user has selected that will be used in the search query
 		selectedResource: [],
 		selectedService: [],
 		selectedCategory: [],
 		selectedZipcode: [],
 		insuranceRequired: false,
+		
+		// Contains the resources that were returned from the query that match the user selected criteria.
 		resources: [],
 	},
 	methods: {
