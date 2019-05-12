@@ -13,4 +13,4 @@ define('DB_PASSWORD', '*utep2019!');
 //Choose the Database (name)
 define('DB_DATABASE', 'spr19_team11');
 //We make the connection.
-$db = new mysqli(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_DATABASE) or die();
+$dbconn = new mysqli(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_DATABASE) or die();

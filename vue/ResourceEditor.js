@@ -59,9 +59,9 @@ let editorApp = new Vue({
 
 	data: {
 		//
-		resources: rlist,
-		categories: clist,
-		services: slist,
+		resources: [],
+		categories: [],
+		services: [],
 		//
 		categorySelectList: [],
 		serviceSelectList: [],
@@ -308,3 +308,7 @@ let editorApp = new Vue({
 
 fetchOptionsList('category', editorApp, 'categorySelectList');
 fetchOptionsList('service', editorApp, 'serviceSelectList');
+Editor.refreshResources(editorApp);
+Editor.refreshTags('category', editorApp);
+Editor.refreshTags('service', editorApp);
+
