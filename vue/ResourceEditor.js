@@ -1,53 +1,10 @@
 
-Vue.config.devtools = true; // Vue chrome debugger line, remove in deployment
-
 import Multiselect from 'vue-multiselect';
 import Resource from '../js/Resource.js';
 import Contact from '../js/Contact.js';
 import Tag from '../js/Tag.js';
 import { fetchOptionsList } from '../js/fetchMultiselectOptions.js';
 import * as Editor from '../js/editor.js';
-
-
-// Dummy Table Data
-var contact1 = new Contact(1, 'Michael', 'Hawk', 'The Dude', '(915) 253-4321', 'micawk@icloud.com');
-var contact2 = new Contact(2, 'Michael', 'Hunt', 'The Man', '(915) 253-2331', 'mikunt@icloud.com');
-var contact3 = new Contact(3, 'Janet', 'Hanky', 'Jan the Man', '(915) 431-4321', 'janisaman@icloud.com');
-let clist = [
-	new Tag(1, 'Health', 'Resources pertaining to physical health.'),
-	new Tag(2, 'Shelter', 'Resources that provide housing services or living accomodations'),
-	new Tag(3, 'Mental Health', 'Resources pertaining to mental health.'),
-];
-let slist = [
-	new Tag(2, 'Tutoring', 'Learning resources.'),
-	new Tag(3, 'Hitman', 'First rule of fight club. ;)'),
-	new Tag(4, 'Cleaning', 'Basically'),
-	new Tag(5, 'Car Repair', 'Repair broken down vehicles.'),
-	new Tag(6, 'Wedding Planning', 'Planning wedding parties.'),
-];
-let rlist = [
-	new Resource(13, 'Homeless Shelter of El Paso', '6354 Long Street Road', 79932, 
-		9152737843, 'contact@homelssshelterofelpaso.org', 'www.homelssshelterofelpaso.org', 
-		'Description of homeless shelter of el paso.', 
-		'- Requires new id\n- Some more requirements\n', '', false,
-		'MW 9:00am-4:00pm', [clist[0],clist[1]], [slist[2],slist[4]], new Date(), 'mrsoto3', [contact2,contact1,contact3]),
-	new Resource(2, 'Shelter Place of El Paso', '6354 Long Street Road', 38293, 
-		9152737843, 'contact@homelssshelterofelpaso.org', 'www.shelter.org', 
-		'Description of shelter place of el paso.', 
-		'Some more requirements\n- JK just come by', '', true,
-		'MW 9:00am-4:00pm', [clist[0]], [slist[1],slist[0],slist[4]], new Date(), 'mrsoto3', [contact1]),
-	new Resource(9, 'Homeless Bureau', '532 Street Road', 79932, 
-		9152737843, 'contact@homelssshelterofelpaso.org', 'www.homelssshelterofelpaso.org', 
-		'Description of homeless bureau of el paso.', 
-		'', '', false,
-		'MW 9:00am-4:00pm', [clist[0],clist[1]], [slist[2],slist[4]], new Date(), 'mrsoto3', [contact2,contact3]),
-	new Resource(783, 'El Paso Dispensary', '7843 Mesa Quemasapplauda Dr', 79983, 
-		9152737843, 'contact@dispensaryelpaso.com', 'www.epdispense.org', 
-		'Medicinal shop for those in need.', 
-		'- Must have a medical id.', '', true,
-		'MW 9:00am-4:00pm', [clist[1],clist[2]], [slist[4]], new Date(), 'jkll678', []),
-];
-rlist[2].lastUpdate.setFullYear(2000);
 
 
 let editorApp = new Vue({
