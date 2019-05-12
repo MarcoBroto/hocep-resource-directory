@@ -10,21 +10,56 @@ $response = [ // Original JSON Response, defaults to failed
     'type' => $params['type']
 ];
 
-
 if (isset($params) && isset($params['type']) && isset($params['tag'])) {
     $tag_type = $params['type'];
     $tag_data = $params['tag'];
 
-    //TODO: Construct create tag query (or call procedure) with the parameters in $params
-    //$query = "";
-    //$conn = new mysqli($host, $usr, $pass, $dbname);
-    //$conn->query($query);
+    if (mysqli_connect_errno()) {
+        die("Connection failed: " . mysqli_connect_error());
+    } 
+    else {
+        if ($tag_type == 'category'){
+            addCategory($tag_data, $db);
+        }
+        else{
+            addService($tag_data, $db);
+        }
 
+    }
+    mysqli_close($db);
+}
 
-    $response['response'] = true;
-    $response['message'] = "Tag was created successfully.";
-    $response['type'] = $tag_type;
-    //$conn->close();
+function addCategory($tag_data, $conn){
+    global $response;
+    $tag_name = $tag_data['name'];
+    $tag_description = $tag_data['description'];
+    $sql = "CALL addCategory('$tag_name', '$tag_description');";
+
+    if (mysqli_query($conn, $sql)) {
+        $response['response'] = true;
+        $response['message'] = "Create tag passed.";
+    } 
+    else {
+        echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+    }
+
+}
+
+function addService($tag_data, $conn){
+    global $response;
+    $tag_name = $tag_data['name'];
+    $tag_description = $tag_data['description'];
+    $sql = "CALL addService('$tag_name', '$tag_description');";
+
+    if (mysqli_query($conn, $sql)) {
+        $response['response'] = true;
+        $response['message'] = "Create tag passed.";
+    } 
+    else {
+        echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+    }
 }
 
 echo json_encode($response); // Send JSON response
+
+?>

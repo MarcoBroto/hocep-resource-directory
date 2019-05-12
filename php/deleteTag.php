@@ -15,16 +15,47 @@ if (isset($params) && isset($params['type']) && isset($params['id'])) {
     $tag_type = $params['type'];
     $tag_id = $params['id'];
 
-    //TODO: Construct delete tag query (or call procedure) with the parameters in $params
-    //$query = "";
-    //$conn = new mysqli($host, $usr, $pass, $dbname);
-    //$conn->query($query);
+    if (mysqli_connect_errno()) {
+        die("Connection failed: " . mysqli_connect_error());
+    } 
+    else {
+        if ($tag_type == 'category'){
+            deleteCategory($tag_id, $db);
+        }
+        else{
+            deleteService($tag_id, $db);
+        }
 
+    }
+    mysqli_close($db);
+}
 
-    $response['response'] = true;
-    $response['message'] = "Tag was deleted successfully.";
-    $response['type'] = $tag_type;
-    //$conn->close();
+function deleteCategory($tag_id, $conn){
+    global $response;
+    $sql = "CALL deleteCategory($tag_id);";
+
+    if (mysqli_query($conn, $sql)) {
+        $response['response'] = true;
+        $response['message'] = "Delete tag passed.";
+    } 
+    else {
+        echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+    }
+
+}
+
+function deleteService($tag_id, $conn){
+    global $response;
+    $sql = "CALL deleteService($tag_id);";
+
+    if (mysqli_query($conn, $sql)) {
+        $response['response'] = true;
+        $response['message'] = "Delete tag passed.";
+    } 
+    else {
+        echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+    }
 }
 
 echo json_encode($response); // Send JSON response
+?>

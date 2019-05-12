@@ -9,20 +9,31 @@ $response = [ // Original JSON Response, defaults to failed
     'message' => "Delete resource failed."
 ];
 
-
 if (isset($params) && isset($params['id'])) {
     $resource_id = $params['id'];
 
-    //TODO: Construct delete resource query (or call procedure) with the id parameter in $params
-    //$query = "";
-    //$conn = new mysqli($host, $usr, $pass, $dbname);
-    //$conn->query($query);
-
-
-    $response['response'] = true;
-    $response['message'] = "Resource was deleted successfully.";
-    //$conn->close();
+    if (mysqli_connect_errno()) {
+        die("Connection failed: " . mysqli_connect_error());
+    } 
+    else {
+       deleteResource($resource_id, $db);
+    }
+    mysqli_close($db);
 }
 
-$response['params'] = $params;
+function deleteResource($resource_id, $conn){
+    global $response;
+    $sql = "CALL deleteResource($resource_id);";
+
+    if (mysqli_query($conn, $sql)) {
+        $response['response'] = true;
+        $response['message'] = "Delete resource passed.";
+    } 
+    else {
+        echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+    }
+
+}
+
 echo json_encode($response); // Send JSON response
+?>
