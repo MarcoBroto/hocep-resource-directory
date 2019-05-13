@@ -1,102 +1,50 @@
-<?
-    error_reporting(E_ERROR); // Use to remove error echoing
-    fetchOptions();
+<?php
 
-    function fetchOptions() {
-        $response = ['response' => 'false']; // Initial Response
+include('config.php');
 
-        $host = 'ilinkserver.cs.utep.edu';
-        $user = 'mrsoto3';
-        $pass = '*utep2019!';
-        $dbname = 'team11_db';
-        $conn = new mysqli($host, $user, $pass, $dbname);
+$response = [
+    'response' => false,
+    //'params' => $_GET['options']
+];
 
-        /* Production Code Block, Send queries through here and parse
 
-        if ($conn->connect_errno || !isset($_GET['options'])) {
-            echo json_encode($response);
-            die();
+if ($dbconn->connect_errno || !isset($_GET['options'])) {
+    echo json_encode($response);
+    die();
+}
+
+if (isset($_GET['options'])) {
+    switch ($_GET['options']) {
+        case 'resource':
+            $sql = "SELECT * FROM ".DB_DATABASE.".resource_list";
+            break;
+        case 'category':
+            $sql = "SELECT * FROM ".DB_DATABASE.".category_list";
+            break;
+        case 'service':
+            $sql = "SELECT * FROM ".DB_DATABASE.".service_list";
+            break;
+        case 'zipcode':
+            $sql = "SELECT * FROM ".DB_DATABASE.".zipcode_list";
+            break;
+        default:
+            return;
+    }
+
+    $table = $dbconn->query($sql) or $dbconn->error;
+    if ($dbconn->error) {
+        $response['reason'] = $table;
+    }
+    else {
+        $rows = array();
+        while ($row = $table->fetch_assoc()) {
+            $rows[] = $row;
         }
 
-        $query = 'SELECT * from category_list;';
-        $query = 'SELECT * from service_list;';
-        $query = 'SELECT * from resource_list;';
-        $query = 'SELECT * from zipcode_list;';
-        $conn->query($query);
-
-        $response = [
-            'response' => $_GET['options']
-        ];
-
-        */
-
-
-        //  Dummy Response
-        $response = [
-            'response' => true,
-            'options' => $_GET['options'],
-            'resources' => [
-                0 => [
-                    'name' => 'Homeless Shelter of El Paso',
-                    'id' => 0
-                ],
-                1 => [
-                    'name' => 'Shelter Place of El Paso',
-                    'id' => 1
-                ],
-                2 => [
-                    'name' => 'El Paso Dispensary',
-                    'id' => 2
-                ],
-                3 => [
-                    'name' => 'Opportunity Organization',
-                    'id' => 3
-                ]
-            ],
-            'categories' => [
-                0 => [
-                    'name' => 'Mental Health',
-                    'id' => 0
-                ],
-                1 => [
-                    'name' => 'Health',
-                    'id' => 1
-                ],
-                2 => [
-                    'name' => 'Housing',
-                    'id' => 2
-                ],
-                3 => [
-                    'name' => 'Military',
-                    'id' => 3
-                ]
-            ],
-            'services' => [
-                0 => [
-                    'name' => 'Cleaning',
-                    'id' => 1
-                ],
-                1 => [
-                    'name' => 'Job Placement',
-                    'id' => 2
-                ],
-                2 => [
-                    'name' => 'Community Service',
-                    'id' => 3
-                ],
-                3 => [
-                    'name' => 'Environmental Service',
-                    'id' => 4
-                ],
-            ],
-            'zipcodes' => [
-                79932,
-                85643,
-                29019,
-                79989
-            ]
-        ];
-
-        echo json_encode($response);
-        $conn->close();
+        $response[$_GET['options']] = $rows;
+        $response['response'] = true;
     }
+}
+
+echo json_encode($response);
+$dbconn->close();

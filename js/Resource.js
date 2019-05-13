@@ -15,7 +15,7 @@ export default class Resource {
 		this.description = resource_descrip
 		this.requirements = resource_requirements;
 		this.documents = resource_documents;
-		this.needInsurance = insurance_required;
+		this.insurance = insurance_required;
 		this.opHours = hoursOfOperation;
 		this.categories = resource_category;
 		this.services = resource_service;
@@ -23,5 +23,9 @@ export default class Resource {
 		this.lastUpdate_admin = lastUpdate_admin
 		this.address = `${street} ${zipcode}`;
 		this.contactList = contact_list;
+	}
+
+	getAddress() {
+		return `${this.street} ${this.zipcode}`;
 	}
 }

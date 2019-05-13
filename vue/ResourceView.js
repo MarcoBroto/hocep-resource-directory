@@ -38,8 +38,8 @@ Vue.component("ResourceView", {
 					<div class="card bg-primary mr-1 my-1 data-card-top">
 						<div class="card-body py-2">
 							<h4 class="card-title text-white">Name<button style="float: right;"class="btn btn-sm btn-info ml-auto pl-auto" data-toggle="collapse" :data-target="'#collapse' + ind" v-on:click="toggleOpen()">
-								<span v-if="!isOpen">Show More<img src="../assets/outline-expand_more-24px.svg"></span>
-								<span v-else>Show Less<img src="../assets/baseline-expand_less-24px.svg"></span>
+								<span v-if="!isOpen">Show More<img src="./assets/outline-expand_more-24px.svg"></span>
+								<span v-else>Show Less<img src="./assets/baseline-expand_less-24px.svg"></span>
 							</button></h4>
 							<h5 class="card-text text-info overflow"><strong>{{ resource.name }}</strong></h5>
 						</div>
@@ -47,7 +47,7 @@ Vue.component("ResourceView", {
 					<div class="card bg-light mr-1 my-1 data-card-top">
 						<div class="card-body py-2 overflow-auto">
 							<h4 class="card-title">Address</h4>
-							<h5 class="card-text overflow">{{ resource.address }}</h5>
+							<h5 class="card-text overflow">{{ resource.getAddress() }}</h5>
 						</div>
 					</div>
 					<div class="card bg-light mr-1 data-card-top">
@@ -84,12 +84,12 @@ Vue.component("ResourceView", {
 						<div class="card-body overflow-auto cat-serv-card">
 							<h4 class="card-title"><span class="text-success">Categories</span ></h4>
 							<div>
-								<span v-for="category in resource.categories" class="badge badge-pill badge-success ml-0 mr-1">{{ category.name }}</span>
+								<span v-for="category in resource.categories" class="badge badge-pill badge-success ml-0 mr-1">{{ category }}</span>
 							</div>
 							<hr>
 							<h4 class="card-title"><span class="text-warning">Services</span></h4>
 							<div>
-								<span v-for="service in resource.services" class="badge badge-pill badge-warning ml-0 mr-1">{{ service.name }}</span>
+								<span v-for="service in resource.services" class="badge badge-pill badge-warning ml-0 mr-1">{{ service }}</span>
 							</div>
 						</div>
 					</div>
@@ -101,7 +101,7 @@ Vue.component("ResourceView", {
 					<div class="card bg-light ml-0 mr-1 my-1">
 						<div class="card-body overflow-auto long-text-card">
 							<h4 class="card-title">Description</h4>
-							<p class="card-text">{{ resource.description }}</p>
+							<p class="card-text"><span style="white-space:pre">{{ resource.description }}</span></p>
 						</div>
 					</div>
 
@@ -109,8 +109,8 @@ Vue.component("ResourceView", {
 						<div class="card-body overflow-auto long-text-card">
 							<h4 class="card-title">Qualificatons and Requirements</h4>
 							<p class="card-text">
-								<span v-if="resource.needInsurance"><strong class="text-danger">*Insurance is Required</strong><br></span>
-								{{ resource.requirements }}
+								<span v-if="resource.insurance"><strong class="text-danger">*Insurance is Required</strong><br></span>
+								<span style="white-space:pre">{{ resource.requirements }}</span>
 							</p>
 						</div>
 					</div>
@@ -118,7 +118,7 @@ Vue.component("ResourceView", {
 					<div class="card bg-light ml-0 mr-1 my-1">
 						<div class="card-body overflow-auto long-text-card">
 							<h4 class="card-title">Required Documents</h4>
-							<p class="card-text">{{ resource.documents }}</p>
+							<p class="card-text"><span style="white-space:pre">{{ resource.documents }}</span></p>
 						</div>
 					</div>
 				</div>
@@ -128,7 +128,7 @@ Vue.component("ResourceView", {
 							<h4 class="card-title">Hours of Operation</h4>
 							<div>
 								<h5>
-									{{ resource.opHours }}<br>
+									<span style="white-space:pre">{{ resource.opHours }}</span><br>
 								</h5>
 							</div>
 						</div>
@@ -148,7 +148,7 @@ Vue.component("ResourceView", {
 									</thead>
 									<tbody>
 										<tr v-for="contact in resource.contactList" class="table-light">
-											<td class="name-col overflow">{{ contact.name }}</td>
+											<td class="name-col overflow">{{ contact.fullname() }}</td>
 											<td class="title-col overflow">{{ contact.title }}</td>
 											<td class="phone-col">{{ contact.phone }}</td>
 											<td><a href="http://www.apple.com">{{ contact.email }}</a></td>

@@ -9,30 +9,43 @@ const request = require('ajax-request');
  */
 export function fetchOptionsList(list, vueComponent, dataField) {
 	request({url: '../php/fetchOptions.php', data: {'options': list}, method: 'GET'}, function(err, res, body) {
-		let data = JSON.parse(body);
-		if (data.response) {
-			switch(list) {
-				case 'resource':
-					if (data.resources != null)
-						vueComponent.$data[dataField] = data.resources;
-						break;
-				case 'category':
-					if (data.categories != null)
-						vueComponent.$data[dataField] = data.categories;
-						break;
-				case 'service':
-					if (data.services != null)
-						vueComponent.$data[dataField] = data.services;
-						break;
-				case 'zipcode':
-					if (data.zipcodes != null)
-						vueComponent.$data[dataField] = data.zipcodes;
-						break;
-				default:
-					console.log(`Error fetching \"${list}\".`);
-			}
-		}
-		else
+		if (err) {
+			console.log(err);
 			console.log(`Error fetching \"${list}\".`);
+		}
+		try {
+			let data = JSON.parse(body);
+			console.log(data);
+			console.log(data[list]);
+			console.log(vueComponent);
+			if (data.response) {
+				switch(list) {
+					case 'resource':
+						if (data[list] != null)
+							vueComponent.$data[dataField] = data[list];
+							break;
+					case 'category':
+						if (data[list] != null)
+							vueComponent.$data[dataField] = data[list];
+							break;
+					case 'service':
+						if (data[list] != null)
+							vueComponent.$data[dataField] = data[list];
+							break;
+					case 'zipcode':
+						if (data[list] != null) {
+							let zipcodes = data[list].map(ind => ind.zipcode);
+							vueComponent.$data[dataField] = zipcodes;
+						}
+							break;
+					default:
+						console.log(`Error fetching \"${list}\".`);
+				}
+			} else
+				console.log(`Error fetching \"${list}\".`);
+		} catch (err) {
+			console.log(err);
+			return;
+		}	
 	});
 }
