@@ -24,3 +24,4 @@ $response['resources'] = $rows;
 $response['query'] = $sql;
 echo json_encode($response);
 $dbconn->close();
+?>

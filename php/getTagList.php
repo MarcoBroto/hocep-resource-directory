@@ -23,3 +23,4 @@ if (isset($_GET['type'])) {
 
 echo json_encode($response);
 $dbconn->close();
+?>

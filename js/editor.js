@@ -148,7 +148,7 @@ export function refreshResources(vueComponent) {
 			console.log(`Error loading resource list.`);
 		}
 		else {
-			//console.log(body);
+			console.log(body);
 			try {
 				body = JSON.parse(body);
 				console.log(body);
@@ -185,7 +185,7 @@ export function refreshTags(tag_type=null, vueComponent) {
 			console.log(`Error loading ${tag_type} list.`);
 		}
 		else {
-			//console.log(body);
+			console.log(body);
 			try {
 				body = JSON.parse(body);
 				console.log(body);

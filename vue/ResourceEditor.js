@@ -15,32 +15,39 @@ let editorApp = new Vue({
 	},
 
 	data: {
-		//
+		/*
+		 * Stores the visible lists that are contained in the database
+		 * and that the administrator can edit.
+		 */
 		resources: [],
 		categories: [],
 		services: [],
-		//
+
+		// Stores the available options in the vue multiselectors displayed in the resource modal interface.
 		categorySelectList: [],
 		serviceSelectList: [],
-		//
+
+		/*
+		 * Will contain copies of the objects selected in the editor that
+		 * can be edited. The objectwill be changed in the interface and within
+		 * the database once the administrator confirms the changes.
+		 */
 		modalResource: null,
-		modalCategory: null,
-		modalService: null,
 		modalContact: null,
 		modalTag: null,
-		//
+
+		// Will store the index of the object being modified in the diplayable list.
 		resourceInd: null,
-		categoryInd: null,
-		serviceInd: null,
-		contactInd: null,
+		contactInd: null, // Stores the index of the contact within the current resource being modified.
 		tagInd: null,
-		//
+
+		// Determines if a new object is being created and will take actions to create new instance.
 		isNewElement: false,
 		isNewContact: false,
 	},
 
 	methods: {
-		formatDate(resource) { // Formats the date object from a resource to month/day/year format
+		formatDate(resource) { // Formats the date object from a resource to mm/dd/yyyy format
 			if (!resource) {
 				console.log('Error: Cannot format date.');
 				return;
@@ -54,27 +61,11 @@ let editorApp = new Vue({
 				return false;
 			return true;
 		},
-		copyObject(obj, type="none") {
-			var copy;
-			switch (type) {
-				case 'resource':
-					copy = new Resource();
-					break;
-				case 'contact':
-					copy = new Contact();
-					break;
-				case 'tag':
-					copy = new Tag();
-					break;
-				default:
-					copy = {};
-					break;
-			}
-			Object.assign(copy, obj);
-			return copy;
-		},
 
-		/*	*/
+		/*
+		 * These methods are used to reset the states and copies 
+		 * of objects being edited from the modal interfaces.
+		 */
 		resetModalResource() {
 			this.modalResource = null;
 			this.resourceInd = null;
@@ -88,8 +79,11 @@ let editorApp = new Vue({
 			this.tagInd = null;
 		},
 
-		/*	*/
-		newModalResource() { // Sets modalResource to a new object
+		/*
+		 * These methods are used for creating a new instance of the object 
+		 * being created and edited in the modal interface.
+		 */
+		newModalResource() {
 			this.resetModalResource();
 			this.isNewElement = true;
 			this.modalResource = new Resource();
@@ -97,7 +91,7 @@ let editorApp = new Vue({
 		newModalContact() {
 			this.resetModalContact();
 			this.isNewContact= true;
-			// this.contactInd = null;
+			this.contactInd = null;
 			this.modalContact = new Contact();
 		},
 		newModalTag() {
@@ -106,27 +100,31 @@ let editorApp = new Vue({
 			this.modalTag = new Tag();
 		},
 
-		/*	*/
+		/*
+		 * These methods are used for copying an object that is already in existence that will 
+		 * be used by the modal interface to edit the current contents. The changes are saved
+		 * once they are submitted to the database.
+		 */
 		setModalResource(resource, ind) {
 			this.isNewElement = false;
 			this.resourceInd = ind;
-			this.modalResource = this.copyObject(resource, 'resource'); // Copy used as the editing canvas, changes saved once confirmed by user.
+			this.modalResource = Object.assign(new Resource(), resource); // Copy used as the editing canvas, changes saved once confirmed by user.
 		},
 		setModalContact(contact, ind) {
 			this.isNewContact = false;
-			this.modalContact = this.copyObject(contact, 'contact'); // Copy used as the editing canvas, changes saved once confirmed by user.
+			this.modalContact = Object.assign(new Contact(), contact); // Copy used as the editing canvas, changes saved once confirmed by user.
 			this.contactInd = ind;
 		},
 		setModalTag(tag, ind) {
 			console.log(tag);
 			console.log(ind);
 			this.isNewElement = false;
-			this.modalTag = this.copyObject(tag, 'tag');
+			this.modalTag = Object.assign(new Tag(), tag);
 			this.tagInd = ind;
 			console.log(this.modalTag);
 		},
 
-		/*	*/
+		/* The following methods manage the contact list of a particular resource. */
 		addContact() {
 			console.log('Pushing new contact');
 			this.modalResource.contactList.push(this.modalContact);
@@ -148,10 +146,14 @@ let editorApp = new Vue({
 			}
 			console.log('Removing contact at index ' + ind);
 			this.modalResource.contactList.splice(this.contactInd, 1);
+			// Reset modal state
 			this.resetModalContact();
 		},
 		
-		/*	*/
+		/*
+		 * The following methods submit the CRUD operations for resources to the database
+		 * using ajax requests. The results are then handles accordingly.
+		 */
 		create_update_resource() {
 			if (!this.modalResource || this.modalResource == null) {
 				console.log("Error: Edit resource failed\nReason: No resource saved");
@@ -172,7 +174,7 @@ let editorApp = new Vue({
 				Editor.createResource(this.modalResource); // Send resource add request
 				this.resources.push(this.modalResource);
 			}
-			// Reset modal values
+			// Reset modal state
 			this.resetModalResource();
 			this.isNewElement = true;
 		},
@@ -188,12 +190,15 @@ let editorApp = new Vue({
 			Editor.deleteResource(this.modalResource.id); // Send resource delete request
 			this.resources.splice(this.resourceInd, 1);
 			
-			// Reset modal values
+			// Reset modal state
 			this.resetModalResource();
 			this.isNewElement = true;
 		},
 
-		/*	*/
+		/*
+		 * The following methods submit the CRUD operations for tags [service & category] to the database using ajax requests. 
+		 * The results are then handles accordingly.
+		 */
 		create_update_tag(type) {
 			if (!this.modalTag || this.modalTag == null) {
 				console.log(`Error: Edit ${type} failed\nReason: No ${type} saved`);
@@ -216,7 +221,7 @@ let editorApp = new Vue({
 					this.services.push(this.modalTag);
 			}
 
-			// Reset modal values
+			// Reset modal state
 			this.resetModalTag();
 			this.isNewElement = true;
 		},
@@ -236,14 +241,14 @@ let editorApp = new Vue({
 				this.services.splice(this.tagInd, 1);
 			
 			
-			// Reset modal values
+			// Reset modal state
 			this.resetModalTag();
 			this.isNewElement = true;
 		},
 	},
 
 	computed: {
-		isValidResource() {
+		isValidResource() { // Determines if the resource currently being edited is valid for being saved and submitted.
 			let resource = this.modalResource;
 			return resource.name != null && resource.name !== '' &&
 					resource.phone != null && resource.phone !== '' &&
@@ -251,21 +256,22 @@ let editorApp = new Vue({
 					resource.zipcode != null && resource.zipcode !== '' &&
 					resource.zipcode.toString().length == 5 && !isNaN(resource.zipcode);
 		},
-		isValidContact() {
+		isValidContact() { // Determines if the resource contact currently being edited is valid for being saved and submitted.
 			let contact = this.modalContact;
 			return contact.fname != null && contact.fname !== '' &&
 					contact.lname != null && contact.lname !== '' &&
 					contact.phone != null && contact.phone !== '';
 		},
-		isValidTag() {
+		isValidTag() { // Determines if the tag [service or category] being edited is valid for being saved and submitted.
 			return this.modalTag.name != null && this.modalTag.name !== '';
 		},
 	}
 })
 
+/* Fetch the available options for the vue multiselectors in the resource modal interface. Used to select category or service.*/
 fetchOptionsList('category', editorApp, 'categorySelectList');
 fetchOptionsList('service', editorApp, 'serviceSelectList');
+/* Refresh the current list of items for the interface lists that the administrator can edit. */
 Editor.refreshResources(editorApp);
 Editor.refreshTags('category', editorApp);
 Editor.refreshTags('service', editorApp);
-
