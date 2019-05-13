@@ -30,23 +30,37 @@ CREATE OR REPLACE VIEW `admin_logins` AS (
 	SELECT username, password FROM Admin
 );
 
-# Merge all categories associated with each resource into JSON array. Join into edit_rows and search_rows views.
+# Merge all categories associated with each resource into JSON array. Join into search_rows view.
 CREATE OR REPLACE VIEW `category_grouped` AS (
 	SELECT resource_id, JSON_ARRAYAGG(name) AS 'categories' FROM category
 	JOIN belongs_to ON category.category_id=belongs_to.category_id 
 	GROUP BY resource_id
 );
 
-# Merge all services associated with each resource into JSON array. Join into edit_rows and search_rows views.
+# Merge all categoryies associated with each resource into JSON array. Join into editor_rows view.
+CREATE OR REPLACE VIEW `category_grouped_editor` AS (
+	SELECT resource_id, JSON_ARRAYAGG(JSON_OBJECT('name', name, 'id', category.category_id)) AS 'categories' FROM category
+	JOIN belongs_to ON category.category_id=belongs_to.category_id 
+    GROUP BY resource_id
+);
+
+# Merge all services associated with each resource into JSON array. Join into search_rows view.
 CREATE OR REPLACE VIEW `service_grouped` AS (
 	SELECT resource_id, JSON_ARRAYAGG(name) AS 'services' FROM service
 	JOIN provides ON service.service_id=provides.service_id
 	GROUP BY resource_id
 );
 
+# Merge all services associated with each resource into JSON array. Join into editor_rows view.
+CREATE OR REPLACE VIEW `service_grouped_editor` AS (
+	SELECT resource_id, JSON_ARRAYAGG(JSON_OBJECT('name', name, 'id', service.service_id)) AS 'services' FROM service
+	JOIN provides ON service.service_id=provides.service_id
+	GROUP BY resource_id
+);
+
 # Create JSON objects from each field of a contact. Will be merged into array in contact_grouped view.
 CREATE OR REPLACE VIEW `contact_objects` AS (
-	SELECT resource_id, json_object('contact_id',contact_id, 'title',title, 'fname',f_name, 'lname',l_name,'phone',phone, 'email',email) AS contact FROM contact
+	SELECT resource_id, json_object('id',contact_id, 'title',title, 'fname',f_name, 'lname',l_name,'phone',phone, 'email',email) AS contact FROM contact
 );
 
 # Merge all contact JSON objects into JSON array. Will be joined into data row views. 
@@ -57,7 +71,7 @@ CREATE OR REPLACE VIEW `contact_grouped` AS (
 
 # Merge Updates and Admin tables to be used to merge into edit_row view
 CREATE OR REPLACE VIEW `updates_w_admin` AS (
-	SELECT updates.admin_id as admin_id, resource_id, username, f_name, l_name, updates.date FROM updates
+	SELECT updates.admin_id as 'admin_id', resource_id, username, f_name, l_name, updates.date FROM updates
 	JOIN admin ON updates.admin_id=admin.admin_id
 );
 
@@ -66,15 +80,15 @@ CREATE OR REPLACE VIEW `updates_w_admin` AS (
 
 # View for Resource Editor app, must have all data associated with each row
 CREATE OR REPLACE VIEW `editor_rows` AS (
-	SELECT resource.resource_id, title AS name, categories, services, street_address AS street, zipcode, phone, email, website, description, documents, requirements, insurance, opHours, contacts as contactList, admin_id, username AS lastUpdate_admin, updates_w_admin.date as lastUpdate FROM resource
-	LEFT JOIN category_grouped ON resource.resource_id=category_grouped.resource_id
-	LEFT JOIN service_grouped ON resource.resource_id=service_grouped.resource_id
+	SELECT resource.resource_id AS 'id', title AS 'name', categories, services, street_address AS 'street', zipcode, phone, email, website, description, documents, requirements, insurance, opHours, contacts AS 'contactList', admin_id, username AS 'lastUpdate_admin', updates_w_admin.date AS 'lastUpdate' FROM resource
+	LEFT JOIN category_grouped_editor ON resource.resource_id=category_grouped_editor.resource_id
+	LEFT JOIN service_grouped_editor ON resource.resource_id=service_grouped_editor.resource_id
 	LEFT JOIN contact_grouped ON resource.resource_id=contact_grouped.resource_id
-	LEFT JOIN updates_w_admin ON resource.resource_id=updates_w_admin.resource_id
+	LEFT JOIN updates_w_admin ON resource.resource_id=updates_w_admin.resource_id_editor
 	UNION
-	SELECT resource.resource_id, title AS name, categories, services, street_address AS street, zipcode, phone, email, website, description, documents, requirements, insurance, opHours, contacts as contactList, admin_id, username AS lastUpdate_admin, updates_w_admin.date as lastUpdate FROM resource
-	RIGHT JOIN category_grouped ON resource.resource_id=category_grouped.resource_id
-	RIGHT JOIN service_grouped ON resource.resource_id=service_grouped.resource_id
+	SELECT resource.resource_id AS 'id', title AS 'name', categories, services, street_address AS 'street', zipcode, phone, email, website, description, documents, requirements, insurance, opHours, contacts AS 'contactList', admin_id, username AS 'lastUpdate_admin', updates_w_admin.date AS 'lastUpdate' FROM resource
+	RIGHT JOIN category_grouped_editor ON resource.resource_id=category_grouped_editor.resource_id
+	RIGHT JOIN service_grouped_editor ON resource.resource_id=service_grouped_editor.resource_id
 	RIGHT JOIN contact_grouped ON resource.resource_id=contact_grouped.resource_id
 	RIGHT JOIN updates_w_admin ON resource.resource_id=updates_w_admin.resource_id
 	ORDER BY name
@@ -82,13 +96,13 @@ CREATE OR REPLACE VIEW `editor_rows` AS (
 
 # View for Search Page app, must have all data associated with each row except for the username of the  admin who updated the document.
 CREATE OR REPLACE VIEW `search_rows` AS (
-	SELECT resource.resource_id, title AS name, categories, services, street_address AS street, zipcode, phone, email, website, description, documents, requirements, insurance, opHours, contacts AS contactList, updates.date AS lastUpdate FROM resource
+	SELECT resource.resource_id AS 'id', title AS 'name', categories, services, street_address AS 'street', zipcode, phone, email, website, description, documents, requirements, insurance, opHours, contacts AS 'contactList', updates.date AS 'lastUpdate' FROM resource
 	LEFT JOIN category_grouped ON resource.resource_id=category_grouped.resource_id
 	LEFT JOIN service_grouped ON resource.resource_id=service_grouped.resource_id
 	LEFT JOIN contact_grouped ON resource.resource_id=contact_grouped.resource_id
 	LEFT JOIN updates ON resource.resource_id=updates.resource_id
 	UNION
-	SELECT resource.resource_id, title AS name, categories, services, street_address AS street, zipcode, phone, email, website, description, documents, requirements, insurance, opHours, contacts AS contactList, updates.date AS lastUpdate FROM resource
+	SELECT resource.resource_id AS 'id', title AS 'name', categories, services, street_address AS 'street', zipcode, phone, email, website, description, documents, requirements, insurance, opHours, contacts AS 'contactList', updates.date AS 'lastUpdate' FROM resource
 	RIGHT JOIN category_grouped ON resource.resource_id=category_grouped.resource_id
 	RIGHT JOIN service_grouped ON resource.resource_id=service_grouped.resource_id
 	RIGHT JOIN contact_grouped ON resource.resource_id=contact_grouped.resource_id

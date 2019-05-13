@@ -47,3 +47,13 @@ td.no-wrap-col {
 .service-tag .multiselect__tag-icon:hover{background:#D68D35}
 .service-tag .multiselect__tag-icon:after{color:dimgray}
 .service-tag .multiselect__option--highlight{background:rgb(241,155,44)}
+
+input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
+    /* display: none; <- Crashes Chrome on hover */
+    -webkit-appearance: none;
+    margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+}
+
+input[type=number] {
+    -moz-appearance:textfield; /* Firefox */
+}
