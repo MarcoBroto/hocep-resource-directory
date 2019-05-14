@@ -16,19 +16,26 @@ if (isset($params) && isset($params['type']) && isset($params['id']) && isset($p
     $tag_data = $params['tag'];
 
     if (mysqli_connect_errno()) {
+        $response['message'] = mysqli_connect_error();
+        echo json_encode($response);
+        $dbconn->close();
         die("Connection failed: " . mysqli_connect_error());
     } 
     else{
         if ($tag_type == 'category'){
-            updateCategory($tag_id, $tag_data, $db);
+            updateCategory($tag_id, $tag_data, $dbconn);
         }
         else{
-            updateService($tag_id, $tag_data, $db);
+            updateService($tag_id, $tag_data, $dbconn);
         }
 
     }
-    mysqli_close($db);
 }
+
+echo json_encode($response); // Send JSON response
+$dbconn->close();
+
+
 
 function updateCategory($tag_id, $tag_data, $conn){
     global $response;
@@ -60,5 +67,4 @@ function updateService($tag_id, $tag_data, $conn){
     }
 }
 
-echo json_encode($response); // Send JSON response
 ?>

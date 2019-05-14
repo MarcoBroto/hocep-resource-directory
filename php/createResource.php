@@ -16,13 +16,13 @@ if (isset($params) && isset($params['resource'])) {
     } 
 
     else{
-        $resource_id = addResource($resource_data, $db);
-        linkServices($service_list, $resource_id, $db);
-        linkCategories($category_list, $resource_id, $db);
-        addContacts($contact_list, $resource_id, $db);
+        $resource_id = addResource($resource_data, $dbconn);
+        linkServices($service_list, $resource_id, $dbconn);
+        linkCategories($category_list, $resource_id, $dbconn);
+        addContacts($contact_list, $resource_id, $dbconn);
     }
     
-    mysqli_close($db);
+    mysqli_close($dbconn);
 }
 
 function addResource($resource, $conn){
@@ -39,7 +39,7 @@ function addResource($resource, $conn){
     $insurance = $resource['needInsurance'];
 
     $sql = "CALL addResource('$name','$street', $zipcode, '$phone','$website','$email','$description','$requirements','$documents','$opHours', $insurance);";
-    $maxResourceId = "SELECT MAX(resource_id) AS max_id FROM resource;";
+    $maxResourceId = "SELECT MAX('resource_id') AS max_id FROM " . DB_DATABASE . ".resource";
     
     if (mysqli_query($conn, $sql) && $max = mysqli_query($conn, $maxResourceId)) {
         echo "New record created successfully.";

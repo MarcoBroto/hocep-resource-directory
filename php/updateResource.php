@@ -21,16 +21,16 @@ if (isset($params) && isset($params['resource'])){
     } 
 
     else{
-        updateResource($resource_data, $db);
-        updateServices($service_list, $resource_id, $db);
-        updateCategories($category_list, $resource_id, $db);
-        updateContacts($contact_list, $resource_id, $db);
+        updateResource($resource_data, $dbconn);
+        updateServices($service_list, $resource_id, $dbconn);
+        updateCategories($category_list, $resource_id, $dbconn);
+        updateContacts($contact_list, $resource_id, $dbconn);
     }
 
     $response['response'] = true;
     $response['message'] = "Resource was updated successfully.";
     
-    mysqli_close($db);
+    mysqli_close($dbconn);
 }
 
 

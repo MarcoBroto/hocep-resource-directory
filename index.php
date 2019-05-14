@@ -95,8 +95,8 @@
 				<div class="row mt-2 mb-3">
 					<legend>Other Options</legend>
 					<div class="col-12 custom-control custom-checkbox" style="zoom: 0;">
-					<input v-model="insuranceRequired" type="checkbox" class="custom-control-input" id="insuranceCheck" style="">
-					<label class="custom-control-label" for="insuranceCheck" style="">Requires Insurance</label>
+					<input v-model="insuranceNotRequired" type="checkbox" class="custom-control-input" id="insuranceCheck" style="">
+					<label class="custom-control-label" for="insuranceCheck" style="">Does Not Require Insurance</label>
 				</div>
 				</div>
 			</div>
@@ -104,6 +104,7 @@
 	</div>
 
 	<hr>
+	<img style="display:none" src="../assets/loading_circle_tic.gif">
 	<div v-if="isLoading" class="center"><img src="../assets/loading_circle_tic.gif"></div>
 	<div v-if="welcome" class="container bg-light center py-4">
 		<h2>Welcome to the El Paso Resource Directory for People Experiencing Homelessness</h2><br>

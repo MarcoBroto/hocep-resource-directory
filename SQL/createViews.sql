@@ -4,7 +4,7 @@
 
 # Get list of names of all available resources. Used for front-end selection menus.
 CREATE OR REPLACE VIEW `resource_list` AS (
-	SELECT title AS name, resource_id as id FROM Resource ORDER BY title
+	SELECT title AS 'name', resource_id as 'id' FROM Resource ORDER BY title
 );
 
 # Get list of names of all available zipcodes. Used for front-end selection menus.
@@ -14,12 +14,12 @@ CREATE OR REPLACE VIEW `zipcode_list` AS (
 
 # Get list of names of all available categories. Used for front-end selection menus.
 CREATE OR REPLACE VIEW `category_list` AS (
-	SELECT name, category_id AS id FROM category ORDER BY name
+	SELECT name, category_id AS 'id' FROM category ORDER BY name
 );
 
 # Get list of names of all available services. Used for front-end selection menus. 
 CREATE OR REPLACE VIEW `service_list` AS (
-	SELECT name, service_id AS id FROM service ORDER BY name
+	SELECT name, service_id AS 'id' FROM service ORDER BY name
 );
 
 ######################
@@ -71,7 +71,7 @@ CREATE OR REPLACE VIEW `contact_grouped` AS (
 
 # Merge Updates and Admin tables to be used to merge into edit_row view
 CREATE OR REPLACE VIEW `updates_w_admin` AS (
-	SELECT updates.admin_id as 'admin_id', resource_id, username, f_name, l_name, updates.date FROM updates
+	SELECT updates.admin_id as 'admin_id', resource_id, username, updates.date FROM updates
 	JOIN admin ON updates.admin_id=admin.admin_id
 );
 
@@ -84,13 +84,7 @@ CREATE OR REPLACE VIEW `editor_rows` AS (
 	LEFT JOIN category_grouped_editor ON resource.resource_id=category_grouped_editor.resource_id
 	LEFT JOIN service_grouped_editor ON resource.resource_id=service_grouped_editor.resource_id
 	LEFT JOIN contact_grouped ON resource.resource_id=contact_grouped.resource_id
-	LEFT JOIN updates_w_admin ON resource.resource_id=updates_w_admin.resource_id_editor
-	UNION
-	SELECT resource.resource_id AS 'id', title AS 'name', categories, services, street_address AS 'street', zipcode, phone, email, website, description, documents, requirements, insurance, opHours, contacts AS 'contactList', admin_id, username AS 'lastUpdate_admin', updates_w_admin.date AS 'lastUpdate' FROM resource
-	RIGHT JOIN category_grouped_editor ON resource.resource_id=category_grouped_editor.resource_id
-	RIGHT JOIN service_grouped_editor ON resource.resource_id=service_grouped_editor.resource_id
-	RIGHT JOIN contact_grouped ON resource.resource_id=contact_grouped.resource_id
-	RIGHT JOIN updates_w_admin ON resource.resource_id=updates_w_admin.resource_id
+	LEFT JOIN updates_w_admin ON resource.resource_id=updates_w_admin.resource_id
 	ORDER BY name
 );
 
@@ -101,11 +95,5 @@ CREATE OR REPLACE VIEW `search_rows` AS (
 	LEFT JOIN service_grouped ON resource.resource_id=service_grouped.resource_id
 	LEFT JOIN contact_grouped ON resource.resource_id=contact_grouped.resource_id
 	LEFT JOIN updates ON resource.resource_id=updates.resource_id
-	UNION
-	SELECT resource.resource_id AS 'id', title AS 'name', categories, services, street_address AS 'street', zipcode, phone, email, website, description, documents, requirements, insurance, opHours, contacts AS 'contactList', updates.date AS 'lastUpdate' FROM resource
-	RIGHT JOIN category_grouped ON resource.resource_id=category_grouped.resource_id
-	RIGHT JOIN service_grouped ON resource.resource_id=service_grouped.resource_id
-	RIGHT JOIN contact_grouped ON resource.resource_id=contact_grouped.resource_id
-	RIGHT JOIN updates ON resource.resource_id=updates.resource_id
 	ORDER BY name
 );

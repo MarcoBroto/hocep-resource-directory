@@ -16,9 +16,9 @@ if (isset($params) && isset($params['id'])) {
         die("Connection failed: " . mysqli_connect_error());
     } 
     else {
-       deleteResource($resource_id, $db);
+       deleteResource($resource_id, $dbconn);
     }
-    mysqli_close($db);
+    mysqli_close($dbconn);
 }
 
 function deleteResource($resource_id, $conn){

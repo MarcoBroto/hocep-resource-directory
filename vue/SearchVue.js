@@ -24,7 +24,7 @@ let app = new Vue({
 		selectedService: [],
 		selectedCategory: [],
 		selectedZipcode: [],
-		insuranceRequired: false,
+		insuranceNotRequired: false,
 		
 		// Contains the resources that were returned from the query that match the user selected criteria.
 		resources: [],
@@ -51,7 +51,7 @@ let app = new Vue({
 				if (this.selectedZipcode.length)
 					params['zipcode'] = this.csv_zipcode(this.selectedZipcode);
 			}
-			params['insurance'] = this.insuranceRequired;
+			params['insurance'] = this.insuranceNotRequired;
 			return params;
 		},
 		search() {

@@ -19,14 +19,14 @@ if (isset($params) && isset($params['type']) && isset($params['tag'])) {
     } 
     else {
         if ($tag_type == 'category'){
-            addCategory($tag_data, $db);
+            addCategory($tag_data, $dbconn);
         }
         else{
-            addService($tag_data, $db);
+            addService($tag_data, $dbconn);
         }
 
     }
-    mysqli_close($db);
+    mysqli_close($dbconn);
 }
 
 function addCategory($tag_data, $conn){

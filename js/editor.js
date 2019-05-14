@@ -158,8 +158,8 @@ export function refreshResources(vueComponent) {
 						let r = body.resources[i];
 						r.services = (r.services) ? JSON.parse(r.services) : [];
 						r.categories = (r.categories) ? JSON.parse(r.categories) : [];
-						r.insurance = (r.insurance === '1') ? true : false;
-						r.contactList = JSON.parse(r.contactList);
+						r.contactList = (r.contact_list) ? JSON.parse(r.contactList): [];
+						r.insurance = (r.insurance == '1');
 						for (var j = 0; j < r.contactList.length; j++)
 							r.contactList[j] = Object.assign(new Contact(), r.contactList[j]);
 						r.lastUpdate = new Date(r.lastUpdate);

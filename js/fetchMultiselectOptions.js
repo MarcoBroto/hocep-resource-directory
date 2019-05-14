@@ -15,9 +15,9 @@ export function fetchOptionsList(list, vueComponent, dataField) {
 		}
 		try {
 			let data = JSON.parse(body);
-			console.log(data);
-			console.log(data[list]);
-			console.log(vueComponent);
+			//console.log(data);
+			// console.log(data[list]);
+			// console.log(vueComponent);
 			if (data.response) {
 				switch(list) {
 					case 'resource':

@@ -20,14 +20,14 @@ if (isset($params) && isset($params['type']) && isset($params['id'])) {
     } 
     else {
         if ($tag_type == 'category'){
-            deleteCategory($tag_id, $db);
+            deleteCategory($tag_id, $dbconn);
         }
         else{
-            deleteService($tag_id, $db);
+            deleteService($tag_id, $dbconn);
         }
 
     }
-    mysqli_close($db);
+    mysqli_close($dbconn);
 }
 
 function deleteCategory($tag_id, $conn){
