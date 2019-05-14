@@ -1,9 +1,21 @@
 <?php
+    include('../php/session.php');
+    session_start();
+
+    echo("(DEBUG) Username: " . $_SESSION['login_user'] . " id: " . $_SESSION['login_id']);
+
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        if (isset($_POST['btnLogout'])) {
+            header("Location: logout.php");
+        }
+    }
+
 	// if ( $_SERVER['REQUEST_METHOD']=='GET' && realpath(__FILE__) == realpath( $_SERVER['SCRIPT_FILENAME'] ) ) {
 	//     header( 'HTTP/1.0 403 Forbidden', TRUE, 403 );
 	//     die( header( 'Location: /login' ) );
 	// }
 ?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -29,9 +41,9 @@
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary mt-0 mb-4">
 	<a class="navbar-brand" href="/edit.html"><h4>Admin Dashboard | <span class="text-secondary">Resource Editor</span></h4></a>
-	<div class="ml-auto">
-		<a class="text-white disabled mr-3">User: <? /* echo current user */echo 'mrsoto3' ?></a>
-		<button class="btn btn-secondary">Logout</button>
+	<div id="user-id" class="ml-auto">
+		<a class="text-white disabled mr-3">User: {{ user }}</a>
+		<button class="btn btn-secondary" type="submit" id="btnLogout" name="btnLogout" value="Logout">Logout</button>
 	</div>
 </nav>
 
