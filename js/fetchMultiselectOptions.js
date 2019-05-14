@@ -8,7 +8,7 @@ const request = require('ajax-request');
  *	dataField 	 <- Vue componenet data field that the values should be assigned to.
  */
 export function fetchOptionsList(list, vueComponent, dataField) {
-	request({url: '../php/fetchOptions.php', data: {'options': list}, method: 'GET'}, function(err, res, body) {
+	request({url: './php/fetchOptions.php', data: {'options': list}, method: 'GET'}, function(err, res, body) {
 		if (err) {
 			console.log(err);
 			console.log(`Error fetching \"${list}\".`);

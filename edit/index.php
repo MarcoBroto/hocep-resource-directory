@@ -1,14 +1,14 @@
 <?php
-    include('../php/session.php');
-    session_start();
+    // include('../php/session.php');
+    // session_start();
 
-    echo("(DEBUG) Username: " . $_SESSION['login_user'] . " id: " . $_SESSION['login_id']);
+    // echo("(DEBUG) Username: " . $_SESSION['login_user'] . " id: " . $_SESSION['login_id']);
 
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        if (isset($_POST['btnLogout'])) {
-            header("Location: logout.php");
-        }
-    }
+    // if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    //     if (isset($_POST['btnLogout'])) {
+    //         header("Location: logout.php");
+    //     }
+    // }
 
 	// if ( $_SERVER['REQUEST_METHOD']=='GET' && realpath(__FILE__) == realpath( $_SERVER['SCRIPT_FILENAME'] ) ) {
 	//     header( 'HTTP/1.0 403 Forbidden', TRUE, 403 );

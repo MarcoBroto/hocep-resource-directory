@@ -6,7 +6,7 @@
     if(!empty($_SESSION['login_user'])) {
 
         $user_check = $_SESSION['login_user'];
-        $ses_sql = mysqli_query($db,"Select * from Admin where Username = '$user_check' ");
+        $ses_sql = mysqli_query($dbconn,"SELECT * FROM " . DB_DATABASE . ".Admin WHERE 'username' = {$user_check}");
 
         $row = mysqli_fetch_array($ses_sql,MYSQLI_ASSOC);
 
