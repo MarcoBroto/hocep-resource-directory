@@ -4,6 +4,7 @@ include('config.php');
 
 $params = json_decode(file_get_contents('php://input'), true); // Decode JSON parameters into array
 $response = [ 'response' => false,'message' => "Create resource failed."];
+$response['params'] = $params;
 
 if (isset($params) && isset($params['resource'])) {
     $resource_data = $params['resource'];
@@ -12,20 +13,29 @@ if (isset($params) && isset($params['resource'])) {
     $contact_list = $resource_data['contactList'];
 
     if (mysqli_connect_errno()) {
-        die("Connection failed: " . mysqli_connect_error());
-    } 
-
+        $response['message'] = mysqli_connect_error();
+    }
     else{
         $resource_id = addResource($resource_data, $dbconn);
-        linkServices($service_list, $resource_id, $dbconn);
-        linkCategories($category_list, $resource_id, $dbconn);
-        addContacts($contact_list, $resource_id, $dbconn);
+        if (isset($resource_id)) {
+            linkServices($service_list, $resource_id, $dbconn);
+            linkCategories($category_list, $resource_id, $dbconn);
+            addContacts($contact_list, $resource_id, $dbconn);
+        }
+        else {
+            $response['response'] = false;
+            $response['message'] = 'Resource links failed.';
+        }
     }
-    
-    mysqli_close($dbconn);
 }
 
+echo json_encode($response);
+mysqli_close($dbconn);
+
+
+
 function addResource($resource, $conn){
+    global $response;
     $name = $resource['name'];
     $street = $resource['street'];
     $zipcode = $resource['zipcode'];
@@ -36,18 +46,20 @@ function addResource($resource, $conn){
     $requirements = $resource['requirements'];
     $documents = $resource['documents'];
     $opHours = $resource['opHours'];
-    $insurance = $resource['needInsurance'];
+    $insurance = ($resource['insurance']) ? 1 : 0;
 
     $sql = "CALL addResource('$name','$street', $zipcode, '$phone','$website','$email','$description','$requirements','$documents','$opHours', $insurance);";
     $maxResourceId = "SELECT MAX('resource_id') AS max_id FROM " . DB_DATABASE . ".resource";
     
     if (mysqli_query($conn, $sql) && $max = mysqli_query($conn, $maxResourceId)) {
-        echo "New record created successfully.";
         $response['response'] = true;
-        $response['message'] = "Resource was created successfully.";
+        $response['new_id'] = $max;
+        unset($response['message']);
     } 
     else {
-        echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+        echo json_encode($response);
+        $conn->close();
+        die();
     }
 
     $row = mysqli_fetch_array($max);
@@ -57,36 +69,40 @@ function addResource($resource, $conn){
 }
 
 function linkServices($service_list, $resource_id, $conn){
-    foreach($service_list as $service){
+    global $response;
+    foreach($service_list as $service) {
         $service_id = $service['id'];
         $sql = "CALL linkService('$resource_id', '$service_id');";
         if (mysqli_query($conn, $sql)) {
-            echo "linked service successfully.";
             $response['response'] = true;
             $response['message'] = "Resource was created successfully.";
-        } 
-        else {
-            echo "Error: " . $sql . "<br>" . mysqli_error($conn);
-            }
+        } else {
+            echo json_encode($response);
+            $conn->close();
+            die();
         }
+    }
 }
 
-function linkCategories($category_list, $resource_id, $conn){
+function linkCategories($category_list, $resource_id, $conn) {
+    global $response;
     foreach ($category_list as $category){
         $category_id = $category['id'];
         $sql = "CALL linkCategory('$resource_id', '$category_id');";
         if (mysqli_query($conn, $sql)) {
-            echo "linked category successfully.";
             $response['response'] = true;
             $response['message'] = "Resource was created successfully.";
         } 
         else {
-            echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+            echo json_encode($response);
+            $conn->close();
+            die();
         }
     }
 }
 
 function addContacts($contact_list, $resource_id, $conn){
+    global $response;
     foreach ($contact_list as $contact) {
         $fname = $contact['fname'];
         $lname = $contact['lname'];
@@ -96,12 +112,13 @@ function addContacts($contact_list, $resource_id, $conn){
 
         $sql = "CALL addContact($resource_id, '$fname', '$lname', '$title', '$phone', '$email');";
         if (mysqli_query($conn, $sql)) {
-            echo "added contact successfully.";
             $response['response'] = true;
             $response['message'] = "Resource was created successfully.";
         } 
         else {
-            echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+            echo json_encode($response);
+            $conn->close();
+            die();
         }
     }
 

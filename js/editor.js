@@ -117,8 +117,9 @@ export function updateTag(tag_type, tag_data) {
 }
 
 export function deleteTag(tag_type, tag_id) {
-	if (tag_type != 'category' || tag_type != 'service') {
-		console.log("Delete Tag Failed: Invalid Tag Type")
+	if (tag_type != 'category' && tag_type != 'service') {
+		console.log("Delete Tag Failed: Invalid Tag Type");
+		return;
 	}
 	request({url: '../php/deleteTag.php', data: {'type': tag_type, 'id': tag_id}, method: 'POST'}, function(err, response, body) {
 		if (err) {

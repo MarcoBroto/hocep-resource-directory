@@ -116,12 +116,9 @@ let editorApp = new Vue({
 			this.contactInd = ind;
 		},
 		setModalTag(tag, ind) {
-			console.log(tag);
-			console.log(ind);
 			this.isNewElement = false;
 			this.modalTag = Object.assign(new Tag(), tag);
 			this.tagInd = ind;
-			console.log(this.modalTag);
 		},
 
 		/* The following methods manage the contact list of a particular resource. */
@@ -156,7 +153,7 @@ let editorApp = new Vue({
 		 */
 		create_update_resource() {
 			if (!this.modalResource || this.modalResource == null) {
-				console.log("Error: Edit resource failed\nReason: No resource saved");
+				console.log("Error: Edit resource failed\nReason: Modal Resource not set.");
 				return;
 			}
 
@@ -180,7 +177,7 @@ let editorApp = new Vue({
 		},
 		delete_resource() {
 			if (!this.modalResource || this.modalResource == null) {
-				console.log("Error: Delete resource failed\nReason: No resource selected");
+				console.log("Error: Delete resource failed\nReason: Modal resource not set.");
 				return;
 			}
 			else if (isNaN(this.modalResource.id) || this.modalResource.id == null) {
