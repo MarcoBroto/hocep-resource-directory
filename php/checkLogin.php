@@ -13,7 +13,7 @@
         $password = mysqli_real_escape_string($dbconn, $_POST['password']);
 
         //Building the query
-        $stmt = $dbconn -> prepare("SELECT * FROM " . DB_DATABASE . ".Admin WHERE 'username' = ?");
+        $stmt = $dbconn -> prepare("SELECT * FROM " . DB_DATABASE . ".Admin WHERE username = ?");
         $stmt -> bind_param("s", $username);
         $stmt -> execute();
         $result = $stmt -> get_result();
@@ -24,14 +24,12 @@
             if ($password == $row['Password']) {
                 $_SESSION['login_user'] = $row['Username'];
                 $_SESSION['login_id'] = $row['Admin_id'];
-                header("location: ./edit/index.php");
+                header("location: ../edit/index.php");
             } else {
-                echo "<h1>Invalid Password</h1>";
-                header("location: ../login.php");
+                header("location: ./login.php");
             }
         } else {
-            echo "<h1>Invalid username</h1>";
-            header("location: ../login.php");
+            header("location: ./login.php");
         }
         $stmt->free_result();
         $stmt->close();

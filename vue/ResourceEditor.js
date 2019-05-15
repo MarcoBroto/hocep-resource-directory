@@ -15,6 +15,8 @@ let editorApp = new Vue({
 	},
 
 	data: {
+		admin: username,
+
 		/*
 		 * Stores the visible lists that are contained in the database
 		 * and that the administrator can edit.

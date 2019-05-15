@@ -46,7 +46,7 @@ function updateResource($resource, $conn){
     $requirements = $resource['requirements'];
     $documents = $resource['documents'];
     $opHours = $resource['opHours'];
-    $insurance = $resource['needInsurance'];
+    $insurance = ($resource['insurance']) ? 1 : 0;
 
     $sql = "CALL updateResource($id,'$name','$street', $zipcode, '$phone','$website','$email','$description','$requirements','$documents','$opHours', $insurance);";
     
