@@ -50,19 +50,20 @@
 				<input v-else type="password" class="form-control form-control-lg" name="password" aria-describedby="password" required>
 				<small id="passwordHelp" class="form-text text-muted"></small>
 			</fieldset>
+			<div v-if="failed" class="alert alert-dismissible alert-danger mt-3">
+				<button type="button" class="close" data-dismiss="alert">&times;</button>
+				<strong>Invalid Username or Password.</strong> Change a few things up and try submitting again.
+			</div>
             <div class="mt-3" style="text-align: center;">
                 <button class="btn btn-lg btn-primary" style="width: 7.5rem;">Login</button>
             </div>
 		</form>
-		<div v-if="failed" class="alert alert-dismissible alert-danger mt-3">
-			<button type="button" class="close" data-dismiss="alert">&times;</button>
-			<strong>Invalid Username or Password.</strong> Change a few things up and try submitting again.
-		</div>
+		
 	</div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/vue"></script>
-<script src="vue/LoginVue.js" type="text/javascript"></script>
+<script src="./vue/LoginVue.js" type="text/javascript"></script>
 
 </body>
 </html>

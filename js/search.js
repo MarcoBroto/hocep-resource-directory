@@ -5,13 +5,12 @@ import Contact from '../js/Contact.js';
 
 export function sendSearchRequest(params, component) {
 	if (!component) return;
-	console.log('Searching...');
 	request({url: './php/search.php', data: params, method: 'GET'}, function(err, res, body) {
 		if (err) {
 			console.log(err);
 			return;
 		}
-		console.log(body);
+		//console.log(body);
 		try {
 			body = JSON.parse(body);
 			//console.log(body.query);

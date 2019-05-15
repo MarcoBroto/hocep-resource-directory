@@ -148,10 +148,10 @@ export function refreshResources(vueComponent) {
 			console.log(`Error loading resource list.`);
 		}
 		else {
-			console.log(body);
+			// console.log(body);
 			try {
 				body = JSON.parse(body);
-				console.log(body);
+				// console.log(body);
 				if (body.response) {
 					body.resources = body.resources.map(x => Object.assign(new Resource, x));
 					for (var i = 0; i < body.resources.length; i++) {
@@ -185,10 +185,10 @@ export function refreshTags(tag_type=null, vueComponent) {
 			console.log(`Error loading ${tag_type} list.`);
 		}
 		else {
-			console.log(body);
+			// console.log(body);
 			try {
 				body = JSON.parse(body);
-				console.log(body);
+				// console.log(body);
 
 				if (body.response) {
 					body.tags = body.tags.map(x => Object.assign(new Tag(), x));

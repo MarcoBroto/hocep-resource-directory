@@ -22,11 +22,11 @@
 	<title>Resource Editor</title>
 
 	<!-- Bootstrap with Flatly Theme import -->
-	<link href="bootstrap/flatly.bootstrap.min.css" rel="stylesheet">
+	<link href="../bootstrap/flatly.bootstrap.min.css" rel="stylesheet">
 	<!-- Used for multi-select dropdown menu -->
 	<link rel="stylesheet" href="https://unpkg.com/vue-multiselect@2.1.0/dist/vue-multiselect.min.css">
 	<!-- Page Stylesheet -->
-	<link href="css/style.edit.css" rel="stylesheet">
+	<link href="../css/style.edit.css" rel="stylesheet">
 
 	<!-- Bootstrap JS imports -->
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

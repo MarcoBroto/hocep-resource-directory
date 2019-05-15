@@ -1,5 +1,8 @@
 
 const request = require('ajax-request');
+const path = require('path');
+
+const FILEPATH = path.resolve(__dirname, '/php/fetchOptions.php');
 
 /**
  * Query database for desired list of element names and assign the values to the selected Vue data field.
@@ -8,7 +11,7 @@ const request = require('ajax-request');
  *	dataField 	 <- Vue componenet data field that the values should be assigned to.
  */
 export function fetchOptionsList(list, vueComponent, dataField) {
-	request({url: './php/fetchOptions.php', data: {'options': list}, method: 'GET'}, function(err, res, body) {
+	request({url: `${FILEPATH}`, data: {'options': list}, method: 'GET'}, function(err, res, body) {
 		if (err) {
 			console.log(err);
 			console.log(`Error fetching \"${list}\".`);
