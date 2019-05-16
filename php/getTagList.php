@@ -7,7 +7,7 @@ $response = [
 ];
 
 if (isset($_GET['type'])) {
-    $sql = "SELECT * FROM " . DB_DATABASE . ".{$_GET['type']}";
+    $sql = "SELECT * FROM " . DB_DATABASE . ".{$_GET['type']} ORDER BY name";
     $table = $dbconn->query($sql);
     if ($dbconn->connect_error)
         $response['reason'] = $dbconn->connect_error;

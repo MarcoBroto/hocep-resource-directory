@@ -35,12 +35,15 @@ function addCategory($tag_data, $conn){
     $tag_description = $tag_data['description'];
     $sql = "CALL addCategory('$tag_name', '$tag_description');";
 
-    if (mysqli_query($conn, $sql)) {
+    if (mysqli_query($conn, $sql) && $table = $conn->query("SELECT MAX(category_id) AS 'max_id' FROM " . DB_DATABASE . ".category")) {
         $response['response'] = true;
-        $response['message'] = "Create tag passed.";
+        $table = mysqli_fetch_array($table);
+        $response['new_id'] = $table['max_id'];
+        unset($response['message']);
     } 
     else {
-        echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+        $response['response'] = false;
+        $response['message'] = 'Add category tag Failed.';
     }
 
 }
@@ -51,12 +54,15 @@ function addService($tag_data, $conn){
     $tag_description = $tag_data['description'];
     $sql = "CALL addService('$tag_name', '$tag_description');";
 
-    if (mysqli_query($conn, $sql)) {
+    if (mysqli_query($conn, $sql) && $table = $conn->query("SELECT MAX(service_id) AS 'max_id' FROM " . DB_DATABASE . ".service")) {
         $response['response'] = true;
-        $response['message'] = "Create tag passed.";
+        $table = mysqli_fetch_array($table);
+        $response['new_id'] = $table['max_id'];
+        unset($response['message']);
     } 
     else {
-        echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+        $response['response'] = false;
+        $response['message'] = 'Add service tag failed';
     }
 }
 

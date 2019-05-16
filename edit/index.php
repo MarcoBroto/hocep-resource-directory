@@ -113,7 +113,7 @@
 					</tr>
 				</tbody>
 			</table>
-			<small>* Deleting a category tag will dissasociate it from all resources linked to it.</small>
+			<small>* Deleting a category tag will dissociate it from all resources linked to it.</small>
 		</div>
 
 		<div class="tab-pane fade" id="services">
@@ -139,7 +139,7 @@
 					</tr>
 				</tbody>
 			</table>
-			<small>* Deleting a service tag will dissasociate it from all resources linked to it.</small>
+			<small>* Deleting a service tag will dissociate it from all resources linked to it.</small>
 		</div>
 	</div>
 

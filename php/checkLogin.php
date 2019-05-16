@@ -26,10 +26,10 @@
                 $_SESSION['login_id'] = $row['Admin_id'];
                 header("location: ../edit/index.php");
             } else {
-                header("location: ./login.php");
+                header("location: ../login.php");
             }
         } else {
-            header("location: ./login.php");
+            header("location: ../login.php");
         }
         $stmt->free_result();
         $stmt->close();
