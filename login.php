@@ -32,13 +32,12 @@
 
 <div id="login-app" class="container jumbotron my-4">
 	<div  style="text-align: center;">
-		<h1 class="display-3">Oppurtunity Center</h1>
+		<h1 class="display-3">Opportunity Center</h1>
 		<h3>Resource Directory Editor Login</h3>
 	</div>
 	<hr/>
 	<div class="container" style="width: 45vw;">
-        <!-- <form id="login-form" action="php/checkLogin.php" method="POST" > -->
-        <form id="login-form" action="" method="POST" >
+         <form id="login-form" action="php/checkLogin.php" method="POST" >
         <fieldset>
 				<legend><label>Username</label></legend>
 				<input v-if="failed" type="form-text" class="form-control form-control-lg is-invalid" name="username" aria-describedby="username" required>
