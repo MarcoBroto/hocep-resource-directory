@@ -15,6 +15,8 @@ let editorApp = new Vue({
 	},
 
 	data: {
+		admin: username,
+
 		/*
 		 * Stores the visible lists that are contained in the database
 		 * and that the administrator can edit.
@@ -163,14 +165,14 @@ let editorApp = new Vue({
 
 			if (!this.isNewElement) {
 				console.log(`Updating resource_id=${this.modalResource.id}`);
-				Editor.updateResource(this.modalResource); // Send resource update request
-				Object.assign(this.resources[this.resourceInd], this.modalResource);
+				Editor.updateResource(this.modalResource, this, this.resourceInd); // Send resource update request
 			}
 			else {
 				console.log(`Creating resource`);
-				Editor.createResource(this.modalResource); // Send resource add request
-				this.resources.push(this.modalResource);
+				Editor.createResource(this.modalResource, this); // Send resource add request
 			}
+			// The list of resources is updated in the request callback
+
 			// Reset modal state
 			this.resetModalResource();
 			this.isNewElement = true;
@@ -184,8 +186,8 @@ let editorApp = new Vue({
 				console.log("Error: Delete resource failed\nReason: Invalid Resource ID");
 				return;
 			}
-			Editor.deleteResource(this.modalResource.id); // Send resource delete request
-			this.resources.splice(this.resourceInd, 1);
+			Editor.deleteResource(this.modalResource.id, this, this.resourceInd); // Send resource delete request
+			// The list of resources is updated in the request callback
 			
 			// Reset modal state
 			this.resetModalResource();
@@ -203,20 +205,13 @@ let editorApp = new Vue({
 			}
 
 			if (!this.isNewElement) {
-				Editor.updateTag(type, this.modalTag); // Send tag update request
-				if (type == 'category')
-					Object.assign(this.categories[this.tagInd], this.modalTag);
-				else if (type == 'service')
-					Object.assign(this.services[this.tagInd], this.modalTag);
+				Editor.updateTag(type, this.modalTag, this, this.tagInd); // Send tag update request
 			}
 			else {
 				console.log(`Creating ${type}`);
-				Editor.createTag(type, this.modalTag); // Send resource add request
-				if (type == 'category')
-					this.categories.push(this.modalTag);
-				else if (type == 'service')
-					this.services.push(this.modalTag);
+				Editor.createTag(type, this.modalTag, this); // Send resource add request
 			}
+			// The list of tags is updated in the request callback
 
 			// Reset modal state
 			this.resetModalTag();
@@ -231,13 +226,9 @@ let editorApp = new Vue({
 				console.log(`Error: Delete ${type} failed\nReason: Invalid ${type} ID`);
 				return;
 			}
-			Editor.deleteTag(type, this.modalTag.id); // Send tag delete request
-			if (type == 'category')
-				this.categories.splice(this.tagInd, 1);
-			else if (type == 'service')
-				this.services.splice(this.tagInd, 1);
-			
-			
+			Editor.deleteTag(type, this.modalTag.id, this, this.tagInd); // Send tag delete request
+			// The list of tags is updated in the request callback
+
 			// Reset modal state
 			this.resetModalTag();
 			this.isNewElement = true;

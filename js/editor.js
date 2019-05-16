@@ -4,7 +4,7 @@ import Resource from '../js/Resource.js';
 import Contact from '../js/Contact.js';
 import Tag from '../js/Tag.js';
 
-export function createResource(resource_data) {
+export function createResource(resource_data, component) {
 	request({url: '../php/createResource.php', data: {'resource': resource_data}, method: 'POST'}, function(err, response, body) {
 		if (err) {
 			console.log("CREATE RESOURCE REQUEST ERROR");
@@ -14,8 +14,8 @@ export function createResource(resource_data) {
 		try {
 			body = JSON.parse(body);
 			if (body.response) {
-				console.log('Added Resource Successfully.');
-				// TODO: refresh edit page interface items
+				resource_data['id'] = body.new_id;
+				component._data.resources.unshift(Object.assign(new Resource(), resource_data));
 			}
 			else
 				console.log('Failed to Create Resource.');
@@ -25,7 +25,7 @@ export function createResource(resource_data) {
 	});
 }
 
-export function updateResource(resource_data) {
+export function updateResource(resource_data, component, pos) {
 	request({url: '../php/updateResource.php', data: {'resource': resource_data}, method: 'POST'}, function(err, response, body) {
 		if (err) {
 			console.log("UPDATE RESOURCE REQUEST ERROR");
@@ -34,8 +34,7 @@ export function updateResource(resource_data) {
 		console.log(body);
 		try {
 			if (body.response) {
-				console.log('Updated Resource Successfully.');
-				// TODO: refresh edit page interface items
+				Object.assign(component._data.resources[pos], resource_data);
 			}
 			else
 				console.log('Failed to Update Resource.');
@@ -45,7 +44,7 @@ export function updateResource(resource_data) {
 	});
 }
 
-export function deleteResource(resource_id) {
+export function deleteResource(resource_id, component, pos) {
 	request({url: '../php/deleteResource.php', data: {'id': resource_id}, method: 'POST'}, function(err, response, body) {
 		if (err) {
 			console.log("DELETE RESOURCE REQUEST ERROR");
@@ -55,8 +54,7 @@ export function deleteResource(resource_id) {
 		try {
 			body = JSON.parse(body);
 			if (body.response) {
-				console.log('Deleted Resource Successfully.');
-				// TODO: refresh edit page interface items
+				component._data.resources.splice(pos, 1);
 			}
 			else
 				console.log('Failed to Delete Resource.');
@@ -68,7 +66,7 @@ export function deleteResource(resource_id) {
 
 /*********************************************************/
 
-export function createTag(tag_type, tag_data) {
+export function createTag(tag_type, tag_data, component) {
 	if (tag_type !== 'category' && tag_type !== 'service') {
 		console.log("Create Tag Failed: Invalid Tag Type")
 	}
@@ -81,8 +79,11 @@ export function createTag(tag_type, tag_data) {
 		try {
 			body = JSON.parse(body);
 			if (body.response) {
-				console.log('Added Tag Successfully.');
-				// TODO: refresh edit page interface items
+				tag_data['id'] = body.new_id;
+				if (tag_type === 'category')
+					component._data.categories.unshift(Object.assign(new Tag(), tag_data));
+				else
+					component._data.services.unshift(Object.assign(new Tag(), tag_data));
 			}
 			else
 				console.log('Failed to Create Tag.');
@@ -92,7 +93,7 @@ export function createTag(tag_type, tag_data) {
 	});
 }
 
-export function updateTag(tag_type, tag_data) {
+export function updateTag(tag_type, tag_data, component, pos) {
 	if (tag_type !== 'category' && tag_type !== 'service') {
 		console.log("Update Tag Failed: Invalid Tag Type")
 	}
@@ -105,8 +106,10 @@ export function updateTag(tag_type, tag_data) {
 		try {
 			body = JSON.parse(body);
 			if (body.response) {
-				console.log('Updated Tag Successfully.');
-				// TODO: refresh edit page interface items
+				if (tag_type === 'category')
+					Object.assign(component._data.categories[pos], tag_data);
+				else
+					Object.assign(component._data.services[pos], tag_data);
 			}
 			else
 				console.log('Failed to Update Tag.');
@@ -116,7 +119,7 @@ export function updateTag(tag_type, tag_data) {
 	});
 }
 
-export function deleteTag(tag_type, tag_id) {
+export function deleteTag(tag_type, tag_id, component, pos) {
 	if (tag_type != 'category' && tag_type != 'service') {
 		console.log("Delete Tag Failed: Invalid Tag Type");
 		return;
@@ -130,8 +133,10 @@ export function deleteTag(tag_type, tag_id) {
 		try {
 			body = JSON.parse(body);
 			if (body.response) {
-				console.log('Deleted Tag Successfully.');
-				// TODO: refresh edit page interface items
+				if (tag_type === 'category')
+					component._data.categories.splice(pos, 1);
+				else
+					component._data.services.splice(pos, 1);
 			}
 			else
 				console.log('Failed to Delete Tag.');

@@ -6,7 +6,7 @@ $response = [
     'response' => false,
 ];
 
-$sql = "SELECT * FROM " . DB_DATABASE . ".editor_rows";
+$sql = "SELECT * FROM " . DB_DATABASE . ".editor_rows ORDER BY name";
 $table = $dbconn->query($sql);
 if ($dbconn->connect_error) {
     $response['reason'] = $dbconn->connect_error;
