@@ -46,7 +46,7 @@ function updateResource($resource, $conn){
     $requirements = $resource['requirements'];
     $documents = $resource['documents'];
     $opHours = $resource['opHours'];
-    $insurance = $resource['needInsurance'];
+    $insurance = $resource['insurance'];
 
     $sql = "CALL updateResource($id,'$name','$street', $zipcode, '$phone','$website','$email','$description','$requirements','$documents','$opHours', $insurance);";
     
@@ -72,7 +72,7 @@ function updateServices($service_list, $resource_id, $conn){
 
     $comma_seperated = implode(",", $list_id);
    
-    $sql = "SELECT provides.service_id AS to_delete FROM provides WHERE provides.resource_id = $resource_id AND provides.service_id NOT IN($comma_seperated);";
+    $sql = "SELECT provides.service_id AS to_delete FROM provides WHERE provides.resource_id = $resource_id AND provides.service_id NOT IN($comma_seperated)";
     if($result = mysqli_query($conn, $sql)) {
        while($row = mysqli_fetch_array($result)) {
             $delete = "CALL deleteService($row[to_delete])";
