@@ -38,6 +38,7 @@ mysqli_close($dbconn);
 
 
 function addResource($resource, $conn){
+    global $response;
     $name = $resource['name'];
     $street = $resource['street'];
     $zipcode = $resource['zipcode'];
@@ -49,12 +50,14 @@ function addResource($resource, $conn){
     $documents = $resource['documents'];
     $opHours = $resource['opHours'];
     $insurance = ($resource['insurance']) ? 1 : 0;
+    $admin_uname = $resource['admin_username'];
 
     $sql = "CALL addResource('$name','$street', $zipcode, '$phone','$website','$email','$description','$requirements','$documents','$opHours', $insurance);";
-    $maxResourceId = "SELECT MAX(resource_id) AS max_id FROM " . DB_DATABASE . ".resource";
-    
-    if (mysqli_query($conn, $sql) && $max = mysqli_query($conn, $maxResourceId)) {
+    $getResourceIdSql = "SELECT MAX(resource_id) AS max_id FROM " . DB_DATABASE . ".resource";
+    $getAdminIdSql = "SELECT admin_id FROM " . DB_DATABASE . ".admin WHERE username='{$admin_uname}'";
 
+    if (mysqli_query($conn, $sql) && $rid_table = mysqli_query($conn, $getResourceIdSql)) {
+        $resource_id = mysqli_fetch_array($rid_table)['max_id'];
     } 
     else {
         global $response;
@@ -62,9 +65,6 @@ function addResource($resource, $conn){
         $conn->close();
         die();
     }
-
-    $row = mysqli_fetch_array($max);
-    $resource_id = $row['max_id'];
 
     return $resource_id;
 }

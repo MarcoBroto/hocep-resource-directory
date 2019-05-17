@@ -89,6 +89,7 @@ let editorApp = new Vue({
 			this.resetModalResource();
 			this.isNewElement = true;
 			this.modalResource = new Resource();
+			this.modalResource.admin_username = this.admin;
 		},
 		newModalContact() {
 			this.resetModalContact();
@@ -111,6 +112,7 @@ let editorApp = new Vue({
 			this.isNewElement = false;
 			this.resourceInd = ind;
 			this.modalResource = Object.assign(new Resource(), resource); // Copy used as the editing canvas, changes saved once confirmed by user.
+			this.modalResource.admin_username = this.admin;
 		},
 		setModalContact(contact, ind) {
 			this.isNewContact = false;

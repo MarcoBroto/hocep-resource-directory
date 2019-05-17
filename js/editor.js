@@ -33,6 +33,7 @@ export function updateResource(resource_data, component, pos) {
 		}
 		console.log(body);
 		try {
+			body = JSON.parse(body);
 			if (body.response) {
 				Object.assign(component._data.resources[pos], resource_data);
 			}
@@ -164,7 +165,7 @@ export function refreshResources(vueComponent) {
 						let r = body.resources[i];
 						r.services = (r.services) ? JSON.parse(r.services) : [];
 						r.categories = (r.categories) ? JSON.parse(r.categories) : [];
-						r.contactList = (r.contact_list) ? JSON.parse(r.contactList): [];
+						r.contactList = (r.contactList) ? JSON.parse(r.contactList): [];
 						r.insurance = (r.insurance == '1');
 						for (var j = 0; j < r.contactList.length; j++)
 							r.contactList[j] = Object.assign(new Contact(), r.contactList[j]);

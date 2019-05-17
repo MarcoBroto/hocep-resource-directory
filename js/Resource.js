@@ -20,7 +20,7 @@ export default class Resource {
 		this.categories = resource_category;
 		this.services = resource_service;
 		this.lastUpdate = lastUpdate_date;
-		this.lastUpdate_admin = lastUpdate_admin
+		this.admin_username = lastUpdate_admin
 		this.contactList = contact_list;
 	}
 

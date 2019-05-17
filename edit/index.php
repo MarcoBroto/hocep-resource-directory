@@ -77,7 +77,7 @@
 						<td class="name">{{ resource.name }}</td>
 						<td class="description">{{ resource.description }}</td>
 						<td>{{ formatDate(resource) }}</td>
-						<td>{{ resource.lastUpdate_admin }}</td>
+						<td>{{ resource.admin_username }}</td>
 						<td>
 							<button v-if="isUpdated(resource.lastUpdate)" class="btn btn-outline-info" data-toggle="modal" data-target="#resource-modal" v-on:click="setModalResource(resource, ind)">View/Edit</button>
 							<button v-else class="btn btn-info" data-toggle="modal" data-target="#resource-modal" data-backdrop="static" data-keyboard="false" v-on:click="setModalResource(resource, ind)">View/Edit</button>
