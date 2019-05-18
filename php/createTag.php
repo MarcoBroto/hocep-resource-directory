@@ -14,28 +14,25 @@ if (isset($params) && isset($params['type']) && isset($params['tag'])) {
     $tag_type = $params['type'];
     $tag_data = $params['tag'];
 
-    if (mysqli_connect_errno()) {
-        die("Connection failed: " . mysqli_connect_error());
-    } 
-    else {
-        if ($tag_type == 'category'){
-            addCategory($tag_data, $dbconn);
-        }
-        else{
-            addService($tag_data, $dbconn);
-        }
-
+    if ($tag_type == 'category') {
+        addCategory($tag_data, $dbconn);
+    } else {
+        addService($tag_data, $dbconn);
     }
-    mysqli_close($dbconn);
 }
 
-function addCategory($tag_data, $conn){
-    global $response;
-    $tag_name = $tag_data['name'];
-    $tag_description = $tag_data['description'];
-    $sql = "CALL addCategory('$tag_name', '$tag_description');";
+echo json_encode($response); // Send JSON response
+$dbconn->close();
 
-    if (mysqli_query($conn, $sql) && $table = $conn->query("SELECT MAX(category_id) AS 'max_id' FROM " . DB_DATABASE . ".category")) {
+
+function addCategory($tag_data, mysqli $conn){
+    global $response;
+    /* Retrieve category tag values and escape strings to prevent SQL injection */
+    $tag_name = $conn->real_escape_string($tag_data['name']);
+    $tag_description = $conn->real_escape_string($tag_data['description']);
+    $sql = "CALL addCategory('{$tag_name}', '{$tag_description}');";
+
+    if ($conn->query($sql) && $table = $conn->query("SELECT MAX(category_id) AS 'max_id' FROM " . DB_DATABASE . ".category")) {
         $response['response'] = true;
         $table = mysqli_fetch_array($table);
         $response['new_id'] = $table['max_id'];
@@ -44,28 +41,32 @@ function addCategory($tag_data, $conn){
     else {
         $response['response'] = false;
         $response['message'] = 'Add category tag Failed.';
+        echo json_encode($response);
+        $conn->close();
+        die();
     }
 
 }
 
-function addService($tag_data, $conn){
+function addService($tag_data, mysqli $conn){
     global $response;
-    $tag_name = $tag_data['name'];
-    $tag_description = $tag_data['description'];
-    $sql = "CALL addService('$tag_name', '$tag_description');";
+    /* Retrieve service tag values and escape strings to prevent SQL injection */
+    $tag_name = $conn->real_escape_string($tag_data['name']);
+    $tag_description = $conn->real_escape_string($tag_data['description']);
+    $sql = "CALL addService('{$tag_name}', '{$tag_description}');";
 
-    if (mysqli_query($conn, $sql) && $table = $conn->query("SELECT MAX(service_id) AS 'max_id' FROM " . DB_DATABASE . ".service")) {
+    if ($conn->query($sql) && $table = $conn->query("SELECT MAX(service_id) AS 'max_id' FROM " . DB_DATABASE . ".service")) {
         $response['response'] = true;
         $table = mysqli_fetch_array($table);
         $response['new_id'] = $table['max_id'];
         unset($response['message']);
-    } 
+    }
     else {
         $response['response'] = false;
-        $response['message'] = 'Add service tag failed';
+        $response['message'] = 'Add service tag Failed.';
+        $response['reason'] = $conn->error;
+        echo json_encode($response);
+        $conn->close();
+        die();
     }
 }
-
-echo json_encode($response); // Send JSON response
-
-?>

@@ -4,11 +4,13 @@ include('config.php');
 
 $response = [
     'response' => false,
-    //'params' => $_GET['options']
+    //'params' => $_GET['options'] // Testing output
 ];
 
 
-if ($dbconn->connect_errno || !isset($_GET['options'])) {
+if ($dbconn->connect_error || !isset($_GET['options'])) {
+    $response['error'] = $dbconn->connect_error;
+    $dbconn->close();
     echo json_encode($response);
     die();
 }
@@ -28,19 +30,19 @@ if (isset($_GET['options'])) {
             $sql = "SELECT * FROM ".DB_DATABASE.".zipcode_list";
             break;
         default:
+            $response['error'] = "Invalid Option";
+            echo json_encode($response);
             return;
     }
 
     $table = $dbconn->query($sql) or $dbconn->error;
-    if ($dbconn->error) {
+    if ($dbconn->error)
         $response['reason'] = $table;
-    }
     else {
         $rows = array();
         while ($row = $table->fetch_assoc()) {
             $rows[] = $row;
         }
-
         $response[$_GET['options']] = $rows;
         $response['response'] = true;
     }

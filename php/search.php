@@ -8,7 +8,10 @@
 
 include('config.php');
 
-$response = ['response' => false];
+$response = [
+    'response' => false,
+//    'params' => $_GET, // Test output
+];
 
 $sql = "SELECT * FROM " . DB_DATABASE . ".search_rows"; // Original query, contains all rows
 
@@ -16,10 +19,9 @@ if (isset($_GET['resource'])) { // Resource is selected, only search for resourc
     $sql = $sql . " WHERE id IN (" . $_GET['resource'] . ");";
 }
 else { // Resource is not selected, search by criteria [NOTE: Uses the intersection of category and service sets]
-    $sql_append = null;
+    $sql_append = "";
 
     // Append insurance query
-
     if (!$_GET['insurance'] = ($_GET['insurance'] == 'true') ? 0 : 1)
         $sql_append = $sql_append . " WHERE search_rows.insurance={$_GET['insurance']}";
 
@@ -58,13 +60,16 @@ else { // Resource is not selected, search by criteria [NOTE: Uses the intersect
         if (isset($sql_append)) $sql_append = $sql_append . " AND search_rows.id IN (" . $_GET['zipcode'] . ")";
         else $sql_append = $sql_append . " WHERE search_rows.zipcode IN (" . $_GET['zipcode'] . ")";
     }
-    $sql = $sql . $sql_append;
+
+    $sql = $sql . $sql_append; // Append to actual query
 }
 
-$response['params'] = $_GET;
-$response['query'] = $sql;
 
+// Testing block
+//$response['query'] = $sql;
 //sleep(2); // Used to simulate 'long query' testing
+
+// Fetch query results
 $table = $dbconn->query($sql) or $dbconn->error;
 if ($dbconn->error) {
     $response['reason'] = $dbconn->error;
@@ -79,4 +84,4 @@ else {
 }
 
 echo json_encode($response);
-//$dbconn->close();
+$dbconn->close();

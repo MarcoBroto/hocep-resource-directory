@@ -16,11 +16,10 @@ export function fetchOptionsList(list, vueComponent, dataField) {
 			console.log(err);
 			console.log(`Error fetching \"${list}\".`);
 		}
+		//console.log(body);
 		try {
 			let data = JSON.parse(body);
 			//console.log(data);
-			// console.log(data[list]);
-			// console.log(vueComponent);
 			if (data.response) {
 				switch(list) {
 					case 'resource':

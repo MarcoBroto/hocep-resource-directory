@@ -2,15 +2,13 @@
 
 include('config.php');
 
-$response = [
-    'response' => false,
-];
+$response = ['response' => false];
 
 if (isset($_GET['type'])) {
     $sql = "SELECT * FROM " . DB_DATABASE . ".{$_GET['type']} ORDER BY name";
     $table = $dbconn->query($sql);
-    if ($dbconn->connect_error)
-        $response['reason'] = $dbconn->connect_error;
+    if ($error = $dbconn->connect_error or $dbconn->error)
+        $response['error'] = $error;
     else {
         $rows = [];
         while ($row = $table->fetch_assoc())
@@ -23,4 +21,3 @@ if (isset($_GET['type'])) {
 
 echo json_encode($response);
 $dbconn->close();
-?>

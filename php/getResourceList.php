@@ -2,14 +2,12 @@
 
 include('config.php');
 
-$response = [
-    'response' => false,
-];
+$response = ['response' => false];
 
 $sql = "SELECT * FROM " . DB_DATABASE . ".editor_rows ORDER BY name";
 $table = $dbconn->query($sql);
 if ($dbconn->connect_error) {
-    $response['reason'] = $dbconn->connect_error;
+    $response['error'] = $dbconn->connect_error;
     echo $response;
     $dbconn->close();
     return;
@@ -24,4 +22,3 @@ $response['resources'] = $rows;
 $response['query'] = $sql;
 echo json_encode($response);
 $dbconn->close();
-?>

@@ -10,9 +10,10 @@ export function createResource(resource_data, component) {
 			console.log("CREATE RESOURCE REQUEST ERROR");
 			return;
 		}
-		console.log(body);
+		// console.log(body);
 		try {
 			body = JSON.parse(body);
+			console.log(body);
 			if (body.response) {
 				resource_data['id'] = body.new_id;
 				component._data.resources.unshift(Object.assign(new Resource(), resource_data));
@@ -31,9 +32,10 @@ export function updateResource(resource_data, component, pos) {
 			console.log("UPDATE RESOURCE REQUEST ERROR");
 			return;
 		}
-		console.log(body);
+		//console.log(body);
 		try {
 			body = JSON.parse(body);
+			console.log(body);
 			if (body.response) {
 				Object.assign(component._data.resources[pos], resource_data);
 			}
@@ -51,7 +53,7 @@ export function deleteResource(resource_id, component, pos) {
 			console.log("DELETE RESOURCE REQUEST ERROR");
 			return;
 		}
-		console.log(body);
+		//console.log(body);
 		try {
 			body = JSON.parse(body);
 			if (body.response) {
@@ -76,9 +78,10 @@ export function createTag(tag_type, tag_data, component) {
 			console.log("CREATE TAG REQUEST ERROR");
 			return;
 		}
-		console.log(body);
+		//console.log(body);
 		try {
 			body = JSON.parse(body);
+			console.log(body);
 			if (body.response) {
 				tag_data['id'] = body.new_id;
 				if (tag_type === 'category')
@@ -103,9 +106,10 @@ export function updateTag(tag_type, tag_data, component, pos) {
 			console.log("UPDATE TAG REQUEST ERROR");
 			return;
 		}
-		console.log(body);
+		//console.log(body);
 		try {
 			body = JSON.parse(body);
+			console.log(body);
 			if (body.response) {
 				if (tag_type === 'category')
 					Object.assign(component._data.categories[pos], tag_data);
@@ -130,9 +134,10 @@ export function deleteTag(tag_type, tag_id, component, pos) {
 			console.log("DELETE TAG REQUEST ERROR");
 			return;
 		}
-		console.log(body);
+		//console.log(body);
 		try {
 			body = JSON.parse(body);
+			console.log(body);
 			if (body.response) {
 				if (tag_type === 'category')
 					component._data.categories.splice(pos, 1);
@@ -153,30 +158,29 @@ export function refreshResources(vueComponent) {
 		if (err) {
 			console.log(err);
 			console.log(`Error loading resource list.`);
+			return;
 		}
-		else {
+		// console.log(body);
+		try {
+			body = JSON.parse(body);
 			// console.log(body);
-			try {
-				body = JSON.parse(body);
-				// console.log(body);
-				if (body.response) {
-					body.resources = body.resources.map(x => Object.assign(new Resource, x));
-					for (var i = 0; i < body.resources.length; i++) {
-						let r = body.resources[i];
-						r.services = (r.services) ? JSON.parse(r.services) : [];
-						r.categories = (r.categories) ? JSON.parse(r.categories) : [];
-						r.contactList = (r.contactList) ? JSON.parse(r.contactList): [];
-						r.insurance = (r.insurance == '1');
-						for (var j = 0; j < r.contactList.length; j++)
-							r.contactList[j] = Object.assign(new Contact(), r.contactList[j]);
-						r.lastUpdate = new Date(r.lastUpdate);
-					}
-					vueComponent._data['resources'] = body.resources;
-				} else
-					console.log(`Error loading resource list.`);
-			} catch(err) {
-				console.log(err);
-			}
+			if (body.response) {
+				body.resources = body.resources.map(x => Object.assign(new Resource, x));
+				for (var i = 0; i < body.resources.length; i++) {
+					let r = body.resources[i];
+					r.services = (r.services) ? JSON.parse(r.services) : [];
+					r.categories = (r.categories) ? JSON.parse(r.categories) : [];
+					r.contactList = (r.contactList) ? JSON.parse(r.contactList): [];
+					r.insurance = (r.insurance == '1');
+					for (var j = 0; j < r.contactList.length; j++)
+						r.contactList[j] = Object.assign(new Contact(), r.contactList[j]);
+					r.lastUpdate = new Date(r.lastUpdate);
+				}
+				vueComponent._data['resources'] = body.resources;
+			} else
+				console.log(`Error loading resource list.`);
+		} catch(err) {
+			console.log(err);
 		}
 	});
 }
@@ -190,28 +194,26 @@ export function refreshTags(tag_type=null, vueComponent) {
 		if (err) {
 			console.log(err);
 			console.log(`Error loading ${tag_type} list.`);
+			return;
 		}
-		else {
+		// console.log(body);
+		try {
+			body = JSON.parse(body);
 			// console.log(body);
-			try {
-				body = JSON.parse(body);
-				// console.log(body);
-
-				if (body.response) {
-					body.tags = body.tags.map(x => Object.assign(new Tag(), x));
-					for (var i = 0; i < body.tags.length; i++)
-						body.tags[i].id = body.tags[i][`${tag_type}_id`];
-					if (tag_type === 'category') {
-						//vueComponent.$set()
-						vueComponent._data['categories'] = body['tags'];
-					} else {
-						vueComponent._data['services'] = body['tags'];
-					}
-				} else
-					console.log(`Error loading ${tag_type} list.`);
-			} catch(err) {
-				console.log(err);
-			}
+			if (body.response) {
+				body.tags = body.tags.map(x => Object.assign(new Tag(), x));
+				for (var i = 0; i < body.tags.length; i++) {
+					body.tags[i].id = body.tags[i][`${tag_type}_id`];
+				}
+				if (tag_type === 'category') {
+					vueComponent._data['categories'] = body['tags'];
+				} else {
+					vueComponent._data['services'] = body['tags'];
+				}
+			} else
+				console.log(`Error loading ${tag_type} list.`);
+		} catch(err) {
+			console.log(err);
 		}
 	});
 }

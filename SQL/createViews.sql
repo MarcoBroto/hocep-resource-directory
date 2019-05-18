@@ -1,3 +1,4 @@
+use `oc_db`; # Set defualt schema
 
 #######################
 #### Listing Views ####

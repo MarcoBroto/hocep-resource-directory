@@ -30,8 +30,8 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary mt-0 mb-4">
 	<a class="navbar-brand" href="/edit.html"><h4>Admin Dashboard | <span class="text-secondary">Resource Editor</span></h4></a>
 	<div id="user-id" class="ml-auto">
-		<a class="text-white disabled mr-3">User: <?php echo $username; ?></a>
-		<form method="GET" action="../php/logout.php">
+		<a class="text-white disabled mr-3">User: <strong class="text-info"><?php echo $username; ?></strong></a>
+		<form method="GET" action="../php/logout.php" style="display: inline-block;">
 			<button class="btn btn-secondary" type="submit" id="btnLogout" name="btnLogout" value="Logout">Logout</button>
 		</form>
 	</div>
@@ -77,7 +77,7 @@
 						<td class="name">{{ resource.name }}</td>
 						<td class="description">{{ resource.description }}</td>
 						<td>{{ formatDate(resource) }}</td>
-						<td>{{ resource.admin_username }}</td>
+						<td>{{ resource.lastUpdate_admin }}</td>
 						<td>
 							<button v-if="isUpdated(resource.lastUpdate)" class="btn btn-outline-info" data-toggle="modal" data-target="#resource-modal" v-on:click="setModalResource(resource, ind)">View/Edit</button>
 							<button v-else class="btn btn-info" data-toggle="modal" data-target="#resource-modal" data-backdrop="static" data-keyboard="false" v-on:click="setModalResource(resource, ind)">View/Edit</button>
@@ -108,7 +108,7 @@
 					<tr v-for="(category, ind) in categories" class="table-light">
 						<td>{{ category.id }}</td>
 						<td class="name"><button class="btn btn-success" disabled>{{ category.name }}</button></td>
-						<td class="description">{{ category.description }}</td>
+						<td class="description" style="min-width: 400px;">{{ category.description }}</td>
 						<td><button class="btn btn-outline-info" data-toggle="modal" data-target="#category-modal" data-backdrop="static" data-keyboard="false" v-on:click="setModalTag(category, ind)">Edit Category</button></td>
 					</tr>
 				</tbody>
@@ -134,7 +134,7 @@
 					<tr v-for="(service, ind) in services" class="table-light">
 						<td>{{ service.id }}</td>
 						<td class="name"><button class="btn btn-warning" disabled>{{ service.name }}</button></td>
-						<td class="description">{{ service.description }}</td>
+						<td class="description" style="min-width: 400px;">{{ service.description }}</td>
 						<td><button class="btn btn-outline-info" data-toggle="modal" data-target="#service-modal" data-backdrop="static" data-keyboard="false" v-on:click="setModalTag(service, ind)">Edit Service</button></td>
 					</tr>
 				</tbody>

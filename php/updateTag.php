@@ -7,30 +7,25 @@ $params = json_decode(file_get_contents('php://input'), true); // Decode JSON pa
 $response = [ // Original JSON Response, defaults to failed
     'response' => false,
     'message' => "Update tag failed.",
-    'type' => $params['type'],
+//    'params'] = $params, // Testing output
 ];
-
-
-$response['params'] = $params;
 
 if (isset($params) && isset($params['type']) && isset($params['tag'])) {
     $tag_type = $params['type'];
     $tag_data = $params['tag'];
+    $params['type'] = $tag_type;
 
     if (mysqli_connect_errno()) {
-        $response['message'] = mysqli_connect_error();
+        $response['message'] = mysqli_connect_errno() . mysqli_connect_error();
         echo json_encode($response);
         $dbconn->close();
         die("Connection failed: " . mysqli_connect_error());
     } 
-    else{
-        if ($tag_type == 'category'){
+    else {
+        if ($tag_type == 'category')
             updateCategory($tag_data, $dbconn);
-        }
-        else{
+        else
             updateService($tag_data, $dbconn);
-        }
-
     }
 }
 
@@ -39,36 +34,36 @@ $dbconn->close();
 
 
 
-function updateCategory($tag_data, $conn){
+function updateCategory($tag_data, mysqli $conn){
     global $response;
     $tag_name = $tag_data['name'];
     $tag_description = $tag_data['description'];
     $tag_id = $tag_data['id'];
     $sql = "CALL updateCategory($tag_id, '$tag_name', '$tag_description');";
 
-    if (mysqli_query($conn, $sql)) {
-        $response['response'] = true;
-        $response['message'] = "Update tag passed.";
-    } 
+    if ($conn->query($sql)) $response['response'] = true;
     else {
-        echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+        $response['error'] = $conn->error;
+        $response['message'] = "Update Category Failed";
+        echo json_encode($response);
+        $conn->close();
+        die();
     }
 }
 
-function updateService($tag_data, $conn){
+function updateService($tag_data, mysqli $conn){
     global $response;
     $tag_id = $tag_data['id'];
     $tag_name = $tag_data['name'];
     $tag_description = $tag_data['description'];
     $sql = "CALL updateService($tag_id, '$tag_name', '$tag_description');";
 
-    if (mysqli_query($conn, $sql)) {
-        $response['response'] = true;
-        $response['message'] = "Update tag passed.";
-    } 
+    if ($conn->query($sql)) $response['response'] = true;
     else {
-        echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+        $response['error'] = $conn->error;
+        $response['message'] = "Update Service Failed";
+        echo json_encode($response);
+        $conn->close();
+        die();
     }
 }
-
-?>
