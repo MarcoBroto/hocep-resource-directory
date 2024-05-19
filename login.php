@@ -9,7 +9,7 @@
     <meta name="robots" content="all,follow">
 
 	<!-- Bootstrap with Flatly Theme import -->
-	<link href="bootstrap/flatly.bootstrap.min.css" rel="stylesheet">
+	<link href="css/flatly.bootstrap.min.css" rel="stylesheet">
 	<!-- Page Stylesheet -->
 	<!-- <link href="css/style.login.css" rel="stylesheet"> -->
 

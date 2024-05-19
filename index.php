@@ -2,7 +2,7 @@
 <html>
 <head>
 	<!-- Bootstrap Import -->
-	<link href="bootstrap/flatly.bootstrap.min.css" rel="stylesheet">
+	<link href="css/flatly.bootstrap.min.css" rel="stylesheet">
 	<!-- Used for multi-select dropdown menu -->
 	<link rel="stylesheet" href="https://unpkg.com/vue-multiselect@2.1.0/dist/vue-multiselect.min.css">
 	<!-- Page Stylesheet -->
