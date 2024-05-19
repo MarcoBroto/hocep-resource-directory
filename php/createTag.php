@@ -30,7 +30,7 @@ function addCategory($tag_data, mysqli $conn){
     /* Retrieve category tag values and escape strings to prevent SQL injection */
     $tag_name = $conn->real_escape_string($tag_data['name']);
     $tag_description = $conn->real_escape_string($tag_data['description']);
-    $sql = "CALL addCategory('{$tag_name}', '{$tag_description}');";
+    $sql = "CALL add_category('{$tag_name}', '{$tag_description}');";
 
     if ($conn->query($sql) && $table = $conn->query("SELECT MAX(category_id) AS 'max_id' FROM " . DB_DATABASE . ".category")) {
         $response['response'] = true;
@@ -53,7 +53,7 @@ function addService($tag_data, mysqli $conn){
     /* Retrieve service tag values and escape strings to prevent SQL injection */
     $tag_name = $conn->real_escape_string($tag_data['name']);
     $tag_description = $conn->real_escape_string($tag_data['description']);
-    $sql = "CALL addService('{$tag_name}', '{$tag_description}');";
+    $sql = "CALL add_service('{$tag_name}', '{$tag_description}');";
 
     if ($conn->query($sql) && $table = $conn->query("SELECT MAX(service_id) AS 'max_id' FROM " . DB_DATABASE . ".service")) {
         $response['response'] = true;

@@ -55,12 +55,12 @@ function addResource($resource, mysqli $conn){
     $admin_uname = $conn->real_escape_string($resource['lastUpdate_admin']);
     $insurance = ($resource['insurance']) ? 1 : 0; // Does not need to be escaped since it resolves to boolean
 
-    $sql = "CALL addResource('$name','$street', $zipcode, '$phone','$website','$email','$description','$requirements','$documents','$opHours', $insurance);";
+    $sql = "CALL add_resource('$name','$street', $zipcode, '$phone','$website','$email','$description','$requirements','$documents','$opHours', $insurance);";
     $getResourceIdSql = "SELECT MAX(resource_id) AS max_id FROM " . DB_DATABASE . ".resource";
 
     if ($conn->query($sql) && $rid_table = $conn->query($getResourceIdSql)) {
         $resource_id = mysqli_fetch_array($rid_table)['max_id'];
-        $conn->query("CALL linkAdmin('{$admin_uname}','$resource_id')"); // link Admin to resource id
+        $conn->query("CALL link_admin('{$admin_uname}','$resource_id')"); // link Admin to resource id
         if ($conn->error) $response['error'] = $conn->error;
     } 
     else {
@@ -79,7 +79,7 @@ function linkServices($service_list, $resource_id, mysqli $conn){
     foreach($service_list as $service) {
         $service_id = $service['id'];
 
-        $sql = "CALL linkService('$resource_id', '$service_id');";
+        $sql = "CALL link_service('$resource_id', '$service_id');";
         $conn->query($sql);
         if ($conn->error) {
             global $response;
@@ -96,7 +96,7 @@ function linkCategories($category_list, $resource_id, mysqli $conn) {
     foreach ($category_list as $category){
         $category_id = $category['id'];
 
-        $sql = "CALL linkCategory('$resource_id', '$category_id');";
+        $sql = "CALL link_category('$resource_id', '$category_id');";
         $conn->query($sql);
         if ($conn->error) {
             global $response;
@@ -118,7 +118,7 @@ function addContacts($contact_list, $resource_id, mysqli $conn){
         $phone = $conn->real_escape_string($contact['phone']);
         $email = $conn->real_escape_string($contact['email']);
 
-        $sql = "CALL addContact($resource_id, '$fname', '$lname', '$title', '$phone', '$email');";
+        $sql = "CALL add_contact($resource_id, '$fname', '$lname', '$title', '$phone', '$email');";
         $conn->query($sql);
         if ($conn->error) {
             global $response;

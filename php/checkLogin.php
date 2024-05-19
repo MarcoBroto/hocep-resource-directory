@@ -13,7 +13,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     $password = mysqli_real_escape_string($dbconn, $_POST['password']);
 
     //Building the query
-    $stmt = $dbconn -> prepare("SELECT * FROM " . DB_DATABASE . ".Admin WHERE username = ?");
+    $stmt = $dbconn -> prepare("SELECT * FROM " . DB_DATABASE . ".admin WHERE username = ?");
     $stmt -> bind_param("s", $username);
     $stmt -> execute();
     $result = $stmt -> get_result();

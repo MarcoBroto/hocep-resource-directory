@@ -106,7 +106,7 @@ export function updateTag(tag_type, tag_data, component, pos) {
 			console.log("UPDATE TAG REQUEST ERROR");
 			return;
 		}
-		//console.log(body);
+		console.log(body);
 		try {
 			body = JSON.parse(body);
 			console.log(body);

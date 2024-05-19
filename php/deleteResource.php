@@ -29,7 +29,7 @@ $dbconn->close();
 
 function deleteResource($resource_id, mysqli $conn){
     global $response;
-    $sql = "CALL deleteResource($resource_id);";
+    $sql = "CALL delete_resource($resource_id);";
 
     if ($conn->query($sql)) {
         $response['response'] = true;

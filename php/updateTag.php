@@ -39,7 +39,7 @@ function updateCategory($tag_data, mysqli $conn){
     $tag_name = $tag_data['name'];
     $tag_description = $tag_data['description'];
     $tag_id = $tag_data['id'];
-    $sql = "CALL updateCategory($tag_id, '$tag_name', '$tag_description');";
+    $sql = "CALL update_category($tag_id, '$tag_name', '$tag_description');";
 
     if ($conn->query($sql)) $response['response'] = true;
     else {
@@ -56,7 +56,7 @@ function updateService($tag_data, mysqli $conn){
     $tag_id = $tag_data['id'];
     $tag_name = $tag_data['name'];
     $tag_description = $tag_data['description'];
-    $sql = "CALL updateService($tag_id, '$tag_name', '$tag_description');";
+    $sql = "CALL update_service($tag_id, '$tag_name', '$tag_description');";
 
     if ($conn->query($sql)) $response['response'] = true;
     else {

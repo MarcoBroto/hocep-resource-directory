@@ -31,7 +31,7 @@ $dbconn->close();
 
 function deleteCategory($tag_id, mysqli $conn){
     global $response;
-    $sql = "CALL deleteCategory($tag_id);";
+    $sql = "CALL delete_category($tag_id);";
     if ($conn->query($sql)) $response['response'] = true;
     else $response['error'] = $conn->error;
 
@@ -39,7 +39,7 @@ function deleteCategory($tag_id, mysqli $conn){
 
 function deleteService($tag_id, mysqli $conn){
     global $response;
-    $sql = "CALL deleteService($tag_id);";
+    $sql = "CALL delete_service($tag_id);";
     if ($conn->query($sql)) $response['response'] = true;
     else $response['error'] = $conn->error;
 }

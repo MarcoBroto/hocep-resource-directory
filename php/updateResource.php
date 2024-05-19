@@ -53,7 +53,7 @@ function updateResource($resource, mysqli $conn){
     $admin_uname = $conn->real_escape_string($resource['lastUpdate_admin']);
     $insurance = ($resource['insurance']) ? 1 : 0;
 
-    $sql = "CALL updateResource($id,'$name','$street', $zipcode, '$phone','$website','$email','$description','$requirements','$documents','$opHours', $insurance, '$admin_uname');";
+    $sql = "CALL update_resource($id,'$name','$street', $zipcode, '$phone','$website','$email','$description','$requirements','$documents','$opHours', $insurance, '$admin_uname');";
     $conn->query($sql); // Execute Query
     if ($conn->error) $response['error'] = $conn->error;
 }
@@ -79,7 +79,7 @@ function linkServices($service_list, $resource_id, mysqli $conn){
     global $response;
     foreach($service_list as $service){
         $service_id = $service['id'];
-        $sql = "CALL linkService('$resource_id', '$service_id');";
+        $sql = "CALL link_service('$resource_id', '$service_id');";
         $conn->query($sql);
         if ($conn->error) $response['error'] = $conn->error;
     }
@@ -104,7 +104,7 @@ function linkCategories($category_list, $resource_id, mysqli $conn){
     global $response;
     foreach($category_list as $category){
         $category_id = $category['id'];
-        $sql = "CALL linkCategory({$resource_id}, {$category_id});";
+        $sql = "CALL link_category({$resource_id}, {$category_id});";
         $conn->query($sql);
         if ($conn->error) $response['error'] = $conn->error;
     }
@@ -136,7 +136,7 @@ function addContacts($contact_list, $resource_id, mysqli $conn){
         $phone = $contact['phone'];
         $email = $contact['email'];
 
-        $sql = "CALL addContact($resource_id, '$fname', '$lname', '$title', '$phone', '$email');";
+        $sql = "CALL add_contact($resource_id, '$fname', '$lname', '$title', '$phone', '$email');";
         $conn->query($sql);
         if ($conn->error) $response['error'] = $conn->error;
     }
