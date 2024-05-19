@@ -14,6 +14,7 @@ module.exports = {
 	},
 	entry: {
 		main: path.resolve(__dirname, 'js/main.js'),
+		login: path.resolve(__dirname, 'js/login.js'),
 		edit: path.resolve(__dirname, 'js/edit.js'),
 	},
 	output: {
