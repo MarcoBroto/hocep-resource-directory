@@ -5,7 +5,7 @@ use `oc_db`; # Set defualt schema
 
 # Get list of names of all available resources. Used for front-end selection menus.
 CREATE OR REPLACE VIEW `resource_list` AS (
-	SELECT title AS 'name', resource_id as 'id' FROM Resource ORDER BY title
+	SELECT title AS 'name', resource_id as 'id' FROM resource ORDER BY title
 );
 
 # Get list of names of all available zipcodes. Used for front-end selection menus.
@@ -28,7 +28,7 @@ CREATE OR REPLACE VIEW `service_list` AS (
 
 # Gets list of Admins and login credentials. Used for login page validation.
 CREATE OR REPLACE VIEW `admin_logins` AS (
-	SELECT username, password FROM Admin
+	SELECT username, password FROM admin
 );
 
 # Merge all categories associated with each resource into JSON array. Join into search_rows view.
