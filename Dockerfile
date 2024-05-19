@@ -17,7 +17,7 @@ COPY src/sql/03-createProcedures.sql /docker-entrypoint-initdb.d/
 EXPOSE 3306
 
 # Define a volume for MySQL data
-# VOLUME /var/lib/mysql
+VOLUME /var/lib/mysql
 
 # Run additional SQL script after MySQL initialization
 # RUN service mysql start
