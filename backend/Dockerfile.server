@@ -1,0 +1,40 @@
+FROM node:latest AS build_node
+
+COPY ./package.json /
+COPY ./package-lock.json /
+COPY webpack.config.dev.js /
+
+COPY ./index.php /
+COPY ./login.php /
+
+ADD ./edit /edit
+ADD ./js /js
+ADD ./vue /vue
+
+RUN ["npm", "install"]
+RUN ["npm", "run", "build-dev"]
+
+
+FROM php:7.4-apache AS build_server
+
+
+RUN docker-php-ext-install mysqli && docker-php-ext-enable mysqli
+
+RUN mkdir /var/www/html/node_modules
+RUN mkdir /var/www/html/dist
+COPY --from=build_node ./node_modules /var/www/html/node_modules
+COPY --from=build_node ./dist /var/www/html/dist
+
+ADD ./index.php /var/www/html
+ADD ./login.php /var/www/html
+
+ADD ./edit /var/www/html/edit
+ADD ./php /var/www/html/php
+ADD ./css /var/www/html/css
+ADD ./assets /var/www/html/assets
+# ADD ./js /var/www/html
+# ADD ./vue /var/www/html
+
+EXPOSE 80
+
+# CMD ["apache2-foreground"]

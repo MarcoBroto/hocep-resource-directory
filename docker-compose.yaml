@@ -1,10 +1,9 @@
-version: '3.8'
 
 services:
   mysql:
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.database
     environment:
       MYSQL_ROOT_PASSWORD: Mysqllocalhost123!
       MYSQL_DATABASE: oc_db
@@ -13,7 +12,15 @@ services:
     ports:
       - "3306:3306"
     volumes:
-      - mysql_data:/var/lib/mysql
+      - mysql-data:/var/lib/mysql
+
+  backend:
+    build:
+      context: .
+      dockerfile: ./backend/Dockerfile.server
+    ports:
+      - "8080:80"
 
 volumes:
-  mysql_data:
+  mysql-data:
+    name: "mysql-data"
