@@ -20,7 +20,12 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
 
-    if (count($row) > 0) {
+    if (is_null($row)) {
+        echo($row);
+        http_response_code(400);
+        // header('Location: ../login.php');
+        // exit;
+    } else if (count($row) > 0) {
         if ($password == $row['password']) {
             $_SESSION['login_user'] = $row['username'];
             $_SESSION['login_id'] = $row['admin_id'];
@@ -29,7 +34,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
             header("location: ../login.php");
         }
     } else { // Invalid Username
-            header("location: ../login.php");
+        http_response_code(401);
+        // header("location: ../login.php");
     }
     $stmt->free_result();
     $stmt->close();
