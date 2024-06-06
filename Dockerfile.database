@@ -12,15 +12,13 @@ COPY src/sql/init.sql /docker-entrypoint-initdb.d/
 COPY src/sql/01-createSchema.sql /docker-entrypoint-initdb.d/
 COPY src/sql/02-createViews.sql /docker-entrypoint-initdb.d/
 COPY src/sql/03-createProcedures.sql /docker-entrypoint-initdb.d/
+COPY src/sql/04-createDefaultAdminUsers.sql /docker-entrypoint-initdb.d/
 
 # Expose port 3306 to allow external connections
 EXPOSE 3306
 
-# Define a volume for MySQL data
+# Define the volume for MySQL data
 VOLUME /var/lib/mysql
-
-# Run additional SQL script after MySQL initialization
-# RUN service mysql start
 
 # Start MySQL server
 CMD ["mysqld"]
