@@ -17,7 +17,6 @@ RUN ["npm", "run", "build-dev"]
 
 FROM php:7.4-apache AS build_server
 
-
 RUN docker-php-ext-install mysqli && docker-php-ext-enable mysqli
 
 RUN mkdir /var/www/html/node_modules
@@ -32,9 +31,5 @@ ADD ./edit /var/www/html/edit
 ADD ./php /var/www/html/php
 ADD ./css /var/www/html/css
 ADD ./assets /var/www/html/assets
-# ADD ./js /var/www/html
-# ADD ./vue /var/www/html
 
-EXPOSE 80
-
-# CMD ["apache2-foreground"]
+EXPOSE 3000
