@@ -5,7 +5,7 @@
 error_reporting(E_ERROR);
 
 //Specify the Database server host
-define('DB_SERVER', 'localhost:3306');
+define('DB_SERVER', 'mysql:3306');
 //Specify the Database username
 define('DB_USERNAME', 'tester');
 //Specify the Database password

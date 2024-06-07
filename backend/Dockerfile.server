@@ -32,4 +32,4 @@ ADD ./php /var/www/html/php
 ADD ./css /var/www/html/css
 ADD ./assets /var/www/html/assets
 
-EXPOSE 3000
+EXPOSE 80
